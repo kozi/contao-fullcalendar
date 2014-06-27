@@ -1,0 +1,46 @@
+{
+    "name": "martin-kozianka/contao-sabredav",
+    "description": "sabre/dav Wrapper",
+    "keywords": [
+        "contao",
+        "sabre",
+        "sabredav",
+        "carddav",
+        "caldav",
+        "webdav"
+    ],
+    "type": "contao-module",
+    "license": "LGPL-3.0+",
+    "authors": [
+        {
+            "name": "Martin Kozianka",
+            "email": "martin@kozianka.de",
+            "homepage": "http://kozianka.de",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "email": "martin@kozianka.de",
+        "issues": "https://github.com/kozi/contao-sabredav/issues",
+        "irc": "irc://irc.freenode.org/contao.dev",
+        "source": "https://github.com/kozi/contao-sabredav"
+    },
+    "autoload": {
+        "psr-0": {
+            "ContaoDav": "src/"
+        }
+    },
+    "require": {
+        "php": ">=5.4",
+        "contao/core": ">=2.11,<3.4",
+        "contao-community-alliance/composer-plugin": "~2.0",
+        "sabre/dav": ">=2,<3"
+    },
+    "extra": {
+        "contao": {
+            "sources": {
+                "contao": "system/modules/sabredav"
+            }
+        }
+    }
+}
