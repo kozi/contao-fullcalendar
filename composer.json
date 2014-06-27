@@ -42,5 +42,8 @@
                 "contao": "system/modules/sabredav"
             }
         }
+    },
+    "config": {
+        "component-dir": "../assets/components"
     }
 }

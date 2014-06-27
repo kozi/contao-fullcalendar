@@ -1,6 +1,5 @@
 <?php
 
-
 namespace ContaoSabredav;
 
 class SabredavTest extends \System {
