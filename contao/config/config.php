@@ -1,3 +1,3 @@
 <?php
 
-$GLOBALS['TL_HOOKS']['generatePage'][] = array('ContaoSabredav', 'generatePageHook');
+$GLOBALS['TL_HOOKS']['generatePage'][] = array('SabredavTest', 'generatePageHook');

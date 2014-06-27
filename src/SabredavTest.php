@@ -3,7 +3,7 @@
 
 namespace ContaoSabredav;
 
-class ContaoSabredav extends \System {
+class SabredavTest extends \System {
 
 
     public function generatePageHook(\PageModel $objPage, \LayoutModel $objLayout, \PageRegular $objPageRegular) {
