@@ -13,8 +13,10 @@
  * @filesource
  */
 
-$GLOBALS['BE_MOD']['system']['sabredav'] = array(
-    'tables'     => array('tl_sabredav'),
-    'icon'       => 'system/modules/sabredav/assets/drive-network.png',
-    'test'       => array('SabredavManager', 'testConnection')
-);
+namespace ContaoSabredav;
+
+class SabredavModel extends \Model {
+
+    protected static $strTable = 'tl_sabredav';
+
+}
