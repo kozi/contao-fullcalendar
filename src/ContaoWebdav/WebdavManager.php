@@ -24,24 +24,18 @@ class WebdavManager extends \System {
             return false;
         }
 
-        $webdavObj   = WebdavModel::findByPk($id);
-        $settings = array(
+        $webdavObj = WebdavModel::findByPk($id);
+        $settings  = array(
             'baseUri'  => $webdavObj->baseUri,
             'userName' => $webdavObj->username,
             'password' => \Encryption::decrypt($webdavObj->password)
         );
 
         $client   = new \Sabre\DAV\Client($settings);
-        // $response = $client->request('GET');
-
-
         $response = $client->request('HEAD');
-        $features = $client->options();
-        var_dump($features);
-        die();
 
         if ($response['statusCode'] === 200) {
-            \Message::add(sprintf('OK!  %s [%s]',$settings['baseUri'], $settings['userName']), 'TL_INFO');
+            \Message::add(sprintf('Connection successful!  %s [%s]',$settings['baseUri'], $settings['userName']), 'TL_INFO');
         }
         elseif ($response['statusCode'] === 404) {
             \Message::add($settings['baseUri'].' not found. [404]', 'TL_ERROR');

@@ -14,8 +14,8 @@
  */
 
 $GLOBALS['BE_MOD']['system']['webdav'] = array(
-    'tables'     => array('tl_webdav'),
-    'icon'       => 'system/modules/webdav/assets/icon.png',
+    'tables'     => array('tl_webdav', 'tl_webdav_mapping'),
+    'icon'       => 'system/modules/webdav/assets/drive-network.png',
     'stylesheet' => 'system/modules/webdav/assets/backend.css',
     'test'       => array('ContaoWebdav\WebdavManager', 'testConnection')
 );

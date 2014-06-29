@@ -19,7 +19,7 @@ $GLOBALS['TL_DCA']['tl_webdav'] = array(
     'config' => array
     (
         'dataContainer'               => 'Table',
-        // 'ctable'                      => array('tl_webdav_sync'),
+        'ctable'                      => array('tl_webdav_mapping'),
         'switchToEdit'				  => true,
         'enableVersioning'            => true,
         'sql' => array(
@@ -39,7 +39,7 @@ $GLOBALS['TL_DCA']['tl_webdav'] = array(
         ),
         'label' => array
         (
-            'fields'                  => array('title', 'tstamp'),
+            'fields'                  => array('title','baseUri','username'),
             'showColumns'             => true,
         ),
         'global_operations' => array
@@ -54,7 +54,12 @@ $GLOBALS['TL_DCA']['tl_webdav'] = array(
         ),
         'operations' => array
         (
-
+            'mapping' => array
+            (
+                'label'               => &$GLOBALS['TL_LANG']['tl_webdav']['mapping'],
+                'href'                => 'table=tl_webdav_mapping',
+                'icon'                => 'system/modules/webdav/assets/gear.png'
+            ),
             'test' => array
             (
                 'label'               => &$GLOBALS['TL_LANG']['tl_webdav']['test'],
@@ -94,6 +99,7 @@ $GLOBALS['TL_DCA']['tl_webdav'] = array(
         'tstamp' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_webdav']['tstamp'],
+            'flag'                    => 9,
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
         ),
         'title' => array
