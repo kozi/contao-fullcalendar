@@ -8,13 +8,15 @@
  * PHP version 5
  * @copyright  Martin Kozianka 2014 <http://kozianka.de/>
  * @author     Martin Kozianka <http://kozianka.de/>
- * @package    contao-sabredav
+ * @package    contao-dav
  * @license    LGPL
  * @filesource
  */
 
-$GLOBALS['BE_MOD']['system']['sabredav'] = array(
-    'tables'     => array('tl_sabredav'),
-    'icon'       => 'system/modules/sabredav/assets/drive-network.png',
-    'test'       => array('SabredavManager', 'testConnection')
+$GLOBALS['BE_MOD']['system']['dav'] = array(
+    'tables'     => array('tl_dav'),
+    'icon'       => 'system/modules/dav/assets/icon.png',
+    'stylesheet' => 'system/modules/dav/assets/backend.css',
+    'test'       => array('ContaoDav\DavManager', 'testConnection')
 );
+

@@ -8,7 +8,7 @@
  * PHP version 5
  * @copyright  Martin Kozianka 2014 <http://kozianka.de/>
  * @author     Martin Kozianka <http://kozianka.de/>
- * @package    contao-sabredav
+ * @package    contao-dav
  * @license    LGPL
  * @filesource
  */

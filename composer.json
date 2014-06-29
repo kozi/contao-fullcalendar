@@ -1,5 +1,5 @@
 {
-    "name": "martin-kozianka/contao-sabredav",
+    "name": "martin-kozianka/contao-dav",
     "description": "sabre/dav Wrapper",
     "keywords": [
         "contao",
@@ -21,13 +21,13 @@
     ],
     "support": {
         "email": "martin@kozianka.de",
-        "issues": "https://github.com/kozi/contao-sabredav/issues",
+        "issues": "https://github.com/kozi/contao-dav/issues",
         "irc": "irc://irc.freenode.org/contao.dev",
-        "source": "https://github.com/kozi/contao-sabredav"
+        "source": "https://github.com/kozi/contao-dav"
     },
     "autoload": {
         "psr-0": {
-            "ContaoSabredav": "src/"
+            "ContaoDav": "src/"
         }
     },
     "require": {
@@ -39,7 +39,7 @@
     "extra": {
         "contao": {
             "sources": {
-                "contao": "system/modules/sabredav"
+                "contao": "system/modules/dav"
             }
         }
     },
