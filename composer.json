@@ -1,6 +1,6 @@
 {
-    "name": "martin-kozianka/contao-dav",
-    "description": "sabre/dav Wrapper",
+    "name": "martin-kozianka/contao-webdav",
+    "description": "Webdav for contao based on sabre/dav",
     "keywords": [
         "contao",
         "sabre",
@@ -21,13 +21,13 @@
     ],
     "support": {
         "email": "martin@kozianka.de",
-        "issues": "https://github.com/kozi/contao-dav/issues",
+        "issues": "https://github.com/kozi/contao-webdav/issues",
         "irc": "irc://irc.freenode.org/contao.dev",
-        "source": "https://github.com/kozi/contao-dav"
+        "source": "https://github.com/kozi/contao-webdav"
     },
     "autoload": {
         "psr-0": {
-            "ContaoDav": "src/"
+            "ContaoWebdav": "src/"
         }
     },
     "require": {
@@ -39,7 +39,7 @@
     "extra": {
         "contao": {
             "sources": {
-                "contao": "system/modules/dav"
+                "contao": "system/modules/webdav"
             }
         }
     },

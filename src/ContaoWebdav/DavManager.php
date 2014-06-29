@@ -8,14 +8,14 @@
  * PHP version 5
  * @copyright  Martin Kozianka 2014 <http://kozianka.de/>
  * @author     Martin Kozianka <http://kozianka.de/>
- * @package    contao-dav
+ * @package    contao-webdav
  * @license    LGPL
  * @filesource
  */
 
 namespace ContaoDav;
 
-class DavManager extends \System {
+class WebdavManager extends \System {
 
 
     public function testConnection() {

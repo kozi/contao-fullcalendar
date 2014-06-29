@@ -13,13 +13,13 @@
  * @filesource
  */
 
-$GLOBALS['TL_DCA']['tl_sabredav'] = array(
+$GLOBALS['TL_DCA']['tl_webdav'] = array(
 
     // Config
     'config' => array
     (
         'dataContainer'               => 'Table',
-        // 'ctable'                      => array('tl_sabredav_sync'),
+        // 'ctable'                      => array('tl_webdav_sync'),
         'switchToEdit'				  => true,
         'enableVersioning'            => true,
         'sql' => array(
@@ -57,19 +57,19 @@ $GLOBALS['TL_DCA']['tl_sabredav'] = array(
 
             'test' => array
             (
-                'label'               => &$GLOBALS['TL_LANG']['tl_sabredav']['test'],
+                'label'               => &$GLOBALS['TL_LANG']['tl_webdav']['test'],
                 'href'                => 'key=test',
-                'icon'                => 'system/modules/sabredav/assets/lightning.png',
+                'icon'                => 'system/modules/webdav/assets/lightning.png',
             ),
             'edit' => array
             (
-                'label'               => &$GLOBALS['TL_LANG']['tl_sabredav']['edit'],
+                'label'               => &$GLOBALS['TL_LANG']['tl_webdav']['edit'],
                 'href'                => 'act=edit',
                 'icon'                => 'edit.gif'
             ),
             'delete' => array
             (
-                'label'               => &$GLOBALS['TL_LANG']['tl_sabredav']['delete'],
+                'label'               => &$GLOBALS['TL_LANG']['tl_webdav']['delete'],
                 'href'                => 'act=delete',
                 'icon'                => 'delete.gif',
                 'attributes'          => 'onclick="if (!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\')) return false; Backend.getScrollOffset();"'
@@ -80,7 +80,7 @@ $GLOBALS['TL_DCA']['tl_sabredav'] = array(
     // Palettes
     'palettes' => array
     (
-        'default'                     => '{sabredav_legend}, title, baseUri, username, password',
+        'default'                     => '{webdav_legend}, title, baseUri, username, password',
     ),
 
 
@@ -93,12 +93,12 @@ $GLOBALS['TL_DCA']['tl_sabredav'] = array(
         ),
         'tstamp' => array
         (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_sabredav']['tstamp'],
+            'label'                   => &$GLOBALS['TL_LANG']['tl_webdav']['tstamp'],
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
         ),
         'title' => array
         (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_sabredav']['title'],
+            'label'                   => &$GLOBALS['TL_LANG']['tl_webdav']['title'],
             'exclude'                 => true,
             'flag'                    => 1,
             'inputType'               => 'text',
@@ -107,7 +107,7 @@ $GLOBALS['TL_DCA']['tl_sabredav'] = array(
         ),
         'baseUri' => array
         (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_sabredav']['baseUri'],
+            'label'                   => &$GLOBALS['TL_LANG']['tl_webdav']['baseUri'],
             'exclude'                 => true,
             'flag'                    => 1,
             'inputType'               => 'text',
@@ -116,7 +116,7 @@ $GLOBALS['TL_DCA']['tl_sabredav'] = array(
         ),
         'username' => array
         (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_sabredav']['username'],
+            'label'                   => &$GLOBALS['TL_LANG']['tl_webdav']['username'],
             'exclude'                 => true,
             'flag'                    => 1,
             'inputType'               => 'text',
@@ -125,7 +125,7 @@ $GLOBALS['TL_DCA']['tl_sabredav'] = array(
         ),
         'password' => array
         (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_sabredav']['password'],
+            'label'                   => &$GLOBALS['TL_LANG']['tl_webdav']['password'],
             'exclude'                 => true,
             'flag'                    => 1,
             'inputType'               => 'text',

@@ -8,15 +8,15 @@
  * PHP version 5
  * @copyright  Martin Kozianka 2014 <http://kozianka.de/>
  * @author     Martin Kozianka <http://kozianka.de/>
- * @package    contao-dav
+ * @package    contao-webdav
  * @license    LGPL
  * @filesource
  */
 
-namespace ContaoDav;
+namespace ContaoWebdav;
 
-class DavModel extends \Model {
+class WebdavModel extends \Model {
 
-    protected static $strTable = 'tl_dav';
+    protected static $strTable = 'tl_webdav';
 
 }
