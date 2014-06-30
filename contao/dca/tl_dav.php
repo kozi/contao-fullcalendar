@@ -13,7 +13,7 @@
  * @filesource
  */
 
-$GLOBALS['TL_DCA']['tl_webdav'] = array(
+$GLOBALS['TL_DCA']['tl_dav'] = array(
 
     // Config
     'config' => array
@@ -39,7 +39,7 @@ $GLOBALS['TL_DCA']['tl_webdav'] = array(
         ),
         'label' => array
         (
-            'fields'                  => array('title','baseUri','username'),
+            'fields'                  => array('title', 'baseUri', 'username'),
             'showColumns'             => true,
         ),
         'global_operations' => array
@@ -56,31 +56,31 @@ $GLOBALS['TL_DCA']['tl_webdav'] = array(
         (
             'test' => array
             (
-                'label'               => &$GLOBALS['TL_LANG']['tl_webdav']['test'],
+                'label'               => &$GLOBALS['TL_LANG']['tl_dav']['test'],
                 'href'                => 'key=test',
                 'icon'                => 'system/modules/webdav/assets/lightning.png',
             ),
             'refresh' => array
             (
-                'label'               => &$GLOBALS['TL_LANG']['tl_webdav']['refresh'],
+                'label'               => &$GLOBALS['TL_LANG']['tl_dav']['refresh'],
                 'href'                => 'key=refresh',
                 'icon'                => 'system/modules/webdav/assets/arrow-circle-double.png',
             ),
             'mapping' => array
             (
-                'label'               => &$GLOBALS['TL_LANG']['tl_webdav']['mapping'],
+                'label'               => &$GLOBALS['TL_LANG']['tl_dav']['mapping'],
                 'href'                => 'table=tl_webdav_mapping',
                 'icon'                => 'system/modules/webdav/assets/gear.png'
             ),
             'edit' => array
             (
-                'label'               => &$GLOBALS['TL_LANG']['tl_webdav']['edit'],
+                'label'               => &$GLOBALS['TL_LANG']['tl_dav']['edit'],
                 'href'                => 'act=edit',
                 'icon'                => 'edit.gif'
             ),
             'delete' => array
             (
-                'label'               => &$GLOBALS['TL_LANG']['tl_webdav']['delete'],
+                'label'               => &$GLOBALS['TL_LANG']['tl_dav']['delete'],
                 'href'                => 'act=delete',
                 'icon'                => 'delete.gif',
                 'attributes'          => 'onclick="if (!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\')) return false; Backend.getScrollOffset();"'
@@ -104,13 +104,13 @@ $GLOBALS['TL_DCA']['tl_webdav'] = array(
         ),
         'tstamp' => array
         (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_webdav']['tstamp'],
+            'label'                   => &$GLOBALS['TL_LANG']['tl_dav']['tstamp'],
             'flag'                    => 9,
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
         ),
         'title' => array
         (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_webdav']['title'],
+            'label'                   => &$GLOBALS['TL_LANG']['tl_dav']['title'],
             'exclude'                 => true,
             'flag'                    => 1,
             'inputType'               => 'text',
@@ -119,7 +119,7 @@ $GLOBALS['TL_DCA']['tl_webdav'] = array(
         ),
         'baseUri' => array
         (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_webdav']['baseUri'],
+            'label'                   => &$GLOBALS['TL_LANG']['tl_dav']['baseUri'],
             'exclude'                 => true,
             'flag'                    => 1,
             'inputType'               => 'text',
@@ -128,7 +128,7 @@ $GLOBALS['TL_DCA']['tl_webdav'] = array(
         ),
         'username' => array
         (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_webdav']['username'],
+            'label'                   => &$GLOBALS['TL_LANG']['tl_dav']['username'],
             'exclude'                 => true,
             'flag'                    => 1,
             'inputType'               => 'text',
@@ -137,7 +137,7 @@ $GLOBALS['TL_DCA']['tl_webdav'] = array(
         ),
         'password' => array
         (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_webdav']['password'],
+            'label'                   => &$GLOBALS['TL_LANG']['tl_dav']['password'],
             'exclude'                 => true,
             'flag'                    => 1,
             'inputType'               => 'text',

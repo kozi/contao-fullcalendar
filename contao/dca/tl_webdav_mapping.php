@@ -19,7 +19,7 @@ $GLOBALS['TL_DCA']['tl_webdav_mapping'] = array(
     'config' => array
     (
         'dataContainer'               => 'Table',
-        'ptable'                      => 'tl_webdav',
+        'ptable'                      => 'tl_dav',
         'switchToEdit'				  => true,
         'enableVersioning'            => true,
         'sql' => array(

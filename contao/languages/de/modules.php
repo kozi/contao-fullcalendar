@@ -1,3 +1,3 @@
 <?php
 
-$GLOBALS['TL_LANG']['MOD']['webdav']     = array("WebDAV", "WebDAV");
+$GLOBALS['TL_LANG']['MOD']['dav']     = array("*DAV", "*DAV");

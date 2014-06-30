@@ -13,8 +13,8 @@
  * @filesource
  */
 
-$GLOBALS['BE_MOD']['system']['webdav'] = array(
-    'tables'     => array('tl_webdav', 'tl_webdav_mapping'),
+$GLOBALS['BE_MOD']['system']['dav'] = array(
+    'tables'     => array('tl_dav', 'tl_webdav_mapping'),
     'icon'       => 'system/modules/dav/assets/drive-network.png',
     'stylesheet' => 'system/modules/dav/assets/backend.css',
     'test'       => array('ContaoDav\WebdavManager', 'testConnection'),

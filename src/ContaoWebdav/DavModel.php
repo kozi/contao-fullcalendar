@@ -15,8 +15,8 @@
 
 namespace ContaoDav;
 
-class WebdavModel extends \Model {
+class DavModel extends \Model {
 
-    protected static $strTable = 'tl_webdav';
+    protected static $strTable = 'tl_dav';
 
 }

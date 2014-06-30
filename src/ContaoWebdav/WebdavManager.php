@@ -24,11 +24,11 @@ class WebdavManager extends \System {
     private $client = null;
 
     private function initWebdavClient($id) {
-        $webdavObj = WebdavModel::findByPk($id);
+        $davObj = DavModel::findByPk($id);
         $settings  = array(
-            'baseUri'  => $webdavObj->baseUri,
-            'userName' => $webdavObj->username,
-            'password' => \Encryption::decrypt($webdavObj->password)
+            'baseUri'  => $davObj->baseUri,
+            'userName' => $davObj->username,
+            'password' => \Encryption::decrypt($davObj->password)
         );
 
         $this->client = new \Sabre\DAV\Client($settings);
@@ -63,7 +63,7 @@ class WebdavManager extends \System {
         catch (Exception $e) {
             \Message::add($e->getMessage(), 'TL_ERROR');
         }
-        \Controller::redirect(\Environment::get('script').'?do=webdav');
+        \Controller::redirect(\Environment::get('script').'?do=dav');
     }
 
 
@@ -78,12 +78,12 @@ class WebdavManager extends \System {
         }
         catch (Exception $e) {
             \Message::add($e->getMessage(), 'TL_ERROR');
-            \Controller::redirect(\Environment::get('script').'?do=webdav');
+            \Controller::redirect(\Environment::get('script').'?do=dav');
         }
 
         $this->updateMappings($id);
         die();
-        \Controller::redirect(\Environment::get('script').'?do=webdav');
+        \Controller::redirect(\Environment::get('script').'?do=dav');
     }
 
 
