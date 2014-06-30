@@ -58,19 +58,19 @@ $GLOBALS['TL_DCA']['tl_dav'] = array(
             (
                 'label'               => &$GLOBALS['TL_LANG']['tl_dav']['test'],
                 'href'                => 'key=test',
-                'icon'                => 'system/modules/webdav/assets/lightning.png',
+                'icon'                => 'system/modules/dav/assets/lightning.png',
             ),
             'refresh' => array
             (
                 'label'               => &$GLOBALS['TL_LANG']['tl_dav']['refresh'],
                 'href'                => 'key=refresh',
-                'icon'                => 'system/modules/webdav/assets/arrow-circle-double.png',
+                'icon'                => 'system/modules/dav/assets/arrow-circle-double.png',
             ),
             'mapping' => array
             (
                 'label'               => &$GLOBALS['TL_LANG']['tl_dav']['mapping'],
                 'href'                => 'table=tl_webdav_mapping',
-                'icon'                => 'system/modules/webdav/assets/gear.png'
+                'icon'                => 'system/modules/dav/assets/gear.png'
             ),
             'edit' => array
             (
