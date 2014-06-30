@@ -8,12 +8,12 @@
  * PHP version 5
  * @copyright  Martin Kozianka 2014 <http://kozianka.de/>
  * @author     Martin Kozianka <http://kozianka.de/>
- * @package    contao-webdav
+ * @package    contao-dav
  * @license    LGPL
  * @filesource
  */
 
-namespace ContaoWebdav;
+namespace ContaoDav;
 
 class WebdavManager extends \System {
 
