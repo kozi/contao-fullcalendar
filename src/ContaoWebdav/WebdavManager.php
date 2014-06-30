@@ -17,13 +17,13 @@ namespace ContaoWebdav;
 
 class WebdavManager extends \System {
 
+    /**
+     * Client
+     * @var \Sabre\DAV\Client
+     */
+    private $client = null;
 
-    public function testConnection() {
-        $id     = (\Input::get('id') !== null) ? intval(\Input::get('id')) : 0;
-        if ($id === 0) {
-            return false;
-        }
-
+    private function initWebdavClient($id) {
         $webdavObj = WebdavModel::findByPk($id);
         $settings  = array(
             'baseUri'  => $webdavObj->baseUri,
@@ -31,24 +31,67 @@ class WebdavManager extends \System {
             'password' => \Encryption::decrypt($webdavObj->password)
         );
 
-        $client   = new \Sabre\DAV\Client($settings);
-        $response = $client->request('HEAD');
+        $this->client = new \Sabre\DAV\Client($settings);
+        $response     = $this->client->request('HEAD');
 
         if ($response['statusCode'] === 200) {
-            \Message::add(sprintf('Connection successful!  %s [%s]',$settings['baseUri'], $settings['userName']), 'TL_INFO');
+            return true;
         }
         elseif ($response['statusCode'] === 404) {
-            \Message::add($settings['baseUri'].' not found. [404]', 'TL_ERROR');
+            throw new Exception($settings['baseUri'].' not found. [404]', 'TL_ERROR');
         }
         elseif ($response['statusCode'] === 401) {
             $body = str_replace(array('<p>', '</p>'),array('<br>','<br>'), $response['body']);
-            \Message::add(strip_tags($body,'<br>'), 'TL_ERROR');
+            throw new Exception(strip_tags($body,'<br>'));
         }
         else {
-            \Message::add($response['statusCode'], 'TL_ERROR');
+            throw new Exception($response['statusCode']);
+        }
+    }
+
+    public function testConnection() {
+        $id     = (\Input::get('id') !== null) ? intval(\Input::get('id')) : 0;
+        if ($id === 0) {
+            return false;
+        }
+
+        try {
+            if ($this->initWebdavClient($id) === true) {
+                \Message::add('Connection successful!', 'TL_INFO');
+            }
+        }
+        catch (Exception $e) {
+            \Message::add($e->getMessage(), 'TL_ERROR');
         }
         \Controller::redirect(\Environment::get('script').'?do=webdav');
     }
 
 
+    public function updateFiles() {
+        $id     = (\Input::get('id') !== null) ? intval(\Input::get('id')) : 0;
+        if ($id === 0) {
+            return false;
+        }
+
+        try {
+            $this->initWebdavClient($id);
+        }
+        catch (Exception $e) {
+            \Message::add($e->getMessage(), 'TL_ERROR');
+            \Controller::redirect(\Environment::get('script').'?do=webdav');
+        }
+
+        $this->updateMappings($id);
+        die();
+        \Controller::redirect(\Environment::get('script').'?do=webdav');
+    }
+
+
+    private function updateMappings($pid) {
+        $mappingObj = WebdavMappingModel::findBy('pid', $pid);
+        foreach ($mappingObj as $mapObj){
+            var_dump($mapObj);
+        }
+    }
 }
+

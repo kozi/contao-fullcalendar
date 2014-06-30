@@ -37,10 +37,12 @@ $GLOBALS['TL_DCA']['tl_webdav_mapping'] = array(
             'flag'                    => 1,
             'panelLayout'             => 'limit'
         ),
+
         'label' => array
         (
             'fields'                  => array('webdavPath', 'localPath'),
             'showColumns'             => true,
+            'label_callback'          => array('tl_webdav_mapping', 'addLocalPath')
         ),
         'global_operations' => array
         (
@@ -112,5 +114,26 @@ $GLOBALS['TL_DCA']['tl_webdav_mapping'] = array(
             'sql'                     => "blob NULL",
         ),
 
+        'overwrite' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_webdav_mapping']['overwrite'],
+            'default'                 => 1,
+            'exclude'                 => true,
+            'inputType'               => 'checkbox',
+            'eval'                    => array('tl_class'=>'w50'),
+            'sql'                     => "char(1) NOT NULL default ''"
+        ),
     )
 );
+
+class tl_webdav_mapping extends Backend {
+
+    public function addLocalPath($row, $label, DataContainer $dc, $args = null) {
+        $objFile = FilesModel::findByUuid($row['localPath']);
+        if ($objFile !== null) {
+            $args[1] = $objFile->path;
+        }
+        return $args;
+    }
+
+}
