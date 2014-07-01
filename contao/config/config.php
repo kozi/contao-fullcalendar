@@ -30,5 +30,5 @@ $GLOBALS['BE_MOD']['system']['dav'] = array(
     'refresh'    => array('ContaoDav\WebdavManager', 'updateFiles')
 );
 
-$GLOBALS['FE_MOD']['events']['fullcalendar'] = 'ModuleFullCalendar';
+$GLOBALS['FE_MOD']['events']['fullcalendar'] = 'ContaoDav\ModuleFullCalendar';
 
