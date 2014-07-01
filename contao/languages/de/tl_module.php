@@ -1,12 +1,14 @@
 <?php
 
-/*
+$GLOBALS['TL_LANG']['tl_module']['fullcal_legend']         = 'FullCalendar';
+$GLOBALS['TL_LANG']['tl_module']['fullcal_weekNumbers']    = array('Kalenderwochen anzeigen', 'Soll eine Spalte mit den Kalenderwochen anzeigt werden?');
+$GLOBALS['TL_LANG']['tl_module']['fullcal_weekMode']       = array('Wochenmodus', 'Wochenmodus');
+$GLOBALS['TL_LANG']['tl_module']['fullcal_aspectRatio']    = array('Seitenverhältnis', 'Seitenverhältnis des Kalenders Breite = [WERT] x Höhe');
+$GLOBALS['TL_LANG']['tl_module']['fullcal_isRTL']          = array('Schreibrichtung RTL', 'Schreibrichtung von rechts nach links?');
 
-'liquid'; // options = array('fixed', 'liquid', 'variable');
-The calendar will always be 6 weeks tall. The height will always be the same, as determined by height, contentHeight, or aspectRatio.
-The calendar will have either 4, 5, or 6 weeks, depending on the month. The height of the weeks will stretch to fill the available height, as determined by height, contentHeight, or aspectRatio.
-The calendar will have either 4, 5, or 6 weeks, depending on the month. Each week will have the same constant height, meaning the calendar’s height will change month-to-month.
-
-*/
+$fullcalendarDesc = 'Eine durch Komma (zusammenhängende Buttons) bzw. Leerzeichen (separate Buttons) getrennte Liste der folgenden Werte: today, title, prev, next, month, agendaWeek, agendaDay';
+$GLOBALS['TL_LANG']['tl_module']['fullcal_header_left']    = array('Kopfzeile (links)', $fullcalendarDesc);
+$GLOBALS['TL_LANG']['tl_module']['fullcal_header_center']  = array('Kopfzeile (mitte)', $fullcalendarDesc);
+$GLOBALS['TL_LANG']['tl_module']['fullcal_header_right']   = array('Kopfzeile (rechts)', $fullcalendarDesc);
 
 

@@ -2,11 +2,6 @@
 
 <?php $this->block('content'); ?>
 
-
-<pre><code>
-<?php echo $this->fullcalOptions; ?>
-</code></pre>
-
 <div id="calendar"></div>
 <script>
     $(document).ready(function() {

@@ -52,17 +52,15 @@ class ModuleFullCalendar extends \Events {
 
         $fullcalOptions               = new \stdClass();
         $fullcalOptions->firstDay     = $this->cal_startDay;
-        $fullcalOptions->weekNumbers  = true;
-        $fullcalOptions->weekMode     = 'fixed'; // options = array('fixed', 'liquid', 'variable');
-        $fullcalOptions->aspectRatio  = 1.35;
-        $fullcalOptions->isRTL        = false;
+        $fullcalOptions->weekNumbers  = $this->fullcal_weekNumbers;
+        $fullcalOptions->weekMode     = $this->fullcal_weekMode;
+        $fullcalOptions->aspectRatio  = $this->fullcal_aspectRatio;
+        $fullcalOptions->isRTL        = $this->fullcal_isRTL;
 
-
-        // chosen multiple
         $fullcalOptions->header         = new \stdClass();
-        $fullcalOptions->header->left   = 'prev,next today';
-        $fullcalOptions->header->center = 'title';
-        $fullcalOptions->header->right  = implode(',', $this->fullcal_viewButtons);
+        $fullcalOptions->header->left   = $this->fullcal_header_left;
+        $fullcalOptions->header->center = $this->fullcal_header_center;
+        $fullcalOptions->header->right  = $this->fullcal_header_right;
 
 
         $this->Template->fullcalOptions = json_encode($fullcalOptions, JSON_NUMERIC_CHECK | JSON_FORCE_OBJECT);
