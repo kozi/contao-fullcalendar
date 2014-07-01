@@ -13,6 +13,7 @@
  * @filesource
  */
 
+
 $GLOBALS['BE_MOD']['system']['dav'] = array(
     'tables'     => array('tl_dav', 'tl_webdav_mapping'),
     'icon'       => 'system/modules/dav/assets/drive-network.png',
@@ -20,4 +21,14 @@ $GLOBALS['BE_MOD']['system']['dav'] = array(
     'test'       => array('ContaoDav\WebdavManager', 'testConnection'),
     'refresh'    => array('ContaoDav\WebdavManager', 'updateFiles')
 );
+
+$GLOBALS['BE_MOD']['system']['dav'] = array(
+    'tables'     => array('tl_dav', 'tl_webdav_mapping'),
+    'icon'       => 'system/modules/dav/assets/drive-network.png',
+    'stylesheet' => 'system/modules/dav/assets/backend.css',
+    'test'       => array('ContaoDav\WebdavManager', 'testConnection'),
+    'refresh'    => array('ContaoDav\WebdavManager', 'updateFiles')
+);
+
+$GLOBALS['FE_MOD']['events']['fullcalendar'] = 'ModuleFullCalendar';
 
