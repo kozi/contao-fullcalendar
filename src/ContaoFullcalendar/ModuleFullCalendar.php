@@ -14,6 +14,8 @@
  */
 
 namespace ContaoFullcalendar;
+use Contao\Date;
+use Contao\Environment;
 
 /**
  * Class ModuleFullCalendar
@@ -47,7 +49,6 @@ class ModuleFullCalendar extends \Events {
     protected function compile() {
         global $objPage;
 
-
         $this->fullcal_viewButtons    = array('month', 'agendaWeek', 'agendaDay');
 
         $fullcalOptions               = new \stdClass();
@@ -62,10 +63,11 @@ class ModuleFullCalendar extends \Events {
         $fullcalOptions->header->center = $this->fullcal_header_center;
         $fullcalOptions->header->right  = $this->fullcal_header_right;
 
+        // Events
+        $this->fullcal_arrCalendar      = array(1,2,3,4);
+        $fullcalOptions->events         = $this->getEventsAsJson($this->fullcal_arrCalendar);
 
-        $this->Template->fullcalOptions = json_encode($fullcalOptions, JSON_NUMERIC_CHECK | JSON_FORCE_OBJECT);
-
-
+        $this->Template->fullcalOptions = json_encode($fullcalOptions, JSON_NUMERIC_CHECK);
 
         if ($objPage->hasJQuery !== '1') {
             $GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/fullcalendar/assets/jquery/dist/jquery.min.js|static';
@@ -80,6 +82,24 @@ class ModuleFullCalendar extends \Events {
         if (file_exists(TL_ROOT.'/'.$pathLang)) {
             $GLOBALS['TL_JAVASCRIPT'][] = $pathLang.'|static';
         }
+    }
+
+    private function getEventsAsJson(array $arrCalendarIds) {
+
+        $jsonEvents = array();
+        $tsStart    = strtotime('-2 years', time());
+        $tsEnd      = strtotime('+2 years', time());
+        $events     = $this->getAllEvents($arrCalendarIds, $tsStart, $tsEnd);
+        ksort($events);
+
+        foreach($events as $days) {
+            foreach($days as $keyDay => $day) {
+                foreach($day as $event) {
+                    $jsonEvents[] = EventMapper::convert($keyDay, $event);
+                }
+            }
+        }
+        return $jsonEvents;
     }
 
 }

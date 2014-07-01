@@ -30,9 +30,9 @@ class WebdavManager {
 
 
     /**
-     * Instantiate the OpenLigaDB object (Factory)
+     * Instantiate the WebdavManager object (Factory)
      *
-     * @return OpenLigaDB The OpenLigaDB object
+     * @return WebdavManager
      */
     static public function getInstance() {
 
