@@ -29,12 +29,20 @@
             "ContaoFullcalendar": "src/"
         }
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/iCalcreator/iCalcreator"
+        }
+    ],
     "require": {
         "php": ">=5.4",
         "contao/core": "~3.3",
-        "contao-community-alliance/composer-plugin": "~2.2"
+        "contao-community-alliance/composer-plugin": "~2.2",
+        "kigkonsult/icalcreator" : "*"
     },
     "minimum-stability": "dev",
+    "prefer-stable": true,
     "extra": {
         "contao": {
             "sources": {
