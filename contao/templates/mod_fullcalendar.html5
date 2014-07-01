@@ -1,9 +1,6 @@
 <?php $this->extend('block_searchable'); ?>
 
 <?php $this->block('content'); ?>
-<h1>### Full Calendar ###</h1>
-<h1>### Full Calendar ###</h1>
-<h1>### Full Calendar ###</h1>
-<h1>### Full Calendar ###</h1>
+
 <?php $this->endblock() ?>
 

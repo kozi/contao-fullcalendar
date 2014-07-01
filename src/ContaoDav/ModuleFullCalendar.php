@@ -47,15 +47,14 @@ class ModuleFullCalendar extends \Events {
     protected function compile() {
         global $objPage;
 
-        $GLOBALS['TL_CSS'][] = 'system/modules/contao-dav/assets/fullcalendar/fullcalendar.css||static';
+        $GLOBALS['TL_CSS'][] = 'system/modules/dav/assets/fullcalendar/fullcalendar.css||static';
 
-        $objLayout = $this->getPageLayout($objPage);
-        var_dump($objLayout);
-
-        $GLOBALS['TL_JAVASCRIPT'][] = 'lib/jquery.min.js|static';
-
-        $GLOBALS['TL_JAVASCRIPT'][] = 'lib/moment.min.js|static';
-        $GLOBALS['TL_JAVASCRIPT'][] = 'fullcalendar/fullcalendar.js|static';
+        //$objLayout = $this->getPageLayout($objPage);
+        if ($objPage->hasJQuery !== '1') {
+            $GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/dav/assets/fullcalendar/lib/jquery.min.js|static';
+        }
+        $GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/dav/assets/fullcalendar/lib/moment.min.js|static';
+        $GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/dav/assets/fullcalendar/fullcalendar.js|static';
 
     }
 
