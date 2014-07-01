@@ -1,6 +1,6 @@
 {
     "name": "contao-fullcalendar",
     "dependencies": {
-        "fullcalendar": "2.0.2"
+        "fullcalendar": "~2"
     }
 }

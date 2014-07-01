@@ -15,7 +15,12 @@
 
 namespace ContaoFullcalendar;
 
-class WebdavManager extends \System {
+class WebdavManager {
+
+    /**
+     * @var WebdavManager
+     */
+    protected static $instance;
 
     /**
      * Client
@@ -23,12 +28,29 @@ class WebdavManager extends \System {
      */
     private $client = null;
 
-    private function initWebdavClient($id) {
-        $davObj = DavModel::findByPk($id);
+
+    /**
+     * Instantiate the OpenLigaDB object (Factory)
+     *
+     * @return OpenLigaDB The OpenLigaDB object
+     */
+    static public function getInstance() {
+
+        if (static::$instance === null) {
+            static::$instance = new static();
+        }
+        return static::$instance;
+    }
+
+    public function getFile($url) {
+        $this->client->request($url);
+    }
+
+    public function init($baseUri, $username, $password) {
         $settings  = array(
-            'baseUri'  => $davObj->baseUri,
-            'userName' => $davObj->username,
-            'password' => \Encryption::decrypt($davObj->password)
+            'baseUri'  => $baseUri,
+            'userName' => $username,
+            'password' => $password
         );
 
         $this->client = new \Sabre\DAV\Client($settings);
@@ -49,49 +71,5 @@ class WebdavManager extends \System {
         }
     }
 
-    public function testConnection() {
-        $id     = (\Input::get('id') !== null) ? intval(\Input::get('id')) : 0;
-        if ($id === 0) {
-            return false;
-        }
-
-        try {
-            if ($this->initWebdavClient($id) === true) {
-                \Message::add('Connection successful!', 'TL_INFO');
-            }
-        }
-        catch (Exception $e) {
-            \Message::add($e->getMessage(), 'TL_ERROR');
-        }
-        \Controller::redirect(\Environment::get('script').'?do=fullcalendar');
-    }
-
-
-    public function updateFiles() {
-        $id     = (\Input::get('id') !== null) ? intval(\Input::get('id')) : 0;
-        if ($id === 0) {
-            return false;
-        }
-
-        try {
-            $this->initWebdavClient($id);
-        }
-        catch (Exception $e) {
-            \Message::add($e->getMessage(), 'TL_ERROR');
-            \Controller::redirect(\Environment::get('script').'?do=fullcalendar');
-        }
-
-        $this->updateMappings($id);
-        die();
-        \Controller::redirect(\Environment::get('script').'?do=fullcalendar');
-    }
-
-
-    private function updateMappings($pid) {
-        $mappingObj = WebdavMappingModel::findBy('pid', $pid);
-        foreach ($mappingObj as $mapObj){
-            var_dump($mapObj);
-        }
-    }
 }
 
