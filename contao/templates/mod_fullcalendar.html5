@@ -2,5 +2,20 @@
 
 <?php $this->block('content'); ?>
 
+
+<pre><code>
+<?php echo $this->fullcalOptions; ?>
+</code></pre>
+
+<div id="calendar"></div>
+<script>
+    $(document).ready(function() {
+        // page is now ready, initialize the calendar...
+        $('#calendar').fullCalendar(<?php echo $this->fullcalOptions; ?>);
+
+    });
+</script>
 <?php $this->endblock() ?>
+
+
 

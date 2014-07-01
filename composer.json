@@ -1,13 +1,12 @@
 {
-    "name": "martin-kozianka/contao-dav",
-    "description": "DAV for contao based on sabre/dav",
+    "name": "martin-kozianka/contao-fullcalendar",
+    "description": "Fullcalendar for contao",
     "keywords": [
         "contao",
-        "sabre",
-        "sabredav",
-        "carddav",
-        "caldav",
-        "webdav"
+        "calendar",
+        "fullcalendar",
+        "ical",
+        "ics"
     ],
     "type": "contao-module",
     "license": "LGPL-3.0+",
@@ -18,28 +17,29 @@
             "homepage": "http://kozianka.de",
             "role": "Developer"
         }
-    ],
+    ],  
     "support": {
         "email": "martin@kozianka.de",
-        "issues": "https://github.com/kozi/contao-dav/issues",
+        "issues": "https://github.com/kozi/contao-fullcalendar/issues",
         "irc": "irc://irc.freenode.org/contao.dev",
-        "source": "https://github.com/kozi/contao-dav"
+        "source": "https://github.com/kozi/contao-fullcalendar"
     },
     "autoload": {
         "psr-0": {
-            "ContaoDav": "src/"
+            "ContaoFullcalendar": "src/"
         }
     },
     "require": {
         "php": ">=5.4",
-        "contao/core": ">=2.11,<3.4",
-        "contao-community-alliance/composer-plugin": "~2.0",
-        "sabre/dav": ">=2,<3"
+        "contao/core": "~3.3",
+        "contao-community-alliance/composer-plugin": "~2.2"
     },
+    "minimum-stability": "dev",
+
     "extra": {
         "contao": {
             "sources": {
-                "contao": "system/modules/dav"
+                "contao": "system/modules/fullcalendar"
             }
         }
     },

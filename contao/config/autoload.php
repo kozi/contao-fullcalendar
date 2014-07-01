@@ -8,12 +8,12 @@
  * PHP version 5
  * @copyright  Martin Kozianka 2014 <http://kozianka.de/>
  * @author     Martin Kozianka <http://kozianka.de/>
- * @package    contao-dav
+ * @package    contao-fullcalendar
  * @license    LGPL
  * @filesource
  */
 
 TemplateLoader::addFiles(array
 (
-    'mod_fullcalendar'        => 'system/modules/dav/templates'
+    'mod_fullcalendar'        => 'system/modules/fullcalendar/templates'
 ));

@@ -8,18 +8,18 @@
  * PHP version 5
  * @copyright  Martin Kozianka 2014 <http://kozianka.de/>
  * @author     Martin Kozianka <http://kozianka.de/>
- * @package    contao-dav
+ * @package    contao-fullcalendar
  * @license    LGPL
  * @filesource
  */
 
-$GLOBALS['TL_DCA']['tl_dav'] = array(
+$GLOBALS['TL_DCA']['tl_fullcalendar_dav'] = array(
 
     // Config
     'config' => array
     (
         'dataContainer'               => 'Table',
-        'ctable'                      => array('tl_webdav_mapping'),
+        'ctable'                      => array('tl_fullcalendar_mapping'),
         'switchToEdit'				  => true,
         'enableVersioning'            => true,
         'sql' => array(
@@ -56,31 +56,31 @@ $GLOBALS['TL_DCA']['tl_dav'] = array(
         (
             'test' => array
             (
-                'label'               => &$GLOBALS['TL_LANG']['tl_dav']['test'],
+                'label'               => &$GLOBALS['TL_LANG']['tl_fullcalendar_dav']['test'],
                 'href'                => 'key=test',
-                'icon'                => 'system/modules/dav/assets/lightning.png',
+                'icon'                => 'system/modules/fullcalendar/assets/lightning.png',
             ),
             'refresh' => array
             (
-                'label'               => &$GLOBALS['TL_LANG']['tl_dav']['refresh'],
+                'label'               => &$GLOBALS['TL_LANG']['tl_fullcalendar_dav']['refresh'],
                 'href'                => 'key=refresh',
-                'icon'                => 'system/modules/dav/assets/arrow-circle-double.png',
+                'icon'                => 'system/modules/fullcalendar/assets/arrow-circle-double.png',
             ),
             'mapping' => array
             (
-                'label'               => &$GLOBALS['TL_LANG']['tl_dav']['mapping'],
-                'href'                => 'table=tl_webdav_mapping',
-                'icon'                => 'system/modules/dav/assets/gear.png'
+                'label'               => &$GLOBALS['TL_LANG']['tl_fullcalendar_dav']['mapping'],
+                'href'                => 'table=tl_fullcalendar_mapping',
+                'icon'                => 'system/modules/fullcalendar/assets/gear.png'
             ),
             'edit' => array
             (
-                'label'               => &$GLOBALS['TL_LANG']['tl_dav']['edit'],
+                'label'               => &$GLOBALS['TL_LANG']['tl_fullcalendar_dav']['edit'],
                 'href'                => 'act=edit',
                 'icon'                => 'edit.gif'
             ),
             'delete' => array
             (
-                'label'               => &$GLOBALS['TL_LANG']['tl_dav']['delete'],
+                'label'               => &$GLOBALS['TL_LANG']['tl_fullcalendar_dav']['delete'],
                 'href'                => 'act=delete',
                 'icon'                => 'delete.gif',
                 'attributes'          => 'onclick="if (!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\')) return false; Backend.getScrollOffset();"'
@@ -104,13 +104,13 @@ $GLOBALS['TL_DCA']['tl_dav'] = array(
         ),
         'tstamp' => array
         (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_dav']['tstamp'],
+            'label'                   => &$GLOBALS['TL_LANG']['tl_fullcalendar_dav']['tstamp'],
             'flag'                    => 9,
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
         ),
         'title' => array
         (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_dav']['title'],
+            'label'                   => &$GLOBALS['TL_LANG']['tl_fullcalendar_dav']['title'],
             'exclude'                 => true,
             'flag'                    => 1,
             'inputType'               => 'text',
@@ -119,7 +119,7 @@ $GLOBALS['TL_DCA']['tl_dav'] = array(
         ),
         'baseUri' => array
         (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_dav']['baseUri'],
+            'label'                   => &$GLOBALS['TL_LANG']['tl_fullcalendar_dav']['baseUri'],
             'exclude'                 => true,
             'flag'                    => 1,
             'inputType'               => 'text',
@@ -128,7 +128,7 @@ $GLOBALS['TL_DCA']['tl_dav'] = array(
         ),
         'username' => array
         (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_dav']['username'],
+            'label'                   => &$GLOBALS['TL_LANG']['tl_fullcalendar_dav']['username'],
             'exclude'                 => true,
             'flag'                    => 1,
             'inputType'               => 'text',
@@ -137,7 +137,7 @@ $GLOBALS['TL_DCA']['tl_dav'] = array(
         ),
         'password' => array
         (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_dav']['password'],
+            'label'                   => &$GLOBALS['TL_LANG']['tl_fullcalendar_dav']['password'],
             'exclude'                 => true,
             'flag'                    => 1,
             'inputType'               => 'text',

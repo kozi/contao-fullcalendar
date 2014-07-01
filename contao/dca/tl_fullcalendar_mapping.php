@@ -8,12 +8,12 @@
  * PHP version 5
  * @copyright  Martin Kozianka 2014 <http://kozianka.de/>
  * @author     Martin Kozianka <http://kozianka.de/>
- * @package    contao-dav
+ * @package    contao-fullcalendar
  * @license    LGPL
  * @filesource
  */
 
-$GLOBALS['TL_DCA']['tl_webdav_mapping'] = array(
+$GLOBALS['TL_DCA']['tl_fullcalendar_mapping'] = array(
 
     // Config
     'config' => array
@@ -42,7 +42,7 @@ $GLOBALS['TL_DCA']['tl_webdav_mapping'] = array(
         (
             'fields'                  => array('webdavPath', 'localPath'),
             'showColumns'             => true,
-            'label_callback'          => array('tl_webdav_mapping', 'addLocalPath')
+            'label_callback'          => array('tl_fullcalendar_mapping', 'addLocalPath')
         ),
         'global_operations' => array
         (
@@ -58,13 +58,13 @@ $GLOBALS['TL_DCA']['tl_webdav_mapping'] = array(
         (
             'edit' => array
             (
-                'label'               => &$GLOBALS['TL_LANG']['tl_webdav_mapping']['edit'],
+                'label'               => &$GLOBALS['TL_LANG']['tl_fullcalendar_mapping']['edit'],
                 'href'                => 'act=edit',
                 'icon'                => 'edit.gif'
             ),
             'delete' => array
             (
-                'label'               => &$GLOBALS['TL_LANG']['tl_webdav_mapping']['delete'],
+                'label'               => &$GLOBALS['TL_LANG']['tl_fullcalendar_mapping']['delete'],
                 'href'                => 'act=delete',
                 'icon'                => 'delete.gif',
                 'attributes'          => 'onclick="if (!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\')) return false; Backend.getScrollOffset();"'
@@ -99,7 +99,7 @@ $GLOBALS['TL_DCA']['tl_webdav_mapping'] = array(
         ),
         'webdavPath' => array
         (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_webdav_mapping']['webdavPath'],
+            'label'                   => &$GLOBALS['TL_LANG']['tl_fullcalendar_mapping']['webdavPath'],
             'exclude'                 => true,
             'inputType'               => 'text',
             'eval'                    => array('mandatory'=>true),
@@ -107,7 +107,7 @@ $GLOBALS['TL_DCA']['tl_webdav_mapping'] = array(
         ),
         'localPath' => array
         (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_webdav_mapping']['localPath'],
+            'label'                   => &$GLOBALS['TL_LANG']['tl_fullcalendar_mapping']['localPath'],
             'exclude'                 => true,
             'inputType'               => 'fileTree',
             'eval'                    => array('mandatory'=> true, 'multiple' => false, 'fieldType' => 'radio', 'files' => false, 'filesOnly' => false),
@@ -116,7 +116,7 @@ $GLOBALS['TL_DCA']['tl_webdav_mapping'] = array(
 
         'overwrite' => array
         (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_webdav_mapping']['overwrite'],
+            'label'                   => &$GLOBALS['TL_LANG']['tl_fullcalendar_mapping']['overwrite'],
             'default'                 => 1,
             'exclude'                 => true,
             'inputType'               => 'checkbox',
@@ -126,7 +126,7 @@ $GLOBALS['TL_DCA']['tl_webdav_mapping'] = array(
     )
 );
 
-class tl_webdav_mapping extends Backend {
+class tl_fullcalendar_mapping extends Backend {
 
     public function addLocalPath($row, $label, DataContainer $dc, $args = null) {
         $objFile = FilesModel::findByUuid($row['localPath']);
