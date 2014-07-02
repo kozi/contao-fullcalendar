@@ -16,20 +16,53 @@
 namespace ContaoFullcalendar;
 
 class CalendarSync extends \Backend {
-
+    private $calObj = null;
 
     public function syncCal() {
+        header('Content-Type: text/html; charset=utf-8');
 
+        $this->calObj    = \CalendarModel::findByPk(\Input::get('id'));
 
-        $calObj     = \CalendarModel::findByPk(\Input::get('id'));
-        $davManager = WebdavManager::getInstance();
+        try {
+            $content = $this->getFileContent();
+        }
+        catch(\Exception $e) {
+            \Message::add($e->getMessage(), 'TL_ERROR');
+            $this->redirect(\Environment::get('script').'?do=calendar');
+        }
 
-        $davManager->init($calObj->fullcal_baseUri, $calObj->fullcal_username, $calObj->fullcal_password);
+        $vcalendar = \Sabre\VObject\Reader::read($content);
+        foreach($vcalendar->VEVENT as $vevent) {
+            EventMapper::saveAsCalendarEventsModel($this->calObj->id, $vevent);
+        }
 
-        $file = $davManager->getFile($calObj->fullcal_path);
-        var_dump($file);
-
-
-        // $this->redirect(\Environment::get('script').'?do=calendar');
+        $this->redirect(\Environment::get('script').'?do=calendar');
     }
+
+
+    private function getFileContent() {
+
+        $settings  = array(
+            'baseUri'  => $this->calObj->fullcal_baseUri,
+            'userName' => $this->calObj->fullcal_username,
+            'password' => \Encryption::decrypt($this->calObj->fullcal_password)
+        );
+
+        $client    = new \Sabre\DAV\Client($settings);
+        $response  = $client->request('GET', $this->calObj->fullcal_path);
+        if ($response['statusCode'] === 200) {
+            return $response['body'];
+        }
+        elseif ($response['statusCode'] === 404) {
+            throw new \Exception($settings['baseUri'].' not found. [404]');
+        }
+        elseif ($response['statusCode'] === 401) {
+            $body = str_replace(array('<p>', '</p>'),array('<br>','<br>'), $response['body']);
+            throw new \Exception(strip_tags($body, '<br>'));
+        }
+        else {
+            throw new Exception($response['statusCode']);
+        }
+    }
+
 }
