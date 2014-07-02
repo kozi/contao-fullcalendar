@@ -1,0 +1,11 @@
+.fullcal_sync .tl_content_left {
+    font-style:italic;
+    color:darkgreen;
+}
+
+.fullcal_sync .tl_content_right a.copy,
+.fullcal_sync .tl_content_right a.cut,
+.fullcal_sync .tl_content_right a.toggle,
+.fullcal_sync .tl_content_right a.delete {
+    display:none;
+}

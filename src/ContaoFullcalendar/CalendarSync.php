@@ -31,11 +31,20 @@ class CalendarSync extends \Backend {
             $this->redirect(\Environment::get('script').'?do=calendar');
         }
 
-        $vcalendar = \Sabre\VObject\Reader::read($content);
+        $arrEventIds = array();
+        $vcalendar   = \Sabre\VObject\Reader::read($content);
         foreach($vcalendar->VEVENT as $vevent) {
-            EventMapper::saveAsCalendarEventsModel($this->calObj->id, $vevent);
+            $evObj = EventMapper::saveAsCalendarEventsModel($this->calObj->id, $vevent);
+            $arrEventIds[] = $evObj->id;
         }
-
+        // TODO Events löschen die nicht gefunden wurden
+        if (count($arrEventIds) > 0) {
+            \Database::getInstance()->prepare(
+                "DELETE FROM tl_calendar_events WHERE pid=?
+                AND fullcal_uid != ''
+                AND id not in(".
+                implode(',', $arrEventIds).")")->execute($this->calObj->id);
+        }
         $this->redirect(\Environment::get('script').'?do=calendar');
     }
 
@@ -63,6 +72,20 @@ class CalendarSync extends \Backend {
         else {
             throw new Exception($response['statusCode']);
         }
+    }
+
+    public function addEventsWithRrule($arrEvents, $arrCalendars, $intStart, $intEnd, \Module $objModule) {
+
+        // TODO Get events with special rrule
+
+        foreach($arrEvents as &$days) {
+            foreach($days as &$day) {
+                foreach($day as &$event) {
+                    $event['teaser'] = str_replace('{{event_description}}', $event['fullcal_desc'] , $event['teaser']);
+                }
+            }
+        }
+        return $arrEvents;
     }
 
 }

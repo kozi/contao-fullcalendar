@@ -47,14 +47,16 @@ class EventMapper {
             $eventObject = \CalendarEventsModel::findOneBy('fullcal_uid', $eData['uid']);
         }
         if ($eventObject === null) {
-            $eventObject = new \CalendarEventsModel();
+            $eventObject         = new \CalendarEventsModel();
+            // Nur bei neuen Datensätzen den Teaser überschreiben
+            $eventObject->teaser = '{{event_description}}';
         }
 
         $eventObject->fullcal_uid  = $eData['uid'];
+        $eventObject->fullcal_desc = $eData['description'];
         $eventObject->pid          = $calendarId;
         $eventObject->tstamp       = strtotime($eData['last-modified']);
         $eventObject->title        = $eData['summary'];
-        $eventObject->teaser       = $eData['description'];
         $eventObject->location     = $eData['location'];
         $eventObject->published    = '1';
 
@@ -75,9 +77,16 @@ class EventMapper {
             }
             $eventObject->endDate = strtotime('- 1 day', $end);
         }
-        // Repeat
-        static::addRepeat($eventObject, $eData);
 
+        // Repeat
+        $eventObject->fullcal_recurrence_id = ($eData['recurrence-id']) ? $eData['recurrence-id'] : '';
+        if ($eData['rrule']) {
+            $rrule = $eData['rrule'];
+            $eventObject->recurring     = 0;
+            $eventObject->repeatEnd     = ($rrule['until']) ? strtotime($rrule['until']) : 2145913200;
+            $eventObject->recurrences   = ($rrule['count']) ? intval($rrule['count']) : 0;
+            $eventObject->fullcal_rrule = serialize($rrule);
+        }
         $eventObject->save();
 
         // After first save() because the id is necessary for alias generation
@@ -97,11 +106,7 @@ class EventMapper {
         $eventObj->repeatEnd   = 0;
         $eventObj->recurrences = 0;
 
-        if (!$eData['rrule']) {
-            // no repear rule
-            return;
-        }
-
+        // $GLOBALS['TL_HOOKS']['getAllEvents']
         // parse repeat rule
         // var_dump($eData);
     }
