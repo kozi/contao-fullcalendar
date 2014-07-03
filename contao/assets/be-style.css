@@ -9,3 +9,28 @@
 .fullcal_sync .tl_content_right a.delete {
     display:none;
 }
+
+
+
+table.fullcalView {
+    border-collapse: separate;
+    border-spacing:1px;
+    margin:5px 0;
+}
+
+table.fullcalView td {
+    background-color:#efefef;
+    margin:1px;
+    padding:5px 10px;
+}
+
+table.fullcalView .title td,
+table.fullcalView .fullcal_time td {
+    background-color:#ededed;
+    font-size:130%;
+}
+
+table.fullcalView td.key {
+
+    font-weight: bold;
+}

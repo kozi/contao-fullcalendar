@@ -1,0 +1,81 @@
+<?php
+
+/**
+ * Contao Open Source CMS
+ * Copyright (C) 2005-2014 Leo Feyer
+ *
+ *
+ * PHP version 5
+ * @copyright  Martin Kozianka 2014 <http://kozianka.de/>
+ * @author     Martin Kozianka <http://kozianka.de/>
+ * @package    contao-fullcalendar
+ * @license    LGPL
+ * @filesource
+ */
+
+namespace ContaoFullcalendar;
+
+class FullcalViewWidget extends \Widget {
+    protected $strTemplate = 'be_widget';
+    private $strReturn = '';
+    private $tmplRow   = '<tr class="%s"><td class="key">%s</td><td class="value">%s</td></tr>';
+    private $lang      = null;
+    private $event     = null;
+
+    public function generate() {
+        $this->lang  = &$GLOBALS['TL_LANG']['tl_calendar_events'];
+        $this->event = &$this->activeRecord;
+
+        $this->strReturn  = '<table class="fullcalView"><tbody>';
+
+        $this->getTblRow('title', null, 'h');
+
+        $this->getTblRow('fullcal_time', $this->fullcal_time());
+        $this->getTblRow('tstamp', \Date::parse('d.m.Y H:i:s', $this->event->tstamp));
+
+        $this->getTblRow('location');
+        $this->getTblRow('alias');
+        $this->getTblRow('fullcal_uid');
+        $this->getTblRow('fullcal_desc');
+        if ($this->event->fullcal_rrule != '') {
+            $this->getTblRow('fullcal_rrule');
+        }
+
+
+        $this->strReturn .= '</tbody></table>';
+
+        return $this->strReturn;
+        /*
+                getTblRow
+                $strReturn .= sprintf($tmplRow, 'title',    $lang['title'][0], $e->title);
+                $strReturn .= sprintf($tmplRow,
+
+                $strReturn .= '</tbody></table>';
+                return $strReturn;
+
+                /*
+                $e,
+                $e->startTime,
+                $e->endTime,
+                $e->startDate,
+                $e->endDate,
+                $e->fullcal_rrule
+                */
+    }
+    private function fullcal_time() {
+        $tle       = new \tl_calendar_events();
+        $strReturn = $tle->listEvents($this->event->row());
+        $strReturn = preg_replace('/.*?\[(.*?)\].*/i', "$1", $strReturn);
+
+
+        return $strReturn;
+
+
+    }
+
+    private function getTblRow($key, $value = null) {
+        $value = ($value === null) ? $this->event->$key : $value;
+        $this->strReturn .= sprintf($this->tmplRow, $key, $this->lang[$key][0], $value);
+        return ;
+    }
+}

@@ -21,7 +21,6 @@ $GLOBALS['BE_MOD']['content']['calendar']['fullcal']    = array('ContaoFullcalen
 $GLOBALS['FE_MOD']['events']['fullcalendar']            = 'ContaoFullcalendar\ModuleFullCalendar';
 
 
-
-
+$GLOBALS['BE_FFL']['fullcalView'] = 'ContaoFullcalendar\FullcalViewWidget';
 
 

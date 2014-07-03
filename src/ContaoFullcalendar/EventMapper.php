@@ -37,19 +37,25 @@ class EventMapper {
     }
 
     public static function saveAsCalendarEventsModel($calendarId, \Sabre\VObject\Component\VEvent $vevent) {
+        $isNew     = false;
         $eData     = static::serializeVevent($vevent);
         $start     = strtotime($eData['dtstart']);
         $end       = strtotime($eData['dtend']);
         $addTime = !(strlen($eData['dtstart']) === 10 && strlen($eData['dtstart']) === 10);
 
 
+
         if ($eData['uid'] && strlen($eData['uid']) > 0) {
             $eventObject = \CalendarEventsModel::findOneBy('fullcal_uid', $eData['uid']);
         }
         if ($eventObject === null) {
+            $isNew               = true;
             $eventObject         = new \CalendarEventsModel();
             // Nur bei neuen Datensätzen den Teaser überschreiben
-            $eventObject->teaser = '{{event_description}}';
+            $eventObject->teaser = $eData['description'];
+        }
+        else {
+            $eventObject->fullcal_flagNew = false;
         }
 
         $eventObject->fullcal_uid  = $eData['uid'];
@@ -94,6 +100,7 @@ class EventMapper {
 
         // Must be last because of Database statement updating the values
         static::addDateTime($eventObject);
+        $eventObject->fullcal_flagNew = $isNew;
         return $eventObject;
     }
 
