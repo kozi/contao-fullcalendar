@@ -85,6 +85,15 @@ class ModuleFullCalendar extends \Events {
     }
 
     private function getEventsAsJson(array $arrCalendarIds) {
+        $arrColors = array();
+        $calObj    = \CalendarModel::findMultipleByIds($arrCalendarIds);
+        foreach($calObj as $cal) {
+            $arrColor = deserialize($cal->fullcal_color);
+            if (is_array($arrColor) && strlen($arrColor[0]) > 0) {
+                $arrColors[$cal->id] = '#'.$arrColor[0];
+            }
+
+        }
 
         $jsonEvents = array();
         $tsStart    = strtotime('-2 years', time());
@@ -95,7 +104,7 @@ class ModuleFullCalendar extends \Events {
         foreach($events as $days) {
             foreach($days as $keyDay => $day) {
                 foreach($day as $event) {
-                    $jsonEvents[] = EventMapper::convert($keyDay, $event);
+                    $jsonEvents[] = EventMapper::convert($keyDay, $event, $arrColors[$event['pid']]);
                 }
             }
         }

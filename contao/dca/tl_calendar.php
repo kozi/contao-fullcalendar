@@ -4,6 +4,9 @@ $paletteDefault = &$GLOBALS['TL_DCA']['tl_calendar']['palettes']['default'];
 $GLOBALS['TL_DCA']['tl_calendar']['palettes']['default']        = $paletteDefault.';{fullcal_legend:hide},fullcal_color,fullcal_type';
 $GLOBALS['TL_DCA']['tl_calendar']['palettes']['__selector__'][] = 'fullcal_type';
 
+
+$GLOBALS['TL_DCA']['tl_calendar']['list']['label']['label_callback'] = array('tl_calendar_fullcal', 'labelWithColor');
+
 $GLOBALS['TL_DCA']['tl_calendar']['subpalettes']['fullcal_type_webdav']         = 'fullcal_baseUri,fullcal_path,fullcal_username,fullcal_password';
 $GLOBALS['TL_DCA']['tl_calendar']['subpalettes']['fullcal_type_public_ics']     = 'fullcal_ics';
 
@@ -82,5 +85,11 @@ class tl_calendar_fullcal extends Backend {
 
     public function btnCallback($row, $href, $label, $title, $icon, $attributes) {
         return ($row['fullcal_type'] !== '') ? '<a href="'.$this->addToUrl($href.'&amp;id='.$row['id']).'" title="'.specialchars($title).'"'.$attributes.'>'.Image::getHtml($icon, $label).'</a> ' : '';
+    }
+
+    public function labelWithColor($row, $label, DataContainer $dc, $args = null) {
+        $arrColor = deserialize($row['fullcal_color']);
+        $strColor = sprintf('<span class="fullcal_color" style="background-color:#%s;">&nbsp;&nbsp;&nbsp;</span> ', $arrColor[0]);
+        return $strColor.$label;
     }
 }

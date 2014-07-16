@@ -19,7 +19,7 @@ namespace ContaoFullcalendar;
 
 class EventMapper {
 
-    public static function convert($day, array $event) {
+    public static function convert($day, array $event, $color = null) {
         $newEvent = new \stdClass();
 
         $newEvent->id        = $event['id'];
@@ -31,6 +31,9 @@ class EventMapper {
         $newEvent->className = 'jsonEvent'.$event['cssClass'];
         $newEvent->details   = strip_tags($event['details']);
 
+        if ($color !== null) {
+            $newEvent->backgroundColor = $color;
+        }
         // var_dump($event);
 
         return $newEvent;
