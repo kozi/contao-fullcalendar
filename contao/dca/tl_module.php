@@ -14,7 +14,7 @@
  */
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['fullcalendar'] = '{title_legend},name,headline,type;
-{fullcal_legend},cal_startDay,fullcal_weekMode,fullcal_aspectRatio,fullcal_weekNumbers,fullcal_isRTL;
+{fullcal_legend},cal_calendar,cal_startDay,fullcal_weekMode,fullcal_aspectRatio,fullcal_weekNumbers,fullcal_isRTL;
 fullcal_header_left,fullcal_header_center,fullcal_header_right;
 {template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
 

@@ -30,7 +30,7 @@ $GLOBALS['TL_DCA']['tl_calendar_events']['fields']['fullcal_desc'] = array(
 
 $GLOBALS['TL_DCA']['tl_calendar_events']['fields']['fullcal_rrule'] = array(
     'label'=> &$GLOBALS['TL_LANG']['tl_calendar_events']['fullcal_rrule'],
-    'sql'  => "blob NULL",
+    'sql'  => "varchar(255) NOT NULL default ''",
     'eval' => array('doNotCopy' => true)
 );
 

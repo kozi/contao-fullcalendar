@@ -64,8 +64,8 @@ class ModuleFullCalendar extends \Events {
         $fullcalOptions->header->right  = $this->fullcal_header_right;
 
         // Events
-        $this->fullcal_arrCalendar      = array(1,2,3,4);
-        $fullcalOptions->events         = $this->getEventsAsJson($this->fullcal_arrCalendar);
+        $arrCalendarIds                 = array_map('intval', deserialize($this->cal_calendar));
+        $fullcalOptions->events         = $this->getEventsAsJson($arrCalendarIds);
 
         $this->Template->fullcalOptions = json_encode($fullcalOptions, JSON_NUMERIC_CHECK);
 

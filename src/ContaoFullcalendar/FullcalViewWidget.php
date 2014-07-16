@@ -15,6 +15,8 @@
 
 namespace ContaoFullcalendar;
 
+
+
 class FullcalViewWidget extends \Widget {
     protected $strTemplate = 'be_widget';
     private $strReturn = '';
@@ -38,39 +40,20 @@ class FullcalViewWidget extends \Widget {
         $this->getTblRow('fullcal_uid');
         $this->getTblRow('fullcal_desc');
         if ($this->event->fullcal_rrule != '') {
-            $this->getTblRow('fullcal_rrule');
+            $rule            = new \Recurr\Rule($this->event->fullcal_rrule, new \DateTime());
+            $textTransformer = new \Recurr\Transformer\TextTransformer();
+            $this->getTblRow('fullcal_rrule', $textTransformer->transform($rule).' ['.$this->event->fullcal_rrule.']');
         }
-
-
         $this->strReturn .= '</tbody></table>';
 
         return $this->strReturn;
-        /*
-                getTblRow
-                $strReturn .= sprintf($tmplRow, 'title',    $lang['title'][0], $e->title);
-                $strReturn .= sprintf($tmplRow,
-
-                $strReturn .= '</tbody></table>';
-                return $strReturn;
-
-                /*
-                $e,
-                $e->startTime,
-                $e->endTime,
-                $e->startDate,
-                $e->endDate,
-                $e->fullcal_rrule
-                */
     }
+
     private function fullcal_time() {
         $tle       = new \tl_calendar_events();
         $strReturn = $tle->listEvents($this->event->row());
         $strReturn = preg_replace('/.*?\[(.*?)\].*/i', "$1", $strReturn);
-
-
         return $strReturn;
-
-
     }
 
     private function getTblRow($key, $value = null) {

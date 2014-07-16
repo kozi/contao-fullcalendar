@@ -91,7 +91,11 @@ class EventMapper {
             $eventObject->recurring     = 0;
             $eventObject->repeatEnd     = ($rrule['until']) ? strtotime($rrule['until']) : 2145913200;
             $eventObject->recurrences   = ($rrule['count']) ? intval($rrule['count']) : 0;
-            $eventObject->fullcal_rrule = serialize($rrule);
+            $eventObject->fullcal_rrule = static::rruleToString($rrule);
+        }
+        else {
+            $eventObject->recurring     = 0;
+            $eventObject->fullcal_rrule = '';
         }
         $eventObject->save();
 
@@ -151,6 +155,15 @@ class EventMapper {
             }
         }
         return $values;
+    }
+
+
+    public static function rruleToString(array $arrRrule) {
+        $strRule = '';
+        foreach($arrRrule as $k => $v) {
+            $strRule .= strtoupper($k.'='.$v.';');
+        }
+        return $strRule;
     }
 }
 

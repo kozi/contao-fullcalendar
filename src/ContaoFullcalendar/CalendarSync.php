@@ -104,18 +104,6 @@ class CalendarSync extends \Backend {
         throw new Exception('Unknown sync type '.$this->calObj->fullcal_type);
     }
 
-    public function addEventsWithRrule($arrEvents, $arrCalendars, $intStart, $intEnd, \Module $objModule) {
 
-        // TODO Get events with special rrule
-
-        foreach($arrEvents as &$days) {
-            foreach($days as &$day) {
-                foreach($day as &$event) {
-                    $event['teaser'] = str_replace('{{event_description}}', $event['fullcal_desc'] , $event['teaser']);
-                }
-            }
-        }
-        return $arrEvents;
-    }
 
 }
