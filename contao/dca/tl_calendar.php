@@ -81,6 +81,10 @@ $GLOBALS['TL_DCA']['tl_calendar']['fields']['fullcal_password'] = array(
     'eval'                    => array('mandatory' => true, 'tl_class' => 'w50', 'encrypt' => true),
 );
 
+$GLOBALS['TL_DCA']['tl_calendar']['fields']['fullcal_lastchanged'] = array(
+    'sql'                     => "int(10) unsigned NOT NULL default '0'"
+);
+
 class tl_calendar_fullcal extends Backend {
 
     public function btnCallback($row, $href, $label, $title, $icon, $attributes) {

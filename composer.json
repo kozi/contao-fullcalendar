@@ -39,8 +39,7 @@
         "php": ">=5.4",
         "contao/core": "~3.3",
         "contao-community-alliance/composer-plugin": "~2",
-        "sabre/dav":"~2",
-        "simshaun/recurr":  "~0.3"
+        "sabre/dav":"~2"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,

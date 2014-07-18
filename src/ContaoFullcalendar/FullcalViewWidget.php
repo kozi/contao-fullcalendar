@@ -39,11 +39,7 @@ class FullcalViewWidget extends \Widget {
         $this->getTblRow('alias');
         $this->getTblRow('fullcal_uid');
         $this->getTblRow('fullcal_desc');
-        if ($this->event->fullcal_rrule != '') {
-            $rule            = new \Recurr\Rule($this->event->fullcal_rrule, new \DateTime());
-            $textTransformer = new \Recurr\Transformer\TextTransformer();
-            $this->getTblRow('fullcal_rrule', $textTransformer->transform($rule).' ['.$this->event->fullcal_rrule.']');
-        }
+
         $this->strReturn .= '</tbody></table>';
 
         return $this->strReturn;

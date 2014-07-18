@@ -94,7 +94,7 @@ class ModuleFullCalendar extends \Events {
             }
 
         }
-
+        // TODO config time range!
         $jsonEvents = array();
         $tsStart    = strtotime('-2 years', time());
         $tsEnd      = strtotime('+2 years', time());
@@ -112,3 +112,4 @@ class ModuleFullCalendar extends \Events {
     }
 
 }
+

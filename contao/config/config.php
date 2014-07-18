@@ -14,9 +14,8 @@
  */
 $GLOBALS['BE_MOD']['content']['calendar']['stylesheet'] = 'system/modules/fullcalendar/assets/be-style.css';
 $GLOBALS['BE_MOD']['content']['calendar']['javascript'] = 'system/modules/fullcalendar/assets/be-style.js';
-$GLOBALS['TL_HOOKS']['getAllEvents'][]                  = array('ContaoFullcalendar\EventManager', 'addEventsWithRrule');
 
-$GLOBALS['BE_MOD']['content']['calendar']['fullcal']    = array('ContaoFullcalendar\CalendarSync', 'syncCal');
+$GLOBALS['BE_MOD']['content']['calendar']['fullcal']    = array('ContaoFullcalendar\CalendarSync', 'syncOneCal');
 $GLOBALS['FE_MOD']['events']['fullcalendar']            = 'ContaoFullcalendar\ModuleFullCalendar';
 $GLOBALS['BE_FFL']['fullcalView']                       = 'ContaoFullcalendar\FullcalViewWidget';
 

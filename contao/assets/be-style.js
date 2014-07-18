@@ -3,4 +3,3 @@ window.addEvent('domready', function() {
         el.parentElement.addClass('fullcal_sync');
     });
 });
-
