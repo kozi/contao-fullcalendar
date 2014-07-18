@@ -33,6 +33,17 @@ class EventMapper {
         $newEvent->allDay    = ($event['addTime'] === '');
 
         $newEvent->start     = \Date::parse('c', $intDay);
+
+        if (!$newEvent->allDay) {
+            $newEvent->end       = \Date::parse('c', $event['end']);
+        }
+
+        /*
+        var_dump($newEvent->allDay, \Date::parse('c', $event['begin']), \Date::parse('c', $event['end']));
+        $suffix              = \Date::parse('P', $intDay);
+        echo '<pre>'.$newEvent->start.' -- '.$newEvent->title."</pre>";
+        */
+
         // TODO $newEvent->end    = \Date::parse('c', $event['endDate']);
         // TODO Endzeitpunkt berechnen! Addtime?
         $newEvent->className = 'jsonEvent'.$event['cssClass'];
