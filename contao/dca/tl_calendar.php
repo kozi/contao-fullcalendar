@@ -107,4 +107,5 @@ class tl_calendar_fullcal extends Backend {
         $strColor = sprintf('<span class="fullcal_color" style="background-color:#%s;">&nbsp;&nbsp;&nbsp;</span> ', $arrColor[0]);
         return $strColor.$label;
     }
+
 }

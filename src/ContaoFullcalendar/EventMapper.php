@@ -26,8 +26,21 @@ class EventMapper {
      * @return object
      */
     public static function convert($intDay, array $event, $color = null) {
-        $newEvent = new \stdClass();
 
+
+
+        echo
+        '<code>__'.$event['id']
+        .' __ '.    (($event['addTime']) ? 'ADDTIME ' : 'NOTIME_ ')
+        .' __ '.    \Date::parse('d.m.Y H:i', $event['startTime'])
+        .' __ '.    \Date::parse('d.m.Y H:i', $event['endTime'])
+        .' __ '.    \Date::parse('d.m.Y H:i', $event['startDate'])
+        .' __ '.    \Date::parse('d.m.Y H:i', $event['endDate'])
+        .'</code><br>';
+
+
+
+        $newEvent            = new \stdClass();
         $newEvent->id        = $event['id'];
         $newEvent->title     = \String::decodeEntities($event['title']);
         $newEvent->allDay    = ($event['addTime'] === '');

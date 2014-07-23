@@ -20,6 +20,8 @@ fullcal_header_left,fullcal_header_center,fullcal_header_right;';
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['fullcalendar'] = str_replace('{include_legend},form;', $fullcalPalette, $GLOBALS['TL_DCA']['tl_module']['palettes']['form']);
 
+$GLOBALS['TL_DCA']['tl_module']['config']['onsubmit_callback'][] =
+    array('tl_module_fullcal', 'checkCalNoSpan');
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['fullcal_range'] = array(
     'label'                   => &$GLOBALS['TL_LANG']['tl_module']['fullcal_range'],
@@ -92,3 +94,16 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['fullcal_header_right'] = array(
     'sql'                     => "varchar(255) NOT NULL default ''",
     'eval'                    => array('tl_class' => 'w50'),
 );
+
+class tl_module_fullcal extends Backend {
+
+    public function checkCalNoSpan(DataContainer $dc) {
+        $id        = intval($dc->id);
+        $moduleObj = \ModuleModel::findByPk($id);
+        if($moduleObj && $moduleObj->type === 'fullcalendar') {
+            $moduleObj->cal_noSpan = '1';
+            $moduleObj->save();
+        }
+    }
+}
+
