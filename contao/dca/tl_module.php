@@ -13,11 +13,23 @@
  * @filesource
  */
 
-$GLOBALS['TL_DCA']['tl_module']['palettes']['fullcalendar'] = '{title_legend},name,headline,type;
-{fullcal_legend},cal_calendar,cal_startDay,fullcal_weekMode,fullcal_aspectRatio,fullcal_weekNumbers,fullcal_isRTL;
-fullcal_header_left,fullcal_header_center,fullcal_header_right;
-{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
 
+$fullcalPalette = '{fullcal_legend},cal_calendar,fullcal_range,cal_startDay,
+fullcal_weekMode,fullcal_aspectRatio,fullcal_weekNumbers,fullcal_isRTL;
+fullcal_header_left,fullcal_header_center,fullcal_header_right;';
+
+$GLOBALS['TL_DCA']['tl_module']['palettes']['fullcalendar'] = str_replace('{include_legend},form;', $fullcalPalette, $GLOBALS['TL_DCA']['tl_module']['palettes']['form']);
+
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['fullcal_range'] = array(
+    'label'                   => &$GLOBALS['TL_LANG']['tl_module']['fullcal_range'],
+    'exclude'                 => true,
+    'inputType'               => 'select',
+    'options'                 => array('3 months','6 months','1 year','2 years'),
+    'reference'               => &$GLOBALS['TL_LANG']['tl_module'],
+    'eval'                    => array('tl_class' => 'w50'),
+    'sql'                     => "varchar(255) NOT NULL default 'next_365'",
+);
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['fullcal_weekNumbers'] = array(
     'label'                   => &$GLOBALS['TL_LANG']['tl_module']['fullcal_weekNumbers'],
@@ -42,7 +54,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['fullcal_aspectRatio'] = array( // 1.3
     'default'                 => '1.35',
     'inputType'               => 'text',
     'sql'                     => "varchar(255) NOT NULL default ''",
-    'eval'                    => array('rgxp' => 'digit'),
+    'eval'                    => array('rgxp' => 'digit', 'tl_class' => 'w50'),
 );
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['fullcal_isRTL'] = array(

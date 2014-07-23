@@ -94,10 +94,11 @@ class ModuleFullCalendar extends \Events {
             }
 
         }
-        // TODO config time range!
+
+        // Time range
         $jsonEvents = array();
-        $tsStart    = strtotime('-2 years', time());
-        $tsEnd      = strtotime('+2 years', time());
+        $tsStart    = strtotime('-'.$this->fullcal_range, time());
+        $tsEnd      = strtotime('+'.$this->fullcal_range, time());
         $events     = $this->getAllEvents($arrCalendarIds, $tsStart, $tsEnd);
         ksort($events);
 
@@ -108,7 +109,6 @@ class ModuleFullCalendar extends \Events {
                 }
             }
         }
-
         return $jsonEvents;
     }
 
