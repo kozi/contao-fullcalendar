@@ -26,41 +26,53 @@ class EventMapper {
      * @return object
      */
     public static function convert($intDay, array $event, $color = null) {
-
-
-
-        echo
-        '<code>__'.$event['id']
-        .' __ '.    (($event['addTime']) ? 'ADDTIME ' : 'NOTIME_ ')
-        .' __ '.    \Date::parse('d.m.Y H:i', $event['startTime'])
-        .' __ '.    \Date::parse('d.m.Y H:i', $event['endTime'])
-        .' __ '.    \Date::parse('d.m.Y H:i', $event['startDate'])
-        .' __ '.    \Date::parse('d.m.Y H:i', $event['endDate'])
-        .'</code><br>';
-
-
-
+        $arrCSS              = array('jsonEvent');
         $newEvent            = new \stdClass();
         $newEvent->id        = $event['id'];
         $newEvent->title     = \String::decodeEntities($event['title']);
-        $newEvent->allDay    = ($event['addTime'] === '');
 
-        $newEvent->start     = \Date::parse('c', $intDay);
+        $dateBegin = \Date::parse('Y-m-d', $event['begin']);
+        $dateEnd   = \Date::parse('Y-m-d', $event['end']);
 
-        if (!$newEvent->allDay) {
+        $timeBegin = \Date::parse('H:i', $event['begin']);
+        $timeEnd   = \Date::parse('H:i', $event['end']);
+
+
+        if ($event['begin'] === $event['end']) {
+            // Ein Event mit Startzeit ohne Endzeit
+            $newEvent->start = \Date::parse('c', $event['begin']);
+            $arrCSS[]        = 'oneDayTime';
+        }
+        elseif ($event['addTime'] === '') {
+            // Ohne Zeitangaben
+            $newEvent->start   = $dateBegin;
+            // Ein oder mehrere Tage?
+            if ($dateBegin !== $dateEnd) {
+                // Es muss 1 Tag hinzugefügt werden
+                $newEvent->end    = \Date::parse('Y-m-d', strtotime('+1 day', $event['end']));
+                $arrCSS[]         = 'days';
+            } else {
+                $arrCSS[]        = 'oneDay';
+            }
+        }
+        elseif($timeBegin === $timeEnd) {
+            // Nur eine Startzeit
+            $newEvent->start     = \Date::parse('c', $event['begin']);
+            $newEvent->end       = $dateEnd;
+            $arrCSS[]            = 'daysStart';
+        }
+        else {
+            // Mehrere Tage mit Start- und Endzeit
+            $newEvent->start     = \Date::parse('c', $event['begin']);
             $newEvent->end       = \Date::parse('c', $event['end']);
+            $arrCSS[]            = 'daysTime';
         }
 
-        /*
-        var_dump($newEvent->allDay, \Date::parse('c', $event['begin']), \Date::parse('c', $event['end']));
-        $suffix              = \Date::parse('P', $intDay);
-        echo '<pre>'.$newEvent->start.' -- '.$newEvent->title."</pre>";
-        */
 
-        // TODO $newEvent->end    = \Date::parse('c', $event['endDate']);
-        // TODO Endzeitpunkt berechnen! Addtime?
-        $newEvent->className = 'jsonEvent'.$event['cssClass'];
+        $newEvent->className = implode(' ', $arrCSS);
         $newEvent->details   = strip_tags($event['details']);
+
+        // echo '<br><code>'.implode(' _ ', array($dateBegin, $dateEnd, $timeBegin, $timeEnd, $newEvent->title, $newEvent->className));
 
         if ($color !== null) {
             $newEvent->backgroundColor = $color;

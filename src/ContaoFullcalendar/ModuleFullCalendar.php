@@ -109,7 +109,6 @@ class ModuleFullCalendar extends \Events {
                 }
             }
         }
-        exit;
         return $jsonEvents;
     }
 
