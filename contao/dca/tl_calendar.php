@@ -1,5 +1,7 @@
 <?php
 
+$this->loadLanguageFile('tl_module');
+
 $paletteDefault = &$GLOBALS['TL_DCA']['tl_calendar']['palettes']['default'];
 $GLOBALS['TL_DCA']['tl_calendar']['palettes']['default']        = $paletteDefault.';{fullcal_legend:hide},fullcal_color,fullcal_type';
 $GLOBALS['TL_DCA']['tl_calendar']['palettes']['__selector__'][] = 'fullcal_type';
@@ -7,8 +9,8 @@ $GLOBALS['TL_DCA']['tl_calendar']['palettes']['__selector__'][] = 'fullcal_type'
 
 $GLOBALS['TL_DCA']['tl_calendar']['list']['label']['label_callback'] = array('tl_calendar_fullcal', 'labelWithColor');
 
-$GLOBALS['TL_DCA']['tl_calendar']['subpalettes']['fullcal_type_webdav']         = 'fullcal_baseUri,fullcal_path,fullcal_username,fullcal_password';
-$GLOBALS['TL_DCA']['tl_calendar']['subpalettes']['fullcal_type_public_ics']     = 'fullcal_ics';
+$GLOBALS['TL_DCA']['tl_calendar']['subpalettes']['fullcal_type_webdav']         = 'fullcal_baseUri,fullcal_path,fullcal_username,fullcal_password,fullcal_range';
+$GLOBALS['TL_DCA']['tl_calendar']['subpalettes']['fullcal_type_public_ics']     = 'fullcal_ics,fullcal_range';
 
 
 array_insert($GLOBALS['TL_DCA']['tl_calendar']['list']['operations'], 0, array
@@ -21,6 +23,16 @@ array_insert($GLOBALS['TL_DCA']['tl_calendar']['list']['operations'], 0, array
         'button_callback' => array('tl_calendar_fullcal', 'btnCallback')
     )
 ));
+
+$GLOBALS['TL_DCA']['tl_calendar']['fields']['fullcal_range'] = array(
+    'label'                   => &$GLOBALS['TL_LANG']['tl_calendar']['fullcal_range'],
+    'exclude'                 => true,
+    'inputType'               => 'select',
+    'options'                 => array('3 months','6 months','1 year','2 years'),
+    'reference'               => &$GLOBALS['TL_LANG']['tl_module'],
+    'eval'                    => array('tl_class' => 'w50', 'mandatory' => true),
+    'sql'                     => "varchar(255) NOT NULL default 'next_365'",
+);
 
 $GLOBALS['TL_DCA']['tl_calendar']['fields']['fullcal_color'] = array(
     'label'                   => &$GLOBALS['TL_LANG']['tl_calendar']['fullcal_color'],
@@ -38,7 +50,6 @@ $GLOBALS['TL_DCA']['tl_calendar']['fields']['fullcal_type'] = array(
     'sql'                     => "varchar(16) NOT NULL default ''",
     'eval'                    => array('submitOnChange'=>true, 'tl_class' => 'w50'),
 );
-
 
 $GLOBALS['TL_DCA']['tl_calendar']['fields']['fullcal_baseUri'] = array(
     'label'                   => &$GLOBALS['TL_LANG']['tl_calendar']['fullcal_baseUri'],

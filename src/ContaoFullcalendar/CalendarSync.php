@@ -24,6 +24,13 @@ class CalendarSync extends \Backend {
             $infoObj = $this->updateCalendar($calObj);
             \Message::add($infoObj->getMessage(), 'TL_INFO');
         }
+
+        if (\Input::get('id') && \Input::get('table') === 'tl_calendar_events') {
+            $this->redirect(
+                \Environment::get('script')
+                .'?do=calendar&table=tl_calendar_events&id='.\Input::get('id')
+            );
+        }
         $this->redirect(\Environment::get('script').'?do=calendar');
     }
 
@@ -41,11 +48,10 @@ class CalendarSync extends \Backend {
         $infoObj = new InfoObject($objCalendar);
         if($vcalContent = self::getVCalendarContent($objCalendar)) {
 
-            // TODO config time range!
-
+            // Time range
             $arrEventIds   = array();
-            $dateTimeStart = new \DateTime('-2 Years');
-            $dateTimeEnd   = new \DateTime('+2 Years');
+            $dateTimeStart = new \DateTime('-'.$objCalendar->fullcal_range);
+            $dateTimeEnd   = new \DateTime('+'.$objCalendar->fullcal_range);
 
             $vcalendar     = \Sabre\VObject\Reader::read($vcalContent);
             $vcalendar->expand($dateTimeStart, $dateTimeEnd);

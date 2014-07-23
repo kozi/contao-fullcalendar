@@ -1,6 +1,10 @@
 .fullcal_sync .tl_content_left {
-    font-style:italic;
-    color:darkgreen;
+    background:url('arrow-circle-double-12x12-sw.png') no-repeat 0 center;
+    padding-left:16px;
+    color:#9F9F9F;
+}
+.fullcal_sync .tl_content_left span {
+    color:#b3b3b3;
 }
 
 .fullcal_sync .tl_content_right a.copy,
@@ -9,8 +13,6 @@
 .fullcal_sync .tl_content_right a.delete {
     display:none;
 }
-
-
 
 table.fullcalView {
     border-collapse: separate;
@@ -34,3 +36,5 @@ table.fullcalView td.key {
 
     font-weight: bold;
 }
+
+

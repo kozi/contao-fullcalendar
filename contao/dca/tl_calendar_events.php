@@ -1,13 +1,5 @@
 <?php
 
-/* TODO Sync Button einbauen
-$GLOBALS['TL_DCA']['tl_calendar_events']['list']['global_operations']['fullcal'] = array(
-    'label'               => &$GLOBALS['TL_LANG']['MSC']['all'],
-    'href'                => 'http://google.de',
-    'class'               => 'header_edit_all',
-    'attributes'          => 'onclick="Backend.getScrollOffset()" accesskey="s"'
-);*/
-
 $GLOBALS['TL_DCA']['tl_calendar_events']['list']['sorting']['child_record_callback'] =
     array('tl_calendar_events_fullcal', 'listEvents');
 
@@ -45,9 +37,20 @@ $GLOBALS['TL_DCA']['tl_calendar_events']['fields']['fullcal_detailViewer'] = arr
 class tl_calendar_events_fullcal extends tl_calendar_events {
 
     public function adjustDca() {
+        if ($calObj = \CalendarModel::findByPk(\Input::get('id'))) {
+            if ($calObj->fullcal_type !== '') {
+                $GLOBALS['TL_DCA']['tl_calendar_events']['list']['global_operations']['fullcal'] = array(
+                    'label'               => &$GLOBALS['TL_LANG']['tl_calendar_events']['fullcal_syn'],
+                    'href'                => 'key=fullcal',
+                    'class'               => 'header_sync',
+                    'attributes'          => 'onclick="Backend.getScrollOffset()" accesskey="s"'
+                );
+            }
+        }
+
         if ('edit' === Input::get('act')) {
             $eventObj = CalendarEventsModel::findByPk(Input::get('id'));
-            if ($eventObj->fullcal_uid !== '') {
+            if ($eventObj && $eventObj->fullcal_uid !== '') {
                 $GLOBALS['TL_DCA']['tl_calendar_events']['palettes']['default'] =
                     str_replace(
                         array(
@@ -69,7 +72,6 @@ class tl_calendar_events_fullcal extends tl_calendar_events {
     }
 
     public function listEvents($arrRow) {
-
         // TODO Buttons mit CSS und Javascript ausblenden
         $strReturn = parent::listEvents($arrRow);
         if (strlen($arrRow['fullcal_uid']) > 0) {
