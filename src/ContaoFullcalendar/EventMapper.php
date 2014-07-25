@@ -18,7 +18,7 @@ namespace ContaoFullcalendar;
 
 
 class EventMapper {
-
+    const TMPL_DESCRIPTION = '<h3>%s</h3><p class="desc">%s</p>';
     /* Convert "Contao-Event-Array" to json representation for fullcalendar
      * @param integer
      * @param array
@@ -26,7 +26,8 @@ class EventMapper {
      * @return object
      */
     public static function convert($intDay, array $event, $color = null) {
-        $arrCSS              = array('jsonEvent');
+        $arrCSS              = array_map('trim', explode(' ', $event['class']));
+        $arrCSS[]            = 'jsonEvent';
         $newEvent            = new \stdClass();
         $newEvent->id        = $event['id'];
         $newEvent->title     = \String::decodeEntities($event['title']);
@@ -71,6 +72,12 @@ class EventMapper {
 
         $newEvent->className = implode(' ', $arrCSS);
         $newEvent->details   = strip_tags($event['details']);
+
+        $tmpl = new \FrontendTemplate("fullcalendar_tooltip");
+        foreach($event as $k=>$v) {
+            $tmpl->$k = $v;
+        }
+        $newEvent->description = $tmpl->parse();
 
         // echo '<br><code>'.implode(' _ ', array($dateBegin, $dateEnd, $timeBegin, $timeEnd, $newEvent->title, $newEvent->className));
 
@@ -171,7 +178,6 @@ class EventMapper {
         $tle = new \tl_calendar_events();
         $tle->adjustTime($dc);
     }
-
 
     /* Generate alias for CalendarEventsModel
      * @param \CalendarEventsModel

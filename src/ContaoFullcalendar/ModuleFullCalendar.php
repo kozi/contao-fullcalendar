@@ -75,6 +75,9 @@ class ModuleFullCalendar extends \Events {
 
         $GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/fullcalendar/assets/moment/min/moment.min.js|static';
 
+        $GLOBALS['TL_CSS'][]        = 'system/modules/fullcalendar/assets/qtip2/jquery.qtip.min.css||static';
+        $GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/fullcalendar/assets/qtip2/jquery.qtip.min.js|static';
+
         $GLOBALS['TL_CSS'][]        = 'system/modules/fullcalendar/assets/fullcalendar/dist/fullcalendar.css||static';
         $GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/fullcalendar/assets/fullcalendar/dist/fullcalendar.js|static';
 

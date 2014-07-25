@@ -1,0 +1,17 @@
+.fc-event {
+  border:2px solid rgba(0,0,0,0.1) !important;
+  padding:2px;
+  font-size:72%;
+  cursor:pointer;
+}
+
+.fc-header .fc-state-active,
+.fc-header .ui-state-active {
+  z-index:auto;
+}
+
+.qtip-fullcalendar {
+  background-color:#e6e6e6;
+  border-color:#cccccc;
+  width:240px;
+}

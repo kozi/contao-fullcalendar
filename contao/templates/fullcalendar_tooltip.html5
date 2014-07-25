@@ -1,0 +1,9 @@
+
+
+<h5 class="date">
+    <?php if ($this->day) { echo $this->day.', '; } ?><?php echo $this->date.$this->time; ?>
+</h5>
+<h4 class="title"><?php echo $this->title; ?></h4>
+<div class="teaser">
+    <?php echo $this->teaser; ?>
+</div>
