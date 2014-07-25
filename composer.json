@@ -29,12 +29,6 @@
             "ContaoFullcalendar": "src/"
         }
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/iCalcreator/iCalcreator"
-        }
-    ],
     "require": {
         "php": ">=5.4",
         "contao/core": "~3.3",
