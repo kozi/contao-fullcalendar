@@ -15,10 +15,11 @@
 
 namespace ContaoFullcalendar;
 
+use \Sabre\VObject\Reader;
+
 class CalendarSync extends \Backend {
 
     public function syncOneCal() {
-        header('Content-Type: text/html; charset=utf-8');
         $calObj = \CalendarModel::findByPk(\Input::get('id'));
         if ($calObj) {
             $infoObj = $this->updateCalendar($calObj);
@@ -53,11 +54,12 @@ class CalendarSync extends \Backend {
             $dateTimeStart = new \DateTime('-'.$objCalendar->fullcal_range);
             $dateTimeEnd   = new \DateTime('+'.$objCalendar->fullcal_range);
 
-            $vcalendar     = \Sabre\VObject\Reader::read($vcalContent);
+            $vcalendar     = Reader::read($vcalContent);
             $vcalendar->expand($dateTimeStart, $dateTimeEnd);
 
             if($vcalendar->VEVENT) {
                 foreach($vcalendar->VEVENT as $vevent) {
+
                     $evObj         = EventMapper::getCalendarEventsModel($vevent, $objCalendar);
                     $arrEventIds[] = intval($evObj->id);
                     $infoObj->add($evObj);

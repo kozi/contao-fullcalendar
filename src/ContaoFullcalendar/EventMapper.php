@@ -16,6 +16,10 @@
 namespace ContaoFullcalendar;
 
 
+use Contao\Controller;
+use Contao\DC_Table;
+use Contao\CalendarEventsModel;
+
 
 class EventMapper {
     const TMPL_DESCRIPTION = '<h3>%s</h3><p class="desc">%s</p>';
@@ -101,11 +105,12 @@ class EventMapper {
         $end         = strtotime($eData['dtend']);
         $addTime     = !(strlen($eData['dtstart']) === 10 && strlen($eData['dtend']) === 10);
         $eventId     = $eData['uid'].'_'.$start;
-        $eventObject = \CalendarEventsModel::findOneBy('fullcal_id', $eventId);
+
+        $eventObject = CalendarEventsModel::findOneBy('fullcal_id', $eventId);
 
         if ($eventObject === null) {
             $isNew       = true;
-            $eventObject = new \CalendarEventsModel();
+            $eventObject = new CalendarEventsModel();
         }
         else {
             $eventObject->fullcal_flagNew = false;
@@ -144,6 +149,7 @@ class EventMapper {
 
         // Must be last because of Database statement updating the values
         static::addDateTime($eventObject);
+
         $eventObject->fullcal_flagNew = $isNew;
         return $eventObject;
 
@@ -170,8 +176,9 @@ class EventMapper {
     /* Use the contao class tl_calendar_events to adjust time
      * @param \CalendarEventsModel
      */
-    private static function addDateTime(\CalendarEventsModel $eventObj) {
-        $dc = new \DC_Table('tl_calendar_events');
+    private static function addDateTime(CalendarEventsModel $eventObj) {
+        Controller::loadDataContainer('tl_calendar_events');
+        $dc = new DC_Table('tl_calendar_events');
         $dc->__set('id', $eventObj->id);
         $dc->__set('activeRecord', $eventObj);
 
@@ -182,7 +189,7 @@ class EventMapper {
     /* Generate alias for CalendarEventsModel
      * @param \CalendarEventsModel
      */
-    private static function generateAlias(\CalendarEventsModel $eventObj) {
+    private static function generateAlias(CalendarEventsModel $eventObj) {
         $strAlias = standardize(\String::restoreBasicEntities($eventObj->title));
 
         $objAlias = \Database::getInstance()->prepare("SELECT id FROM tl_calendar_events WHERE alias=?")
