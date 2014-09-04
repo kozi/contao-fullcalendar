@@ -55,11 +55,18 @@ class CalendarSync extends \Backend {
             $dateTimeEnd   = new \DateTime('+'.$objCalendar->fullcal_range);
 
             $vcalendar     = Reader::read($vcalContent);
+
+
+            if($vcalendar->VEVENT) {
+                foreach($vcalendar->VEVENT as $vevent) {
+                    $this->saveSingleEvents($vevent);
+                }
+            }
+
             $vcalendar->expand($dateTimeStart, $dateTimeEnd);
 
             if($vcalendar->VEVENT) {
                 foreach($vcalendar->VEVENT as $vevent) {
-
                     $evObj         = EventMapper::getCalendarEventsModel($vevent, $objCalendar);
                     $arrEventIds[] = intval($evObj->id);
                     $infoObj->add($evObj);
@@ -100,6 +107,22 @@ class CalendarSync extends \Backend {
         }
     }
 
+
+    private function saveSingleEvents(\Sabre\VObject\Component\VEvent $vevent) {
+        $arrData = EventMapper::serializeVevent($vevent);
+        $strFile = 'share/ics/'.$arrData['uid'].'.ics';
+
+
+        $vcalendar = new \Sabre\VObject\Component\VCalendar();
+        $vcalendar->add($vevent);
+
+        echo $strFile;
+        $file = new \Contao\File($strFile);
+        $file->write($vcalendar->serialize());
+        $file->close();
+    }
+
+
     /**
      * Get remote file content
      * @param \CalendarModel
@@ -138,11 +161,11 @@ class CalendarSync extends \Backend {
                 throw new \Exception(strip_tags($body, '<br>'));
             }
             else {
-                throw new Exception($response['statusCode']);
+                throw new \Exception($response['statusCode']);
             }
         }
 
-        throw new Exception('Unknown sync type '.$calObj->fullcal_type);
+        throw new \Exception('Unknown sync type '.$calObj->fullcal_type);
     }
 }
 

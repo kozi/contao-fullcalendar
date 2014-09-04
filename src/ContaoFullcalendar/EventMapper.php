@@ -160,7 +160,7 @@ class EventMapper {
      * @param \Sabre\VObject\Component\VEvent
      * @return array
      */
-    private static function serializeVevent(\Sabre\VObject\Component\VEvent $vevent) {
+    public static function serializeVevent(\Sabre\VObject\Component\VEvent $vevent) {
         $values  = array();
         $jsonObj = $vevent->jsonSerialize();
         foreach($jsonObj[1] as $arrAttr) {
