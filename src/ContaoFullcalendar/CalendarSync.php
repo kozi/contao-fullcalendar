@@ -16,6 +16,7 @@
 namespace ContaoFullcalendar;
 
 use \Sabre\VObject\Reader;
+use \Contao\Folder;
 
 class CalendarSync extends \Backend {
 
@@ -36,16 +37,26 @@ class CalendarSync extends \Backend {
     }
 
     public function syncCal() {
-        $arrInfo = array();
         $objCalendarCollection = \CalendarModel::findAll(array(
             'column' => array("fullcal_type != ''"),
         ));
+
+
         foreach($objCalendarCollection as $objCalendar) {
-            $arrInfo[] = self::updateCalendar($objCalendar);
+            $infoObj = self::updateCalendar($objCalendar);
+            $this->log(strip_tags($infoObj->getMessage()), __METHOD__, TL_CRON);
         }
     }
 
+    public function clearIcsFolder() {
+        $strFolder = 'share/ics';
+        $folder = new Folder($strFolder);
+        $folder->purge();
+        $this->log('Purge folder '.$strFolder, __METHOD__, TL_CRON);
+    }
+
     private function updateCalendar(\CalendarModel $objCalendar) {
+
         $infoObj = new InfoObject($objCalendar);
         if($vcalContent = self::getVCalendarContent($objCalendar)) {
 
@@ -55,13 +66,6 @@ class CalendarSync extends \Backend {
             $dateTimeEnd   = new \DateTime('+'.$objCalendar->fullcal_range);
 
             $vcalendar     = Reader::read($vcalContent);
-
-
-            if($vcalendar->VEVENT) {
-                foreach($vcalendar->VEVENT as $vevent) {
-                    $this->saveSingleEvents($vevent);
-                }
-            }
 
             $vcalendar->expand($dateTimeStart, $dateTimeEnd);
 
@@ -105,21 +109,6 @@ class CalendarSync extends \Backend {
         catch(\Exception $e) {
             return false;
         }
-    }
-
-
-    private function saveSingleEvents(\Sabre\VObject\Component\VEvent $vevent) {
-        $arrData = EventMapper::serializeVevent($vevent);
-        $strFile = 'share/ics/'.$arrData['uid'].'.ics';
-
-
-        $vcalendar = new \Sabre\VObject\Component\VCalendar();
-        $vcalendar->add($vevent);
-
-        echo $strFile;
-        $file = new \Contao\File($strFile);
-        $file->write($vcalendar->serialize());
-        $file->close();
     }
 
 

@@ -6,7 +6,6 @@ $GLOBALS['TL_DCA']['tl_calendar_events']['list']['sorting']['child_record_callba
 $GLOBALS['TL_DCA']['tl_calendar_events']['config']['onload_callback'][] =
     array('tl_calendar_events_fullcal', 'adjustDca');
 
-
 // Fields
 $GLOBALS['TL_DCA']['tl_calendar_events']['fields']['fullcal_uid'] = array(
     'label'=> &$GLOBALS['TL_LANG']['tl_calendar_events']['fullcal_uid'],
@@ -26,6 +25,11 @@ $GLOBALS['TL_DCA']['tl_calendar_events']['fields']['fullcal_desc'] = array(
     'eval' => array('doNotCopy' => true)
 );
 
+$GLOBALS['TL_DCA']['tl_calendar_events']['fields']['fullcal_ics'] = array(
+    'label'=> &$GLOBALS['TL_LANG']['tl_calendar_events']['fullcal_ics'],
+    'sql'  => "varchar(255) NOT NULL default ''",
+    'eval' => array('doNotCopy' => true)
+);
 
 $GLOBALS['TL_DCA']['tl_calendar_events']['fields']['fullcal_detailViewer'] = array(
     'label'     => &$GLOBALS['TL_LANG']['tl_calendar_events']['fullcal_detailViewer'],
@@ -64,8 +68,6 @@ class tl_calendar_events_fullcal extends tl_calendar_events {
                     array('{details_legend},fullcal_detailViewer,',''),
                     $GLOBALS['TL_DCA']['tl_calendar_events']['palettes']['default']
                 );
-
-
             }
        }
 

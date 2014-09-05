@@ -12,6 +12,10 @@
  * @license    LGPL
  * @filesource
  */
+
+$GLOBALS['TL_CRON']['hourly'][]                         = array('ContaoFullcalendar\CalendarSync', 'syncCal');
+$GLOBALS['TL_CRON']['weekly'][]                         = array('ContaoFullcalendar\CalendarSync', 'clearIcsFolder');
+
 $GLOBALS['BE_MOD']['content']['calendar']['stylesheet'] = 'system/modules/fullcalendar/assets/be-style.css';
 $GLOBALS['BE_MOD']['content']['calendar']['javascript'] = 'system/modules/fullcalendar/assets/be-style.js';
 

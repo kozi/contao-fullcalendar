@@ -147,6 +147,9 @@ class EventMapper {
         // After first save() because the id is necessary for alias generation
         static::generateAlias($eventObject);
 
+        // Das einzelne Event als ics Datei speichern
+        static::saveEventAsIcs($eventObject, $vevent);
+
         // Must be last because of Database statement updating the values
         static::addDateTime($eventObject);
 
@@ -172,6 +175,19 @@ class EventMapper {
         return $values;
     }
 
+    private static function saveEventAsIcs(CalendarEventsModel $eventObject, \Sabre\VObject\Component\VEvent $vevent) {
+        $strFile = 'share/ics/'.$eventObject->alias.'.ics';
+
+        $cal = new \Sabre\VObject\Component\VCalendar();
+        $cal->add($vevent);
+
+        $file = new \Contao\File($strFile);
+        $file->write($cal->serialize());
+        $file->close();
+
+        $eventObject->fullcal_ics = $strFile;
+        $eventObject->save();
+    }
 
     /* Use the contao class tl_calendar_events to adjust time
      * @param \CalendarEventsModel
