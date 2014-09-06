@@ -7,7 +7,7 @@ Außerdem bietet die Erweiterung die Möglichkeit automatisch Events aus [ICalen
 Diese Funktion wurde mit **sabre/dav** von  der fruux GmbH realisiert.
 
 #### FullCalendar
-* http://arshaw.com/fullcalendar/
+* http://fullcalendar.io/
 * https://github.com/arshaw/fullcalendar
 
 #### sabre/dav
