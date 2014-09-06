@@ -9,3 +9,4 @@ $GLOBALS['TL_LANG']['tl_calendar']['fullcal_path']       = array('Pfad', 'Pfad z
 $GLOBALS['TL_LANG']['tl_calendar']['fullcal_username']   = array('Benutzername', 'WebDAV Benutzername');
 $GLOBALS['TL_LANG']['tl_calendar']['fullcal_password']   = array('Passwort', 'WebDAV Passwort');
 $GLOBALS['TL_LANG']['tl_calendar']['fullcal_ics']        = array('ICS-URL', 'Link zu der ics-Datei');
+$GLOBALS['TL_LANG']['tl_calendar']['fullcal_alias']      = array('Kalenderalias', 'Der Kalenderalias wird für den Dateinamen der abonnierbaren ICS-Datei verwentet.');

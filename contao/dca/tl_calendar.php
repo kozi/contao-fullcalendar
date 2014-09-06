@@ -3,7 +3,7 @@
 $this->loadLanguageFile('tl_module');
 
 $paletteDefault = &$GLOBALS['TL_DCA']['tl_calendar']['palettes']['default'];
-$GLOBALS['TL_DCA']['tl_calendar']['palettes']['default']        = $paletteDefault.';{fullcal_legend:hide},fullcal_color,fullcal_type';
+$GLOBALS['TL_DCA']['tl_calendar']['palettes']['default']        = $paletteDefault.';{fullcal_legend:hide},fullcal_alias,fullcal_color,fullcal_type';
 $GLOBALS['TL_DCA']['tl_calendar']['palettes']['__selector__'][] = 'fullcal_type';
 
 
@@ -11,7 +11,6 @@ $GLOBALS['TL_DCA']['tl_calendar']['list']['label']['label_callback'] = array('tl
 
 $GLOBALS['TL_DCA']['tl_calendar']['subpalettes']['fullcal_type_webdav']         = 'fullcal_baseUri,fullcal_path,fullcal_username,fullcal_password,fullcal_range';
 $GLOBALS['TL_DCA']['tl_calendar']['subpalettes']['fullcal_type_public_ics']     = 'fullcal_ics,fullcal_range';
-
 
 array_insert($GLOBALS['TL_DCA']['tl_calendar']['list']['operations'], 0, array
 (
@@ -34,6 +33,18 @@ $GLOBALS['TL_DCA']['tl_calendar']['fields']['fullcal_range'] = array(
     'sql'                     => "varchar(255) NOT NULL default 'next_365'",
 );
 
+$GLOBALS['TL_DCA']['tl_calendar']['fields']['fullcal_alias'] = array(
+    'label'                   => &$GLOBALS['TL_LANG']['tl_calendar']['fullcal_alias'],
+    'exclude'                 => true,
+    'inputType'               => 'text',
+    'eval'                    => array('rgxp'=>'alias', 'unique'=>true, 'maxlength'=>128, 'tl_class'=>'w50'),
+    'save_callback' => array
+    (
+        array('tl_calendar_fullcal', 'generateAlias')
+    ),
+    'sql'                     => "varchar(128) COLLATE utf8_bin NOT NULL default ''"
+);
+
 $GLOBALS['TL_DCA']['tl_calendar']['fields']['fullcal_color'] = array(
     'label'                   => &$GLOBALS['TL_LANG']['tl_calendar']['fullcal_color'],
     'exclude'                 => true,
@@ -48,7 +59,7 @@ $GLOBALS['TL_DCA']['tl_calendar']['fields']['fullcal_type'] = array(
     'inputType'               => 'select',
     'options'                 => array('' => 'No Sync', 'webdav' => 'webdav', 'public_ics' => 'public_ics'),
     'sql'                     => "varchar(16) NOT NULL default ''",
-    'eval'                    => array('submitOnChange'=>true, 'tl_class' => 'w50'),
+    'eval'                    => array('submitOnChange'=>true, 'tl_class' => 'long'),
 );
 
 $GLOBALS['TL_DCA']['tl_calendar']['fields']['fullcal_baseUri'] = array(
@@ -107,5 +118,32 @@ class tl_calendar_fullcal extends Backend {
         $strColor = sprintf('<span class="fullcal_color" style="background-color:#%s;">&nbsp;&nbsp;&nbsp;</span> ', $arrColor[0]);
         return $strColor.$label;
     }
+
+
+    public function generateAlias($varValue, DataContainer $dc) {
+        $autoAlias = false;
+
+        // Generate alias if there is none
+        if ($varValue == '') {
+            $autoAlias = true;
+            $varValue = standardize(String::restoreBasicEntities($dc->activeRecord->title));
+        }
+
+        $objAlias = $this->Database->prepare("SELECT id FROM tl_calendar WHERE fullcal_alias=?")
+            ->execute($varValue);
+
+        // Check whether the news alias exists
+        if ($objAlias->numRows > 1 && !$autoAlias) {
+            throw new Exception(sprintf($GLOBALS['TL_LANG']['ERR']['aliasExists'], $varValue));
+        }
+
+        // Add ID to alias
+        if ($objAlias->numRows && $autoAlias) {
+            $varValue .= '-' . $dc->id;
+        }
+
+        return $varValue;
+    }
+
 }
 

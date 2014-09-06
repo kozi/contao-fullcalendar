@@ -19,6 +19,8 @@ use \Sabre\VObject\Reader;
 use \Contao\Folder;
 
 class CalendarSync extends \Backend {
+    public static $icsFolder = 'share/ics-events/';
+    public static $calFolder = 'share/ics-cal/';
 
     public function syncOneCal() {
         $calObj = \CalendarModel::findByPk(\Input::get('id'));
@@ -41,7 +43,6 @@ class CalendarSync extends \Backend {
             'column' => array("fullcal_type != ''"),
         ));
 
-
         foreach($objCalendarCollection as $objCalendar) {
             $infoObj = self::updateCalendar($objCalendar);
             $this->log(strip_tags($infoObj->getMessage()), __METHOD__, TL_CRON);
@@ -49,14 +50,18 @@ class CalendarSync extends \Backend {
     }
 
     public function clearIcsFolder() {
-        $strFolder = 'share/ics';
-        $folder = new Folder($strFolder);
+        $folder = new Folder(static::$calFolder);
         $folder->purge();
-        $this->log('Purge folder '.$strFolder, __METHOD__, TL_CRON);
+        $this->log('Purge folder '.static::$calFolder, __METHOD__, TL_CRON);
+
+        $folder = new Folder(static::$icsFolder);
+        $folder->purge();
+        $this->log('Purge folder '.static::$icsFolder, __METHOD__, TL_CRON);
+
+        $this->syncCal();
     }
 
     private function updateCalendar(\CalendarModel $objCalendar) {
-
         $infoObj = new InfoObject($objCalendar);
         if($vcalContent = self::getVCalendarContent($objCalendar)) {
 
@@ -66,6 +71,12 @@ class CalendarSync extends \Backend {
             $dateTimeEnd   = new \DateTime('+'.$objCalendar->fullcal_range);
 
             $vcalendar     = Reader::read($vcalContent);
+
+            // Lokale Version des Kalenders speichern
+            $strFilename = static::$calFolder.$objCalendar->fullcal_alias.'.ics';
+            $file = new \Contao\File($strFilename);
+            $file->write($vcalContent);
+            $file->close();
 
             $vcalendar->expand($dateTimeStart, $dateTimeEnd);
 
@@ -81,7 +92,7 @@ class CalendarSync extends \Backend {
             if (count($arrEventIds) > 0) {
                 $stmt = \Database::getInstance()->prepare(
                     "DELETE FROM tl_calendar_events WHERE pid = ? AND fullcal_id != ''"
-                   .(empty($arrEventIds) ? "" : " AND id not in(".implode(',', $arrEventIds).")")
+                    .(empty($arrEventIds) ? "" : " AND id not in(".implode(',', $arrEventIds).")")
                 );
                 $stmt->execute($objCalendar->id);
                 $infoObj->setDeleted($stmt->affectedRows);

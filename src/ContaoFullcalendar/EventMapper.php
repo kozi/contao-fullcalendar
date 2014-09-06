@@ -176,7 +176,7 @@ class EventMapper {
     }
 
     private static function saveEventAsIcs(CalendarEventsModel $eventObject, \Sabre\VObject\Component\VEvent $vevent) {
-        $strFile = 'share/ics/'.$eventObject->alias.'.ics';
+        $strFile = CalendarSync::$icsFolder.$eventObject->alias.'.ics';
 
         $cal = new \Sabre\VObject\Component\VCalendar();
         $cal->add($vevent);
