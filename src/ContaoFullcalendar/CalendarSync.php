@@ -156,6 +156,10 @@ class CalendarSync extends \Backend {
             );
 
             $client    = new \Sabre\DAV\Client($settings);
+
+            $client->addCurlSetting(CURLOPT_SSL_VERIFYPEER, 0);
+            $client->addCurlSetting(CURLOPT_SSL_VERIFYHOST, 0);
+
             $response  = $client->request('GET', $calObj->fullcal_path);
             if ($response['statusCode'] === 200) {
                 return $response['body'];

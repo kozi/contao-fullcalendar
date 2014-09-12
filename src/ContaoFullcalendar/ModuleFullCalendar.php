@@ -95,7 +95,6 @@ class ModuleFullCalendar extends \Events {
             if (is_array($arrColor) && strlen($arrColor[0]) > 0) {
                 $arrColors[$cal->id] = '#'.$arrColor[0];
             }
-
         }
 
         // Time range

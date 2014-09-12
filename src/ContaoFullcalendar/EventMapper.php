@@ -42,6 +42,10 @@ class EventMapper {
         $timeBegin = \Date::parse('H:i', $event['begin']);
         $timeEnd   = \Date::parse('H:i', $event['end']);
 
+        if($event['fullcal_cat']) {
+            $arrCSS[] = 'cat_'.standardize($event['fullcal_cat']);
+        }
+
 
         if ($event['begin'] === $event['end']) {
             // Ein Event mit Startzeit ohne Endzeit
@@ -84,7 +88,6 @@ class EventMapper {
         $newEvent->description = $tmpl->parse();
 
         // echo '<br><code>'.implode(' _ ', array($dateBegin, $dateEnd, $timeBegin, $timeEnd, $newEvent->title, $newEvent->className));
-
         if ($color !== null) {
             $newEvent->backgroundColor = $color;
         }
@@ -119,6 +122,7 @@ class EventMapper {
         $eventObject->fullcal_id   = $eventId;
         $eventObject->fullcal_uid  = $eData['uid'];
         $eventObject->fullcal_desc = $eData['description'];
+        $eventObject->fullcal_cat  = $eData['categories'];
         $eventObject->teaser       = $eData['description'];
         $eventObject->pid          = $calObj->id;
         $eventObject->tstamp       = strtotime($eData['last-modified']);
@@ -166,6 +170,8 @@ class EventMapper {
     public static function serializeVevent(\Sabre\VObject\Component\VEvent $vevent) {
         $values  = array();
         $jsonObj = $vevent->jsonSerialize();
+
+
         foreach($jsonObj[1] as $arrAttr) {
             if (count($arrAttr) === 4) {
                 $key          = $arrAttr[0];
