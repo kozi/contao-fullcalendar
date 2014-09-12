@@ -4,50 +4,14 @@
 
 <?php $this->block('content'); ?>
 
-<div id="calendar"></div>
+<div id="fullcalendar"></div>
 <script>
 $(document).ready(function() {
-    var tooltip = $('<div/>').qtip({
-        id: 'calendar',
-        prerender: true,
-        content: {
-            text: ' ',
-            title: {
-                button: false
-            }
-        },
-        position: {
-            my: 'bottom center',
-            at: 'top center',
-            target: 'event',
-            viewport: $('#calendar'),
-            adjust: {
-                mouse: false,
-                scroll: false
-            }
-        },
-        show: false,
-        hide: false,
-        style: 'qtip-fullcalendar'
-    }).qtip('api');
-
-
     // page is now ready, initialize the calendar...
-    $('#calendar').fullCalendar(<?php echo substr_replace($this->fullcalOptions, '', strrpos($this->fullcalOptions, '}')).",\n"; ?>
-
-        eventClick: function(data, event, view) {
-            tooltip.set({'content.text': data.description }).show(event);
-        },
-        dayClick: function() { tooltip.hide() },
-        eventResizeStart: function() { tooltip.hide() },
-        eventDragStart: function() { tooltip.hide() },
-        viewRender: function() { tooltip.hide() }
-
-
-    });
+    $('#fullcalendar').fullCalendar(<?php echo $this->fullcalOptions; ?>);
 });
 </script>
-<?php $this->endblock() ?>
+<?php $this->endblock(); ?>
 
 
 

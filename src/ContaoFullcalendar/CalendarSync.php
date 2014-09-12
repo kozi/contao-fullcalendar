@@ -26,7 +26,7 @@ class CalendarSync extends \Backend {
         $calObj = \CalendarModel::findByPk(\Input::get('id'));
         if ($calObj) {
             $infoObj = $this->updateCalendar($calObj);
-            \Message::add($infoObj->getMessage(), 'TL_INFO');
+            \Message::add($infoObj->getMessage(), $infoObj->getType());
         }
 
         if (\Input::get('id') && \Input::get('table') === 'tl_calendar_events') {
@@ -62,7 +62,17 @@ class CalendarSync extends \Backend {
     }
 
     private function updateCalendar(\CalendarModel $objCalendar) {
-        $infoObj = new InfoObject($objCalendar);
+        $vcalContent = null;
+        $infoObj     = new InfoObject($objCalendar);
+
+        try {
+            $vcalContent = self::getVCalendarContent($objCalendar);
+        }
+        catch(\Exception $e) {
+            $infoObj->setException($e);
+            return $infoObj;
+        }
+
         if($vcalContent = self::getVCalendarContent($objCalendar)) {
 
             // Time range
@@ -110,16 +120,13 @@ class CalendarSync extends \Backend {
      * @return string
      */
     private static function getVCalendarContent($calObj) {
-        try {
-            $content = self::getFileContent($calObj);
-            if (!is_string($content) || strlen($content) === 0) {
-                return false;
-            }
-            return $content;
+        $content = self::getFileContent($calObj);
+
+        if (!is_string($content) || strlen($content) === 0) {
+            throw new \Exception('Could not get content.');
         }
-        catch(\Exception $e) {
-            return false;
-        }
+
+        return $content;
     }
 
 
