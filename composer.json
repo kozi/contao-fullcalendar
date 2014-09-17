@@ -1,6 +1,6 @@
 {
     "name": "martin-kozianka/contao-fullcalendar",
-    "description": "FullCalendar, http://arshaw.com/fullcalendar for Contao",
+    "description": "FullCalendar, http://fullcalendar.io for Contao",
     "keywords": [
         "contao",
         "calendar",
@@ -31,9 +31,9 @@
     },
     "require": {
         "php": ">=5.4",
-        "contao/core": "~3.3",
-        "contao-community-alliance/composer-plugin": "~2",
-        "sabre/dav": "~2"
+        "contao/core": "~3",
+        "sabre/dav": "~2",
+        "contao-community-alliance/composer-plugin": "~2"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
