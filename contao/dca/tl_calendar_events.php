@@ -80,7 +80,6 @@ class tl_calendar_events_fullcal extends tl_calendar_events {
     }
 
     public function listEvents($arrRow) {
-        // TODO Buttons mit CSS und Javascript ausblenden
         $strReturn = parent::listEvents($arrRow);
         if (strlen($arrRow['fullcal_uid']) > 0) {
             $strReturn = '<div class="fullcal_sync">'.$strReturn.'</div>';

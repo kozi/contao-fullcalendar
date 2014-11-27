@@ -4,25 +4,22 @@
  * Contao Open Source CMS
  * Copyright (C) 2005-2014 Leo Feyer
  *
- *
  * PHP version 5
- * @copyright  Martin Kozianka 2014 <http://kozianka.de/>
- * @author     Martin Kozianka <http://kozianka.de/>
+ * @copyright Martin Kozianka 2014 <http://kozianka.de/>
+ * @author    Martin Kozianka <http://kozianka.de/>
  * @package    contao-fullcalendar
  * @license    LGPL
  * @filesource
  */
 
 namespace ContaoFullcalendar;
-use Contao\Date;
-use Contao\Environment;
 
 /**
  * Class ModuleFullCalendar
  *
  * Front end module "fullcalendar".
- * @copyright  Martin Kozianka 2014 <http://kozianka.de/>
- * @author     Martin Kozianka <http://kozianka.de/>
+ * @copyright Martin Kozianka 2014 <http://kozianka.de/>
+ * @author    Martin Kozianka <http://kozianka.de/>
  * @package    contao-fullcalendar
  */
 class ModuleFullCalendar extends \Events {
@@ -34,7 +31,7 @@ class ModuleFullCalendar extends \Events {
     protected $strTemplate = 'mod_fullcalendar';
 
     public function generate() {
-        if (TL_MODE == 'BE') {
+        if (TL_MODE === 'BE') {
             $objTemplate           = new \BackendTemplate('be_wildcard');
             $objTemplate->wildcard = '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['FMD']['fullcalendar'][0]) . ' ###';
             $objTemplate->title    = $this->headline;
@@ -43,6 +40,7 @@ class ModuleFullCalendar extends \Events {
             $objTemplate->href     = 'contao/main.php?do=themes&amp;table=tl_module&amp;act=edit&amp;id=' . $this->id;
             return $objTemplate->parse();
         }
+
         return parent::generate();
     }
 
@@ -106,8 +104,9 @@ class ModuleFullCalendar extends \Events {
 
         foreach($events as $days) {
             foreach($days as $keyDay => $day) {
+                // $keyDay Ein Tag mit eventuell mehreren Events
                 foreach($day as $event) {
-                    $jsonEvents[] = EventMapper::convert($keyDay, $event, $arrColors[$event['pid']]);
+                    $jsonEvents[] = EventMapper::convert($event, $arrColors[$event['pid']]);
                 }
             }
         }

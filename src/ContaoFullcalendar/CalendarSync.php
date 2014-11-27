@@ -4,19 +4,21 @@
  * Contao Open Source CMS
  * Copyright (C) 2005-2014 Leo Feyer
  *
- *
  * PHP version 5
- * @copyright  Martin Kozianka 2014 <http://kozianka.de/>
- * @author     Martin Kozianka <http://kozianka.de/>
- * @package    contao-fullcalendar
- * @license    LGPL
+ * @copyright Martin Kozianka 2014 <http://kozianka.de/>
+ * @author    Martin Kozianka <http://kozianka.de/>
+ * @package   contao-fullcalendar
+ * @license   LGPL
  * @filesource
  */
 
 namespace ContaoFullcalendar;
 
 use \Sabre\VObject\Reader;
+use \Sabre\DAV\Client;
+
 use \Contao\Folder;
+use \Contao\File;
 
 class CalendarSync extends \Backend {
     public static $icsFolder = 'share/ics-events/';
@@ -61,7 +63,7 @@ class CalendarSync extends \Backend {
         $this->syncCal();
     }
 
-    private function updateCalendar(\CalendarModel $objCalendar) {
+    private function updateCalendar(\Model $objCalendar) {
         $vcalContent = null;
         $infoObj     = new InfoObject($objCalendar);
 
@@ -73,41 +75,40 @@ class CalendarSync extends \Backend {
             return $infoObj;
         }
 
-        if($vcalContent = self::getVCalendarContent($objCalendar)) {
 
-            // Time range
-            $arrEventIds   = array();
-            $dateTimeStart = new \DateTime('-'.$objCalendar->fullcal_range);
-            $dateTimeEnd   = new \DateTime('+'.$objCalendar->fullcal_range);
+        // Time range
+        $arrEventIds   = array();
+        $dateTimeStart = new \DateTime('-'.$objCalendar->fullcal_range);
+        $dateTimeEnd   = new \DateTime('+'.$objCalendar->fullcal_range);
 
-            $vcalendar     = Reader::read($vcalContent);
+        $vcalendar     = Reader::read($vcalContent);
 
-            // Lokale Version des Kalenders speichern
-            $strFilename = static::$calFolder.$objCalendar->fullcal_alias.'.ics';
-            $file = new \Contao\File($strFilename);
-            $file->write($vcalContent);
-            $file->close();
+        // Lokale Version des Kalenders speichern
+        $strFilename = static::$calFolder.$objCalendar->fullcal_alias.'.ics';
+        $file = new File($strFilename);
+        $file->write($vcalContent);
+        $file->close();
 
-            $vcalendar->expand($dateTimeStart, $dateTimeEnd);
 
-            if($vcalendar->VEVENT) {
-                foreach($vcalendar->VEVENT as $vevent) {
-                    $evObj         = EventMapper::getCalendarEventsModel($vevent, $objCalendar);
-                    $arrEventIds[] = intval($evObj->id);
-                    $infoObj->add($evObj);
-                }
+        $vcalendar->expand($dateTimeStart, $dateTimeEnd);
+
+        if($vcalendar->VEVENT) {
+            foreach($vcalendar->VEVENT as $vevent) {
+                $evObj         = EventMapper::getCalendarEventsModel($vevent, $objCalendar);
+                $arrEventIds[] = intval($evObj->id);
+                $infoObj->add($evObj);
             }
+        }
 
-            // Events löschen die nicht gefunden wurden
-            if (count($arrEventIds) > 0) {
-                $stmt = \Database::getInstance()->prepare(
-                    "DELETE FROM tl_calendar_events WHERE pid = ? AND fullcal_id != ''"
-                    .(empty($arrEventIds) ? "" : " AND id not in(".implode(',', $arrEventIds).")")
-                );
-                $stmt->execute($objCalendar->id);
-                $infoObj->setDeleted($stmt->affectedRows);
+        // Events löschen die nicht gefunden wurden
+        if (count($arrEventIds) > 0) {
+            $stmt = \Database::getInstance()->prepare(
+                "DELETE FROM tl_calendar_events WHERE pid = ? AND fullcal_id != ''"
+                .(empty($arrEventIds) ? "" : " AND id not in(".implode(',', $arrEventIds).")")
+            );
+            $stmt->execute($objCalendar->id);
+            $infoObj->setDeleted($stmt->affectedRows);
 
-            }
         }
 
         // Add errors in infoObj;
@@ -116,7 +117,10 @@ class CalendarSync extends \Backend {
 
     /**
      * Get vcalendar string
-     * @param \CalendarModel
+     * @param $calObj
+     * @throws \Exception
+     * @internal param $ \CalendarModel
+     *
      * @return string
      */
     private static function getVCalendarContent($calObj) {
@@ -132,7 +136,9 @@ class CalendarSync extends \Backend {
 
     /**
      * Get remote file content
-     * @param \CalendarModel
+     * @param $calObj
+     * @throws \Exception
+     * @internal param $ \CalendarModel
      * @return string
      */
     private static function getFileContent($calObj) {
@@ -155,7 +161,7 @@ class CalendarSync extends \Backend {
                 'password' => \Encryption::decrypt($calObj->fullcal_password)
             );
 
-            $client    = new \Sabre\DAV\Client($settings);
+            $client    = new Client($settings);
 
             // Hack!
             $client->addCurlSetting(CURLOPT_SSL_VERIFYPEER, 0);

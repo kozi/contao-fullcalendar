@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * class EventMapper
  *
  * Contao Open Source CMS
@@ -9,8 +8,8 @@
  *
  *
  * PHP version 5
- * @copyright  Martin Kozianka 2014 <http://kozianka.de/>
- * @author     Martin Kozianka <http://kozianka.de/>
+ * @copyright Martin Kozianka 2014 <http://kozianka.de/>
+ * @author    Martin Kozianka <http://kozianka.de/>
  * @package    contao-fullcalendar
  * @license    LGPL
  * @filesource
@@ -22,17 +21,23 @@ namespace ContaoFullcalendar;
 use Contao\Controller;
 use Contao\DC_Table;
 use Contao\CalendarEventsModel;
+use \Contao\File;
 
+
+use \Sabre\VObject\Component\VCalendar;
+use \Sabre\VObject\Node;
 
 class EventMapper {
     const TMPL_DESCRIPTION = '<h3>%s</h3><p class="desc">%s</p>';
-    /* Convert "Contao-Event-Array" to json representation for fullcalendar
-     * @param integer
+
+
+    /**
+     * Convert "Contao-Event-Array" to json representation for fullcalendar
      * @param array
      * @param string
      * @return object
      */
-    public static function convert($intDay, array $event, $color = null) {
+    public static function convert(array $event, $color=null) {
         $arrCSS              = array_map('trim', explode(' ', $event['class']));
         $arrCSS[]            = 'jsonEvent';
         $newEvent            = new \stdClass();
@@ -64,7 +69,7 @@ class EventMapper {
                 $newEvent->end    = \Date::parse('Y-m-d', strtotime('+1 day', $event['end']));
                 $arrCSS[]         = 'days';
             } else {
-                $arrCSS[]        = 'oneDay';
+                $arrCSS[]         = 'oneDay';
             }
         }
         elseif($timeBegin === $timeEnd) {
@@ -100,11 +105,12 @@ class EventMapper {
 
     /**
      * Get CalendarEventsModel from VEvent
-     * @param \Sabre\VObject\Component\VEvent
-     * @param \CalendarModel
+     * @param \Sabre\VObject\Node $vevent
+     * @param \Model $calObj
+     * @internal param $ \Sabre\VObject\Component\VEvent
      * @return \CalendarEventsModel
      */
-    public static function getCalendarEventsModel(\Sabre\VObject\Component\VEvent $vevent, \CalendarModel $calObj) {
+    public static function getCalendarEventsModel(Node $vevent, \Model $calObj) {
 
         $eData       = static::serializeVevent($vevent);
         $start       = strtotime($eData['dtstart']);
@@ -119,6 +125,7 @@ class EventMapper {
             $eventObject = new CalendarEventsModel();
         }
         else {
+            $isNew       = false;
             $eventObject->fullcal_flagNew = false;
         }
 
@@ -163,14 +170,13 @@ class EventMapper {
         $eventObject->fullcal_flagNew = $isNew;
         return $eventObject;
 
-        return $eventObject;
     }
 
     /* Get a flat array with the event infos
      * @param \Sabre\VObject\Component\VEvent
      * @return array
      */
-    public static function serializeVevent(\Sabre\VObject\Component\VEvent $vevent) {
+    public static function serializeVevent(Node $vevent) {
         $values  = array();
         $jsonObj = $vevent->jsonSerialize();
 
@@ -184,13 +190,20 @@ class EventMapper {
         return $values;
     }
 
-    private static function saveEventAsIcs(CalendarEventsModel $eventObject, \Sabre\VObject\Component\VEvent $vevent) {
+    /**
+     * Get CalendarEventsModel from VEvent
+     * @param CalendarEventsModel $eventObject
+     * @param \Sabre\VObject\Node $vevent
+     * @internal param $ \CalendarEventsModel
+     * @internal param $ \Sabre\VObject\Component\VEvent
+     */
+    private static function saveEventAsIcs(CalendarEventsModel $eventObject, Node $vevent) {
         $strFile = CalendarSync::$icsFolder.$eventObject->alias.'.ics';
 
-        $cal = new \Sabre\VObject\Component\VCalendar();
+        $cal = new VCalendar();
         $cal->add($vevent);
 
-        $file = new \Contao\File($strFile);
+        $file = new File($strFile);
         $file->write($cal->serialize());
         $file->close();
 
