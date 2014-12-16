@@ -17,19 +17,16 @@
 
 namespace ContaoFullcalendar;
 
-
 use Contao\Controller;
 use Contao\DC_Table;
 use Contao\CalendarEventsModel;
-use \Contao\File;
+use Contao\File;
 
-
-use \Sabre\VObject\Component\VCalendar;
-use \Sabre\VObject\Node;
+use Sabre\VObject\Component\VCalendar;
+use Sabre\VObject\Node;
 
 class EventMapper {
     const TMPL_DESCRIPTION = '<h3>%s</h3><p class="desc">%s</p>';
-
 
     /**
      * Convert "Contao-Event-Array" to json representation for fullcalendar
@@ -95,7 +92,6 @@ class EventMapper {
         }
         $newEvent->description = $tmpl->parse();
 
-        // echo '<br><code>'.implode(' _ ', array($dateBegin, $dateEnd, $timeBegin, $timeEnd, $newEvent->title, $newEvent->className));
         if ($color !== null) {
             $newEvent->backgroundColor = $color;
         }
@@ -107,17 +103,22 @@ class EventMapper {
      * Get CalendarEventsModel from VEvent
      * @param \Sabre\VObject\Node $vevent
      * @param \Model $calObj
-     * @internal param $ \Sabre\VObject\Component\VEvent
      * @return \CalendarEventsModel
      */
-    public static function getCalendarEventsModel(Node $vevent, \Model $calObj) {
+    public static function getCalendarEventsModel(Node $vevent, \Model $calObj, \DateTimeZone $objTimezone) {
+        $eData        = static::serializeVevent($vevent);
+        $objTimestamp = $vevent->DTSTAMP->getDateTime();
+        $objStartDate = $vevent->DTSTART->getDateTime();
+        $objEndDate   = $vevent->DTEND->getDateTime();
+        $objStartDate->setTimezone($objTimezone);
+        $objEndDate->setTimezone($objTimezone);
+        $objTimestamp->setTimezone($objTimezone);
 
-        $eData       = static::serializeVevent($vevent);
-        $start       = strtotime($eData['dtstart']);
-        $end         = strtotime($eData['dtend']);
-        $addTime     = !(strlen($eData['dtstart']) === 10 && strlen($eData['dtend']) === 10);
-        $eventId     = $eData['uid'].'_'.$start;
 
+        // Nur wenn Start UND ENDE eine Zeitangabe enthalten ist der Termin mit Zeitangabe!
+        $addTime     = ($vevent->DTSTART->hasTime() && $vevent->DTEND->hasTime());
+
+        $eventId     = $eData['uid'].'_'.$objStartDate->getTimestamp();
         $eventObject = CalendarEventsModel::findOneBy('fullcal_id', $eventId);
 
         if ($eventObject === null) {
@@ -134,26 +135,42 @@ class EventMapper {
         $eventObject->fullcal_desc = $eData['description'];
         $eventObject->fullcal_cat  = $eData['categories'];
         $eventObject->teaser       = $eData['description'];
-        $eventObject->pid          = $calObj->id;
-        $eventObject->tstamp       = strtotime($eData['last-modified']);
         $eventObject->title        = $eData['summary'];
         $eventObject->location     = $eData['location'];
+        $eventObject->pid          = $calObj->id;
         $eventObject->published    = '1';
         $eventObject->addTime      = $addTime ? '1' : '';
-        $eventObject->startDate    = $start;
-        $eventObject->endDate      = $end;
+        $eventObject->tstamp       = $objTimestamp->getTimestamp();
+        $eventObject->startDate    = $objStartDate->getTimestamp();
+        $eventObject->endDate      = $objEndDate->getTimestamp();
 
-        $eventObject->startTime    = $start;
-        $eventObject->endTime      = $end;
+        $eventObject->startTime    = $objStartDate->getTimestamp();
+        $eventObject->endTime      = $objEndDate->getTimestamp();
 
-        if(\Date::parse('dmY', $start) === \Date::parse('dmY',$end)) {
+        if($objStartDate->format('dmY') === $objEndDate->format('dmY')) {
             $eventObject->endDate = null;
         }
+
         if (!$addTime) {
-            if (\Date::parse('dmY', strtotime('+ 1 day', $start)) === \Date::parse('dmY', $end)) {
+
+            // Remove time info
+            $eventObject->startDate = strtotime(date("Y-m-d", $eventObject->startDate));
+            $eventObject->startTime = $eventObject->startDate;
+
+            $objIntervalOneDay      = new \DateInterval('P1D');
+            $objStartDate->add($objIntervalOneDay);
+
+            if ($objStartDate->format('dmY') === $objEndDate->format('dmY')) {
                 $eventObject->endDate = null;
+                $eventObject->endTime = $eventObject->startDate;
             }
-            $eventObject->endDate = strtotime('- 1 day', $end);
+            else {
+                // Bei mehrtägigen Terminen ohne Zeitangabe muss
+                // der letzte Tag subtrahiert werden.
+                $objEndDate->sub($objIntervalOneDay);
+                $eventObject->endDate = $objEndDate->getTimestamp();
+                $eventObject->endTime = $objEndDate->getTimestamp();
+            }
         }
 
         $eventObject->save();
@@ -163,9 +180,6 @@ class EventMapper {
 
         // Das einzelne Event als ics Datei speichern
         static::saveEventAsIcs($eventObject, $vevent);
-
-        // Must be last because of Database statement updating the values
-        static::addDateTime($eventObject);
 
         $eventObject->fullcal_flagNew = $isNew;
         return $eventObject;
@@ -209,19 +223,6 @@ class EventMapper {
 
         $eventObject->fullcal_ics = $strFile;
         $eventObject->save();
-    }
-
-    /* Use the contao class tl_calendar_events to adjust time
-     * @param \CalendarEventsModel
-     */
-    private static function addDateTime(CalendarEventsModel $eventObj) {
-        Controller::loadDataContainer('tl_calendar_events');
-        $dc = new DC_Table('tl_calendar_events');
-        $dc->__set('id', $eventObj->id);
-        $dc->__set('activeRecord', $eventObj);
-
-        $tle = new \tl_calendar_events();
-        $tle->adjustTime($dc);
     }
 
     /* Generate alias for CalendarEventsModel

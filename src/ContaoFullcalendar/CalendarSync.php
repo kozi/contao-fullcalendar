@@ -90,11 +90,14 @@ class CalendarSync extends \Backend {
         $file->close();
 
 
+
         $vcalendar->expand($dateTimeStart, $dateTimeEnd);
+
+        $objTimezone = new \DateTimeZone($GLOBALS['TL_CONFIG']['timeZone']);
 
         if($vcalendar->VEVENT) {
             foreach($vcalendar->VEVENT as $vevent) {
-                $evObj         = EventMapper::getCalendarEventsModel($vevent, $objCalendar);
+                $evObj         = EventMapper::getCalendarEventsModel($vevent, $objCalendar, $objTimezone);
                 $arrEventIds[] = intval($evObj->id);
                 $infoObj->add($evObj);
             }
