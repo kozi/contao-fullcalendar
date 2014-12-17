@@ -51,13 +51,7 @@ class EventMapper {
             $arrCSS[] = 'cat_'.standardize($event['fullcal_cat']);
         }
 
-
-        if ($event['begin'] === $event['end']) {
-            // Ein Event mit Startzeit ohne Endzeit
-            $newEvent->start = \Date::parse('c', $event['begin']);
-            $arrCSS[]        = 'oneDayTime';
-        }
-        elseif ($event['addTime'] === '') {
+        if ($event['addTime'] === '') {
             // Ohne Zeitangaben
             $newEvent->start   = $dateBegin;
             // Ein oder mehrere Tage?
@@ -68,6 +62,11 @@ class EventMapper {
             } else {
                 $arrCSS[]         = 'oneDay';
             }
+        }
+        elseif ($event['begin'] === $event['end']) {
+            // Ein Event mit Startzeit ohne Endzeit
+            $newEvent->start = \Date::parse('c', $event['begin']);
+            $arrCSS[]        = 'oneDayTime';
         }
         elseif($timeBegin === $timeEnd) {
             // Nur eine Startzeit
