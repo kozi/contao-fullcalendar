@@ -1,8 +1,24 @@
 
+v2.2.6 (2015-01-10)
+-------------------
+
+- Compatibility with Moment v2.9. Was breaking GCal plugin ([2408])
+- View object's `title` property mistakenly omitted ([2407])
+- Single-day views with hiddens days could cause prev/next misbehavior ([2406])
+- Don't let the current date ever be a hidden day (solves [2395])
+- Hebrew locale ([2157])
+
+[2408]: https://code.google.com/p/fullcalendar/issues/detail?id=2408
+[2407]: https://code.google.com/p/fullcalendar/issues/detail?id=2407
+[2406]: https://code.google.com/p/fullcalendar/issues/detail?id=2406
+[2395]: https://code.google.com/p/fullcalendar/issues/detail?id=2395
+[2157]: https://code.google.com/p/fullcalendar/issues/detail?id=2157
+
+
 v2.2.5 (2014-12-30)
 -------------------
 
-- `buttonText` specified for custom views via the `view` option
+- `buttonText` specified for custom views via the `views` option
 	- bugfix: wrong default value, couldn't override default
 	- feature: default value taken from locale
 
