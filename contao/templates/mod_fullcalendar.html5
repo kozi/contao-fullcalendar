@@ -11,6 +11,15 @@ $(document).ready(function() {
     $('#fullcalendar').fullCalendar(<?php echo $this->fullcalOptions; ?>);
 });
 </script>
+
+<div class="fullcal_menu">
+
+    <?php
+        // TODO
+        // var_dump($this->arrCalendar);
+    ?>
+</div>
+
 <?php $this->endblock(); ?>
 
 

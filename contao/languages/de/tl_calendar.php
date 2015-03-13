@@ -1,6 +1,6 @@
 <?php
 
-$GLOBALS['TL_LANG']['tl_calendar']['fullcal_legend']     = 'FullCaldendar';
+$GLOBALS['TL_LANG']['tl_calendar']['fullcal_legend']     = 'FullCalendar';
 $GLOBALS['TL_LANG']['tl_calendar']['fullcal_color']      = array('Farbe', 'Termine im Kalender werden mit dieser Hintergrundfarbe dargestellt.');
 $GLOBALS['TL_LANG']['tl_calendar']['fullcal_type']       = array('Synchronisationstyp', 'Art der Synchronisation');
 $GLOBALS['TL_LANG']['tl_calendar']['fullcal_range']      = array('Zeitraum', 'Zeitraum für den die Termine abgerufen werden sollen.');

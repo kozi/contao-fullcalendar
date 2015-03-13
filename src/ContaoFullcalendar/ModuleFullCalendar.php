@@ -65,14 +65,26 @@ class ModuleFullCalendar extends \Events {
         $arrCalendarIds                 = array_map('intval', deserialize($this->cal_calendar));
         $fullcalOptions->events         = $this->getEventsAsJson($arrCalendarIds);
 
+        $arrCalendar   = array();
+        $collectionCal = \CalendarModel::findMultipleByIds($arrCalendarIds);
+        foreach($collectionCal as $objCal) {
+            $arrCalendar[$objCal->fullcal_alias] = array(
+                'id'     => $objCal->id,
+                'title'  => $objCal->title,
+                'alias'  => $objCal->fullcal_alias,
+                'color'  => deserialize($objCal->fullcal_color),
+            );
+
+        }
+
         $this->Template->fullcalOptions = json_encode($fullcalOptions, JSON_NUMERIC_CHECK);
+        $this->Template->arrCalendar    = $arrCalendar;
 
         if ($objPage->hasJQuery !== '1') {
             $GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/fullcalendar/assets/jquery/dist/jquery.min.js|static';
         }
 
         $GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/fullcalendar/assets/moment/min/moment.min.js|static';
-
         $GLOBALS['TL_CSS'][]        = 'system/modules/fullcalendar/assets/qtip2/jquery.qtip.min.css||static';
         $GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/fullcalendar/assets/qtip2/jquery.qtip.min.js|static';
 
