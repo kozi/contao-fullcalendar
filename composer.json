@@ -32,7 +32,8 @@
     "require": {
         "php": ">=5.4",
         "contao/core": "~3",
-        "sabre/dav": "~2",        
+        "sabre/vobject" : "~3.4",
+        "sabre/dav": "~2.1",
         "contao-community-alliance/composer-plugin": "~2"
     },
     "minimum-stability": "dev",
