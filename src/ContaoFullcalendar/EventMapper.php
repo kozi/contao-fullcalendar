@@ -4,11 +4,11 @@
  * class EventMapper
  *
  * Contao Open Source CMS
- * Copyright (C) 2005-2014 Leo Feyer
+ * Copyright (C) 2005-2015 Leo Feyer
  *
  *
  * PHP version 5
- * @copyright Martin Kozianka 2014 <http://kozianka.de/>
+ * @copyright Martin Kozianka 2014-2015 <http://kozianka.de/>
  * @author    Martin Kozianka <http://kozianka.de/>
  * @package    contao-fullcalendar
  * @license    LGPL
@@ -31,10 +31,10 @@ class EventMapper {
     /**
      * Convert "Contao-Event-Array" to json representation for fullcalendar
      * @param array
-     * @param string
+     * @param \CalendarModel
      * @return object
      */
-    public static function convert(array $event, $color=null) {
+    public static function convert(array $event, $calObj) {
         $arrCSS              = array_map('trim', explode(' ', $event['class']));
         $arrCSS[]            = 'jsonEvent';
         $newEvent            = new \stdClass();
@@ -81,19 +81,24 @@ class EventMapper {
             $arrCSS[]            = 'daysTime';
         }
 
-
-        $newEvent->className = implode(' ', $arrCSS);
-        $newEvent->details   = strip_tags($event['details']);
+        if ($calObj !== null) {
+            // Add calendar alias as css class
+            $arrCSS[] = $calObj->fullcal_alias;
+            // Add color from calendar Object
+            if ($calObj->fullcal_hexColor) {
+                $newEvent->backgroundColor = $calObj->fullcal_hexColor;
+            }
+            // Add calendar alias as attribute
+            $newEvent->calendarAlias = $calObj->fullcal_alias;
+        }
 
         $tmpl = new \FrontendTemplate("fullcalendar_tooltip");
         foreach($event as $k=>$v) {
             $tmpl->$k = $v;
         }
         $newEvent->description = $tmpl->parse();
-
-        if ($color !== null) {
-            $newEvent->backgroundColor = $color;
-        }
+        $newEvent->className   = implode(' ', $arrCSS);
+        $newEvent->details     = strip_tags($event['details']);
 
         return $newEvent;
     }

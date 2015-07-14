@@ -2,11 +2,11 @@
 
 /**
  * Contao Open Source CMS
- * Copyright (C) 2005-2014 Leo Feyer
+ * Copyright (C) 2005-2015 Leo Feyer
  *
  * PHP version 5
  * @author    Martin Kozianka <http://kozianka.de/>
- * @copyright Martin Kozianka 2014 <http://kozianka.de/>
+ * @copyright Martin Kozianka 2014-2015 <http://kozianka.de/>
  * @package    contao-fullcalendar
  * @license    LGPL
  * @filesource
@@ -23,7 +23,7 @@ class FullCalTags extends \Frontend {
         $this->tagname = array_shift($tagValues);
 
         // Get ics calendar url
-        if ($this->tagname === 'fullcal_url' || $this->tagname === 'fullcal_link') {
+        if ($this->tagname === 'fullcal_alias' || $this->tagname === 'fullcal_url' || $this->tagname === 'fullcal_link') {
             if (count($tagValues) === 0) {
                 return sprintf('{{%s}} Error: No params given', $strTag);
             }
@@ -35,6 +35,10 @@ class FullCalTags extends \Frontend {
 
             if ($calObj === null) {
                 return sprintf('{{%s}} Error: No calendar found', $strTag);
+            }
+
+            if ($this->tagname === 'fullcal_alias') {
+                return $calObj->fullcal_alias;
             }
 
             $calUrl = \Environment::get('url').'/'.CalendarSync::$calFolder.$calObj->fullcal_alias.'.ics';

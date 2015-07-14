@@ -30,11 +30,11 @@
         }
     },
     "require": {
-        "php": ">=5.4",
-        "contao/core": "~3",
+        "contao-community-alliance/composer-plugin": "~2",
+        "contao/core": ">=3.4",
+        "php": ">=5.5",
         "sabre/vobject" : "~3.4",
-        "sabre/dav": "~2.1",
-        "contao-community-alliance/composer-plugin": "~2"
+        "sabre/dav": "~3"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
