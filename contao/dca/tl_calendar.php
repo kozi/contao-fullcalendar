@@ -99,24 +99,29 @@ $GLOBALS['TL_DCA']['tl_calendar']['fields']['fullcal_lastchanged'] = [
     'sql'                     => "int(10) unsigned NOT NULL default '0'"
 ];
 
-class tl_calendar_fullcal extends Backend {
+class tl_calendar_fullcal extends Backend
+{
 
-    public function btnCallback($row, $href, $label, $title, $icon, $attributes) {
+    public function btnCallback($row, $href, $label, $title, $icon, $attributes)
+    {
         return ($row['fullcal_type'] !== '') ? '<a href="'.$this->addToUrl($href.'&amp;id='.$row['id']).'" title="'.specialchars($title).'"'.$attributes.'>'.Image::getHtml($icon, $label).'</a> ' : '';
     }
 
-    public function labelWithColor($row, $label, DataContainer $dc, $args = null) {
+    public function labelWithColor($row, $label, DataContainer $dc, $args = null)
+    {
         $arrColor = deserialize($row['fullcal_color']);
         $strColor = sprintf('<span class="fullcal_color" style="background-color:#%s;">&nbsp;&nbsp;&nbsp;</span> ', $arrColor[0]);
         return $strColor.$label;
     }
 
 
-    public function generateAlias($varValue, DataContainer $dc) {
+    public function generateAlias($varValue, DataContainer $dc)
+    {
         $autoAlias = false;
 
         // Generate alias if there is none
-        if ($varValue == '') {
+        if ($varValue == '')
+        {
             $autoAlias = true;
             $varValue = standardize(String::restoreBasicEntities($dc->activeRecord->title));
         }
@@ -125,17 +130,17 @@ class tl_calendar_fullcal extends Backend {
             ->execute($varValue);
 
         // Check whether the news alias exists
-        if ($objAlias->numRows > 1 && !$autoAlias) {
+        if ($objAlias->numRows > 1 && !$autoAlias)
+        {
             throw new Exception(sprintf($GLOBALS['TL_LANG']['ERR']['aliasExists'], $varValue));
         }
 
         // Add ID to alias
-        if ($objAlias->numRows && $autoAlias) {
+        if ($objAlias->numRows && $autoAlias)
+        {
             $varValue .= '-' . $dc->id;
         }
 
         return $varValue;
     }
-
 }
-

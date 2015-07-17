@@ -25,7 +25,8 @@ use Contao\File;
 use Sabre\VObject\Component\VCalendar;
 use Sabre\VObject\Node;
 
-class EventMapper {
+class EventMapper
+{
     const TMPL_DESCRIPTION = '<h3>%s</h3><p class="desc">%s</p>';
 
     /**
@@ -34,7 +35,8 @@ class EventMapper {
      * @param \CalendarModel
      * @return object
      */
-    public static function convert(array $event, $calObj) {
+    public static function convert(array $event, $calObj)
+    {
         $arrCSS              = array_map('trim', explode(' ', $event['class']));
         $arrCSS[]            = 'jsonEvent';
         $newEvent            = new \stdClass();
@@ -47,45 +49,55 @@ class EventMapper {
         $timeBegin = \Date::parse('H:i', $event['begin']);
         $timeEnd   = \Date::parse('H:i', $event['end']);
 
-        if($event['fullcal_cat']) {
+        if($event['fullcal_cat'])
+        {
             $arrCSS[] = 'cat_'.standardize($event['fullcal_cat']);
         }
 
-        if ($event['addTime'] === '') {
+        if ($event['addTime'] === '')
+        {
             // Ohne Zeitangaben
             $newEvent->start   = $dateBegin;
             // Ein oder mehrere Tage?
-            if ($dateBegin !== $dateEnd) {
+            if ($dateBegin !== $dateEnd)
+            {
                 // Es muss 1 Tag hinzugefügt werden
                 $newEvent->end    = \Date::parse('Y-m-d', strtotime('+1 day', $event['end']));
                 $arrCSS[]         = 'days';
-            } else {
+            }
+            else
+            {
                 $arrCSS[]         = 'oneDay';
             }
         }
-        elseif ($event['begin'] === $event['end']) {
+        elseif ($event['begin'] === $event['end'])
+        {
             // Ein Event mit Startzeit ohne Endzeit
             $newEvent->start = \Date::parse('c', $event['begin']);
             $arrCSS[]        = 'oneDayTime';
         }
-        elseif($timeBegin === $timeEnd) {
+        elseif($timeBegin === $timeEnd)
+        {
             // Nur eine Startzeit
             $newEvent->start     = \Date::parse('c', $event['begin']);
             $newEvent->end       = $dateEnd;
             $arrCSS[]            = 'daysStart';
         }
-        else {
+        else
+        {
             // Mehrere Tage mit Start- und Endzeit
             $newEvent->start     = \Date::parse('c', $event['begin']);
             $newEvent->end       = \Date::parse('c', $event['end']);
             $arrCSS[]            = 'daysTime';
         }
 
-        if ($calObj !== null) {
+        if ($calObj !== null)
+        {
             // Add calendar alias as css class
             $arrCSS[] = $calObj->fullcal_alias;
             // Add color from calendar Object
-            if ($calObj->fullcal_hexColor) {
+            if ($calObj->fullcal_hexColor)
+            {
                 $newEvent->backgroundColor = $calObj->fullcal_hexColor;
             }
             // Add calendar alias as attribute
@@ -93,7 +105,8 @@ class EventMapper {
         }
 
         $tmpl = new \FrontendTemplate("fullcalendar_tooltip");
-        foreach($event as $k=>$v) {
+        foreach($event as $k=>$v)
+        {
             $tmpl->$k = $v;
         }
         $newEvent->description = $tmpl->parse();
@@ -109,7 +122,8 @@ class EventMapper {
      * @param \Model $calObj
      * @return \CalendarEventsModel
      */
-    public static function getCalendarEventsModel(Node $vevent, \Model $calObj, \DateTimeZone $objTimezone) {
+    public static function getCalendarEventsModel(Node $vevent, \Model $calObj, \DateTimeZone $objTimezone)
+    {
         $eData        = static::serializeVevent($vevent);
         $objTimestamp = $vevent->DTSTAMP->getDateTime();
         $objStartDate = $vevent->DTSTART->getDateTime();
@@ -125,11 +139,13 @@ class EventMapper {
         $eventId     = $eData['uid'].'_'.$objStartDate->getTimestamp();
         $eventObject = CalendarEventsModel::findOneBy('fullcal_id', $eventId);
 
-        if ($eventObject === null) {
+        if ($eventObject === null)
+        {
             $isNew       = true;
             $eventObject = new CalendarEventsModel();
         }
-        else {
+        else
+        {
             $isNew       = false;
             $eventObject->fullcal_flagNew = false;
         }
@@ -151,12 +167,13 @@ class EventMapper {
         $eventObject->startTime    = $objStartDate->getTimestamp();
         $eventObject->endTime      = $objEndDate->getTimestamp();
 
-        if($objStartDate->format('dmY') === $objEndDate->format('dmY')) {
+        if($objStartDate->format('dmY') === $objEndDate->format('dmY'))
+        {
             $eventObject->endDate = null;
         }
 
-        if (!$addTime) {
-
+        if (!$addTime)
+        {
             // Remove time info
             $eventObject->startDate = strtotime(date("Y-m-d", $eventObject->startDate));
             $eventObject->startTime = $eventObject->startDate;
@@ -164,11 +181,13 @@ class EventMapper {
             $objIntervalOneDay      = new \DateInterval('P1D');
             $objStartDate->add($objIntervalOneDay);
 
-            if ($objStartDate->format('dmY') === $objEndDate->format('dmY')) {
+            if ($objStartDate->format('dmY') === $objEndDate->format('dmY'))
+            {
                 $eventObject->endDate = null;
                 $eventObject->endTime = $eventObject->startDate;
             }
-            else {
+            else
+            {
                 // Bei mehrtägigen Terminen ohne Zeitangabe muss
                 // der letzte Tag subtrahiert werden.
                 $objEndDate->sub($objIntervalOneDay);
@@ -194,13 +213,16 @@ class EventMapper {
      * @param \Sabre\VObject\Component\VEvent
      * @return array
      */
-    public static function serializeVevent(Node $vevent) {
+    public static function serializeVevent(Node $vevent)
+    {
         $values  = array();
         $jsonObj = $vevent->jsonSerialize();
 
 
-        foreach($jsonObj[1] as $arrAttr) {
-            if (count($arrAttr) === 4) {
+        foreach($jsonObj[1] as $arrAttr)
+        {
+            if (count($arrAttr) === 4)
+            {
                 $key          = $arrAttr[0];
                 $values[$key] = $arrAttr[3];
             }
@@ -215,7 +237,8 @@ class EventMapper {
      * @internal param $ \CalendarEventsModel
      * @internal param $ \Sabre\VObject\Component\VEvent
      */
-    private static function saveEventAsIcs(CalendarEventsModel $eventObject, Node $vevent) {
+    private static function saveEventAsIcs(CalendarEventsModel $eventObject, Node $vevent)
+    {
         $strFile = CalendarSync::$icsFolder.$eventObject->alias.'.ics';
 
         $cal = new VCalendar();
@@ -232,12 +255,15 @@ class EventMapper {
     /* Generate alias for CalendarEventsModel
      * @param \CalendarEventsModel
      */
-    private static function generateAlias(CalendarEventsModel $eventObj) {
+    private static function generateAlias(CalendarEventsModel $eventObj)
+    {
         $strAlias = standardize(\String::restoreBasicEntities($eventObj->title));
 
         $objAlias = \Database::getInstance()->prepare("SELECT id FROM tl_calendar_events WHERE alias=?")
             ->execute($strAlias);
-        if ($objAlias->numRows > 1) {
+
+        if ($objAlias->numRows > 1)
+        {
             $strAlias .= '-'.$eventObj->id;
         }
         $eventObj->alias = $strAlias;

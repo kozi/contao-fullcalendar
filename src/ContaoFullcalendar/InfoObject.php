@@ -2,7 +2,8 @@
 
 namespace ContaoFullcalendar;
 
-class InfoObject {
+class InfoObject
+{
     /**
      * Exception
      * @var \Exception
@@ -14,7 +15,8 @@ class InfoObject {
     private $intUpdated;
     private $intDeleted;
 
-    public function __construct($objCal) {
+    public function __construct($objCal)
+    {
         $this->strTitle   = $objCal->title;
         $this->intNew     = 0;
         $this->intUpdated = 0;
@@ -22,34 +24,41 @@ class InfoObject {
     }
 
     public function add($objEvent) {
-        if($objEvent->fullcal_flagNew) {
+        if($objEvent->fullcal_flagNew)
+        {
             $this->intNew++;
         }
-        else {
+        else
+        {
             $this->intUpdated++;
         }
     }
 
-    public function setDeleted($intDel) {
+    public function setDeleted($intDel)
+    {
         $this->intDeleted = $intDel;
     }
 
     public function getMessage() {
-        if ($this->objException !== null) {
+        if ($this->objException !== null)
+        {
             return $this->objException->getMessage();
         }
+
         return sprintf(
             'Kalender <strong>%s</strong>: %s Events eingefügt, %s Events aktualisiert, %s Events gelöscht',
             $this->strTitle, $this->intNew, $this->intUpdated, $this->intDeleted
         );
     }
 
-    public function setException(\Exception $e) {
+    public function setException(\Exception $e)
+    {
         $this->strType      = 'TL_ERROR';
         $this->objException = $e;
     }
 
-    public function getType() {
+    public function getType()
+    {
         return $this->strType;
     }
 

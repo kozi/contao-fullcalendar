@@ -22,7 +22,8 @@ namespace ContaoFullcalendar;
  * @author    Martin Kozianka <http://kozianka.de/>
  * @package    contao-fullcalendar
  */
-class ModuleFullCalendar extends \Events {
+class ModuleFullCalendar extends \Events
+{
 
     /**
      * Template
@@ -30,8 +31,10 @@ class ModuleFullCalendar extends \Events {
      */
     protected $strTemplate = 'mod_fullcalendar';
 
-    public function generate() {
-        if (TL_MODE === 'BE') {
+    public function generate()
+    {
+        if (TL_MODE === 'BE')
+        {
             $objTemplate           = new \BackendTemplate('be_wildcard');
             $objTemplate->wildcard = '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['FMD']['fullcalendar'][0]) . ' ###';
             $objTemplate->title    = $this->headline;
@@ -40,14 +43,14 @@ class ModuleFullCalendar extends \Events {
             $objTemplate->href     = 'contao/main.php?do=themes&amp;table=tl_module&amp;act=edit&amp;id=' . $this->id;
             return $objTemplate->parse();
         }
-
         return parent::generate();
     }
 
-    protected function compile() {
+    protected function compile()
+    {
         global $objPage;
 
-        $this->fullcal_viewButtons    = array('month', 'agendaWeek', 'agendaDay');
+        $this->fullcal_viewButtons    = ['month', 'agendaWeek', 'agendaDay'];
 
         $fullcalOptions               = new \stdClass();
         $fullcalOptions->firstDay     = $this->cal_startDay;
@@ -62,16 +65,17 @@ class ModuleFullCalendar extends \Events {
         $fullcalOptions->header->right  = $this->fullcal_header_right;
 
         $arrCalendarIds = array_map('intval', deserialize($this->cal_calendar));
-        $arrCalendar    = array();
+        $arrCalendar    = [];
         $collectionCal  = \CalendarModel::findMultipleByIds($arrCalendarIds);
 
-        foreach($collectionCal as $objCal) {
-            $arrCalendar[$objCal->fullcal_alias] = (object) array(
+        foreach($collectionCal as $objCal)
+        {
+            $arrCalendar[$objCal->fullcal_alias] = (object) [
                 'id'     => $objCal->id,
                 'title'  => $objCal->title,
                 'alias'  => $objCal->fullcal_alias,
                 'color'  => deserialize($objCal->fullcal_color),
-            );
+            ];
 
         }
 
@@ -79,7 +83,8 @@ class ModuleFullCalendar extends \Events {
         $this->Template->fullcalOptions  = json_encode($fullcalOptions, JSON_NUMERIC_CHECK);
         $this->Template->arrCalendar     = $arrCalendar;
 
-        if ($objPage->hasJQuery !== '1') {
+        if ($objPage->hasJQuery !== '1')
+        {
             $GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/fullcalendar/assets/jquery/dist/jquery.min.js|static';
         }
 
@@ -93,17 +98,22 @@ class ModuleFullCalendar extends \Events {
         $GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/fullcalendar/assets/fullcal-eventManager.js|static';
 
         $pathLang = 'system/modules/fullcalendar/assets/fullcalendar/dist/lang/'.$objPage->language.'.js';
-        if (file_exists(TL_ROOT.'/'.$pathLang)) {
+
+        if (file_exists(TL_ROOT.'/'.$pathLang))
+        {
             $GLOBALS['TL_JAVASCRIPT'][] = $pathLang.'|static';
         }
     }
 
-    private function getEventsAsPlainArray(array $arrCalendarIds) {
-        $arrCalendar   = array();
+    private function getEventsAsPlainArray(array $arrCalendarIds)
+    {
+        $arrCalendar   = [];
         $collectionCal = \CalendarModel::findMultipleByIds($arrCalendarIds);
-        foreach($collectionCal as $calModel) {
+        foreach($collectionCal as $calModel)
+        {
             $arrColor = deserialize($calModel->fullcal_color);
-            if (is_array($arrColor) && strlen($arrColor[0]) > 0) {
+            if (is_array($arrColor) && strlen($arrColor[0]) > 0)
+            {
                 $calModel->fullcal_hexColor = '#'.$arrColor[0];
             }
             $arrCalendar[$calModel->id] = $calModel;
@@ -116,10 +126,13 @@ class ModuleFullCalendar extends \Events {
         $events     = $this->getAllEvents($arrCalendarIds, $tsStart, $tsEnd);
         ksort($events);
 
-        foreach($events as $days) {
-            foreach($days as $keyDay => $day) {
+        foreach($events as $days)
+        {
+            foreach($days as $keyDay => $day)
+            {
                 // $keyDay Ein Tag mit eventuell mehreren Events
-                foreach($day as $event) {
+                foreach($day as $event)
+                {
                     $jsonEvents[] = EventMapper::convert($event, $arrCalendar[$event['pid']]);
                 }
             }
@@ -128,4 +141,3 @@ class ModuleFullCalendar extends \Events {
     }
 
 }
-

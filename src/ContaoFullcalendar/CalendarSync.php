@@ -20,18 +20,22 @@ use \Sabre\DAV\Client;
 use \Contao\Folder;
 use \Contao\File;
 
-class CalendarSync extends \Backend {
+class CalendarSync extends \Backend
+{
     public static $icsFolder = 'share/ics-events/';
     public static $calFolder = 'share/ics-cal/';
 
-    public function syncOneCal() {
+    public function syncOneCal()
+    {
         $calObj = \CalendarModel::findByPk(\Input::get('id'));
-        if ($calObj) {
+        if ($calObj)
+        {
             $infoObj = $this->updateCalendar($calObj);
             \Message::add($infoObj->getMessage(), $infoObj->getType());
         }
 
-        if (\Input::get('id') && \Input::get('table') === 'tl_calendar_events') {
+        if (\Input::get('id') && \Input::get('table') === 'tl_calendar_events')
+        {
             $this->redirect(
                 \Environment::get('script')
                 .'?do=calendar&table=tl_calendar_events&id='.\Input::get('id')
@@ -40,18 +44,21 @@ class CalendarSync extends \Backend {
         $this->redirect(\Environment::get('script').'?do=calendar');
     }
 
-    public function syncCal() {
-        $objCalendarCollection = \CalendarModel::findAll(array(
-            'column' => array("fullcal_type != ''"),
-        ));
+    public function syncCal()
+    {
+        $objCalendarCollection = \CalendarModel::findAll([
+            'column' => ["fullcal_type != ''"],
+        ]);
 
-        foreach($objCalendarCollection as $objCalendar) {
+        foreach($objCalendarCollection as $objCalendar)
+        {
             $infoObj = self::updateCalendar($objCalendar);
             $this->log(strip_tags($infoObj->getMessage()), __METHOD__, TL_CRON);
         }
     }
 
-    public function clearIcsFolder() {
+    public function clearIcsFolder()
+    {
         $folder = new Folder(static::$calFolder);
         $folder->purge();
         $this->log('Purge folder '.static::$calFolder, __METHOD__, TL_CRON);
@@ -63,21 +70,24 @@ class CalendarSync extends \Backend {
         $this->syncCal();
     }
 
-    private function updateCalendar(\Model $objCalendar) {
+    private function updateCalendar(\Model $objCalendar)
+    {
         $vcalContent = null;
         $infoObj     = new InfoObject($objCalendar);
 
-        try {
+        try
+        {
             $vcalContent = self::getVCalendarContent($objCalendar);
         }
-        catch(\Exception $e) {
+        catch(\Exception $e)
+        {
             $infoObj->setException($e);
             return $infoObj;
         }
 
 
         // Time range
-        $arrEventIds   = array();
+        $arrEventIds   = [];
         $dateTimeStart = new \DateTime('-'.$objCalendar->fullcal_range);
         $dateTimeEnd   = new \DateTime('+'.$objCalendar->fullcal_range);
 
@@ -85,7 +95,7 @@ class CalendarSync extends \Backend {
 
         // Lokale Version des Kalenders speichern
         $strFilename = static::$calFolder.$objCalendar->fullcal_alias.'.ics';
-        $file = new File($strFilename);
+        $file        = new File($strFilename);
         $file->write($vcalContent);
         $file->close();
 
@@ -95,8 +105,10 @@ class CalendarSync extends \Backend {
 
         $objTimezone = new \DateTimeZone($GLOBALS['TL_CONFIG']['timeZone']);
 
-        if($vcalendar->VEVENT) {
-            foreach($vcalendar->VEVENT as $vevent) {
+        if($vcalendar->VEVENT)
+        {
+            foreach($vcalendar->VEVENT as $vevent)
+            {
                 $evObj         = EventMapper::getCalendarEventsModel($vevent, $objCalendar, $objTimezone);
                 $arrEventIds[] = intval($evObj->id);
                 $infoObj->add($evObj);
@@ -104,7 +116,8 @@ class CalendarSync extends \Backend {
         }
 
         // Events löschen die nicht gefunden wurden
-        if (count($arrEventIds) > 0) {
+        if (count($arrEventIds) > 0)
+        {
             $stmt = \Database::getInstance()->prepare(
                 "DELETE FROM tl_calendar_events WHERE pid = ? AND fullcal_id != ''"
                 .(empty($arrEventIds) ? "" : " AND id not in(".implode(',', $arrEventIds).")")
@@ -126,10 +139,12 @@ class CalendarSync extends \Backend {
      *
      * @return string
      */
-    private static function getVCalendarContent($calObj) {
+    private static function getVCalendarContent($calObj)
+    {
         $content = self::getFileContent($calObj);
 
-        if (!is_string($content) || strlen($content) === 0) {
+        if (!is_string($content) || strlen($content) === 0)
+        {
             throw new \Exception('Could not get content.');
         }
 
@@ -144,20 +159,23 @@ class CalendarSync extends \Backend {
      * @internal param $ \CalendarModel
      * @return string
      */
-    private static function getFileContent($calObj) {
-        if ('public_ics' === $calObj->fullcal_type) {
-
+    private static function getFileContent($calObj)
+    {
+        if ('public_ics' === $calObj->fullcal_type)
+        {
             // fullcal_lastchanged
             $content = file_get_contents($calObj->fullcal_ics);
-            if ($content !== false) {
+            if ($content !== false)
+            {
                 return $content;
             }
-            else {
+            else
+            {
                 throw new \Exception('Error getting content from '.$calObj->fullcal_ics);
             }
         }
-        elseif ('webdav' === $calObj->fullcal_type) {
-
+        elseif ('webdav' === $calObj->fullcal_type)
+        {
             $settings  = array(
                 'baseUri'  => $calObj->fullcal_baseUri,
                 'userName' => $calObj->fullcal_username,
@@ -171,21 +189,24 @@ class CalendarSync extends \Backend {
             $client->addCurlSetting(CURLOPT_SSL_VERIFYHOST, 0);
 
             $response  = $client->request('GET', $calObj->fullcal_path);
-            if ($response['statusCode'] === 200) {
+            if ($response['statusCode'] === 200)
+            {
                 return $response['body'];
             }
-            elseif ($response['statusCode'] === 404) {
+            elseif ($response['statusCode'] === 404)
+            {
                 throw new \Exception($settings['baseUri'].' not found. [404]');
             }
-            elseif ($response['statusCode'] === 401) {
+            elseif ($response['statusCode'] === 401)
+            {
                 $body = str_replace(array('<p>', '</p>'),array('<br>','<br>'), $response['body']);
                 throw new \Exception(strip_tags($body, '<br>'));
             }
-            else {
+            else
+            {
                 throw new \Exception($response['statusCode']);
             }
         }
-
         throw new \Exception('Unknown sync type '.$calObj->fullcal_type);
     }
 }

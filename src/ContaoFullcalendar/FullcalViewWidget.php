@@ -14,16 +14,16 @@
 
 namespace ContaoFullcalendar;
 
-
-
-class FullcalViewWidget extends \Widget {
+class FullcalViewWidget extends \Widget
+{
     protected $strTemplate = 'be_widget';
     private $strReturn = '';
     private $tmplRow   = '<tr class="%s"><td class="key">%s</td><td class="value">%s</td></tr>';
     private $lang      = null;
     private $event     = null;
 
-    public function generate() {
+    public function generate()
+    {
         $this->lang  = &$GLOBALS['TL_LANG']['tl_calendar_events'];
         $this->event = &$this->activeRecord;
 
@@ -44,14 +44,16 @@ class FullcalViewWidget extends \Widget {
         return $this->strReturn;
     }
 
-    private function fullcal_time() {
+    private function fullcal_time()
+    {
         $tle       = new \tl_calendar_events();
         $strReturn = $tle->listEvents($this->event->row());
         $strReturn = preg_replace('/.*?\[(.*?)\].*/i', "$1", $strReturn);
         return $strReturn;
     }
 
-    private function getTblRow($key, $value = null) {
+    private function getTblRow($key, $value = null)
+    {
         $value = ($value === null) ? $this->event->$key : $value;
         $this->strReturn .= sprintf($this->tmplRow, $key, $this->lang[$key][0], $value);
         return ;

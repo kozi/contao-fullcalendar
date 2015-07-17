@@ -41,7 +41,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['fullcal_weekMode'] = [
     'label'                   => &$GLOBALS['TL_LANG']['tl_module']['fullcal_weekMode'],
     'exclude'                 => true,
     'inputType'               => 'select',
-    'options'                 => array('fixed', 'liquid', 'variable'),
+    'options'                 => ['fixed', 'liquid', 'variable'],
     'sql'                     => "varchar(255) NOT NULL default 'fixed'",
     'eval'                    => ['tl_class' => 'w50'],
 ];
@@ -90,6 +90,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['fullcal_header_right'] = [
     'sql'                     => "varchar(255) NOT NULL default ''",
     'eval'                    => ['tl_class' => 'w50'],
 ];
+
 
 class tl_module_fullcal extends Backend
 {

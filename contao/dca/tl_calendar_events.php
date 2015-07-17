@@ -43,7 +43,8 @@ $GLOBALS['TL_DCA']['tl_calendar_events']['fields']['fullcal_detailViewer'] = [
 
 class tl_calendar_events_fullcal extends tl_calendar_events
 {
-    public function adjustDca() {
+    public function adjustDca()
+    {
         if ($calObj = \CalendarModel::findByPk(\Input::get('id')))
         {
             if ($calObj->fullcal_type !== '')

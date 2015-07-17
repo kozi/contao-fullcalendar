@@ -16,34 +16,44 @@ namespace ContaoFullcalendar;
 
 use Contao\CalendarModel;
 
-class FullCalTags extends \Frontend {
+class FullCalTags extends \Frontend
+{
 
-    public function replaceTags($strTag) {
+    public function replaceTags($strTag)
+    {
         $tagValues     = trimsplit('::', $strTag);
         $this->tagname = array_shift($tagValues);
 
         // Get ics calendar url
-        if ($this->tagname === 'fullcal_alias' || $this->tagname === 'fullcal_url' || $this->tagname === 'fullcal_link') {
-            if (count($tagValues) === 0) {
+        if ($this->tagname === 'fullcal_alias' || $this->tagname === 'fullcal_url' || $this->tagname === 'fullcal_link')
+        {
+            if (count($tagValues) === 0)
+            {
                 return sprintf('{{%s}} Error: No params given', $strTag);
             }
-            if(is_numeric($tagValues[0])) {
+            if(is_numeric($tagValues[0]))
+            {
                 $calObj = CalendarModel::findByPk($tagValues[0]);
-            } else {
+            }
+            else
+            {
                 $calObj = CalendarModel::findOneBy('fullcal_alias', $tagValues[0]);
             }
 
-            if ($calObj === null) {
+            if ($calObj === null)
+            {
                 return sprintf('{{%s}} Error: No calendar found', $strTag);
             }
 
-            if ($this->tagname === 'fullcal_alias') {
+            if ($this->tagname === 'fullcal_alias')
+            {
                 return $calObj->fullcal_alias;
             }
 
             $calUrl = \Environment::get('url').'/'.CalendarSync::$calFolder.$calObj->fullcal_alias.'.ics';
 
-            if ($this->tagname === 'fullcal_url') {
+            if ($this->tagname === 'fullcal_url')
+            {
                 return $calUrl;
             }
 
