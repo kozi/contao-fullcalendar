@@ -23,7 +23,8 @@ class InfoObject
         $this->intDeleted = 0;
     }
 
-    public function add($objEvent) {
+    public function add($objEvent)
+    {
         if($objEvent->fullcal_flagNew)
         {
             $this->intNew++;
@@ -39,7 +40,8 @@ class InfoObject
         $this->intDeleted = $intDel;
     }
 
-    public function getMessage() {
+    public function getMessage()
+    {
         if ($this->objException !== null)
         {
             return $this->objException->getMessage();

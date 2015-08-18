@@ -31,6 +31,7 @@ class FullCalTags extends \Frontend
             {
                 return sprintf('{{%s}} Error: No params given', $strTag);
             }
+
             if(is_numeric($tagValues[0]))
             {
                 $calObj = CalendarModel::findByPk($tagValues[0]);
@@ -69,8 +70,6 @@ class FullCalTags extends \Frontend
         // Nicht unser tag
         return false;
     }
-
-
 
 }
 

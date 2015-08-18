@@ -215,7 +215,7 @@ class EventMapper
      */
     public static function serializeVevent(Node $vevent)
     {
-        $values  = array();
+        $values  = [];
         $jsonObj = $vevent->jsonSerialize();
 
 

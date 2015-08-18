@@ -7,14 +7,15 @@
 <div id="calendar"></div>
 <script>
 var fullCalEventManager;
+
 $(document).ready(function() {
 
-    fullCalEventManager = new EventManager('#calendar', <?php echo $this->jsonArrayEvents; ?>);
+    fullCalEventManager = new EventManager('#calendar', <?=$this->jsonArrayEvents?>);
 
     // page is now ready, initialize the calendar...
     $('#calendar').fullCalendar(
         // Remove last } to extend the json object
-        <?php echo substr_replace($this->fullcalOptions, '', strrpos($this->fullcalOptions, '}')); ?>,
+        <?=substr_replace($this->fullcalOptions, '', strrpos($this->fullcalOptions, '}'))?>,
         contentHeight: 'auto',
         events: fullCalEventManager.getCurrentEvents()
     });
@@ -51,9 +52,9 @@ $(document).ready(function() {
 <div class="fullcal_menu">
     <ul>
     <?php foreach($this->arrCalendar as $cal) : ?>
-        <li id="calAlias_<?php echo $cal->alias; ?>" class="calendar active" style="background-color:#<?php echo $cal->color[0]; ?>">
+        <li id="calAlias_<?=$cal->alias?>" class="calendar active" style="background-color:#<?=$cal->color[0]?>">
             <i onclick="fullCalEventManager.update(this)" class="icon-check"></i>
-            <?php echo $cal->title;?>, <a onclick="return false" href="{{fullcal_url::<?php echo $cal->alias;?>}}">{{fullcal_url::<?php echo $cal->alias;?>}}</a>
+            <?=$cal->title?>, <a onclick="return false" href="{{fullcal_url::<?=$cal->alias?>}}">{{fullcal_url::<?=$cal->alias?>}}</a>
 
         </li>
     <?php endforeach; ?>

@@ -176,11 +176,11 @@ class CalendarSync extends \Backend
         }
         elseif ('webdav' === $calObj->fullcal_type)
         {
-            $settings  = array(
+            $settings  = [
                 'baseUri'  => $calObj->fullcal_baseUri,
                 'userName' => $calObj->fullcal_username,
                 'password' => \Encryption::decrypt($calObj->fullcal_password)
-            );
+            ];
 
             $client    = new Client($settings);
 
@@ -199,7 +199,7 @@ class CalendarSync extends \Backend
             }
             elseif ($response['statusCode'] === 401)
             {
-                $body = str_replace(array('<p>', '</p>'),array('<br>','<br>'), $response['body']);
+                $body = str_replace(['<p>', '</p>'],['<br>','<br>'], $response['body']);
                 throw new \Exception(strip_tags($body, '<br>'));
             }
             else

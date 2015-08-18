@@ -120,7 +120,7 @@ class ModuleFullCalendar extends \Events
         }
 
         // Time range
-        $jsonEvents = array();
+        $jsonEvents = [];
         $tsStart    = strtotime('-'.$this->fullcal_range, time());
         $tsEnd      = strtotime('+'.$this->fullcal_range, time());
         $events     = $this->getAllEvents($arrCalendarIds, $tsStart, $tsEnd);
@@ -141,3 +141,4 @@ class ModuleFullCalendar extends \Events
     }
 
 }
+
