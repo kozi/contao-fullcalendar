@@ -1,3 +1,29 @@
+
+.fullcal_menu ul {
+    list-style: none;
+    padding:0;
+    margin:2em 0;
+}
+
+.fullcal_menu li {
+    display:block;
+    padding:0.3em 0.3em 0.2em 0.3em;
+    margin:0.2em 0;
+    color:#fff;
+}
+
+.fullcal_menu li.inactive {
+    background-color:#959FA9 !important;
+}
+
+.fullcal_menu li i:hover {
+    cursor:pointer;
+}
+
+.fullcal_menu li a {
+    color:#fff;
+}
+
 .fc-event {
   border:2px solid rgba(0,0,0,0.1) !important;
   padding:2px;
