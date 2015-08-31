@@ -8,7 +8,7 @@ Diese Funktion wurde mit **sabre/dav** von  der fruux GmbH realisiert.
 
 #### FullCalendar
 * http://fullcalendar.io/
-* https://github.com/arshaw/fullcalendar
+* https://github.com/fullcalendar/fullcalendar
 
 #### sabre/dav
 * http://sabre.io/
