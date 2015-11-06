@@ -10,10 +10,6 @@ Thumbs.db
 .idea/
 nbproject/
 
-# bower
-contao/**/.bower.json
-contao/**/bower.json
-
 # dependencies
 build
 vendor

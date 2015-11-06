@@ -36,9 +36,16 @@
         "sabre/vobject" : "~3.4",
         "sabre/dav": "~3"
     },
+    "require-dev": {
+        "fxp/composer-asset-plugin": "~1",
+        "bower-asset/fullcalendar": "2.4.x"       
+    },
     "minimum-stability": "dev",
     "prefer-stable": true,
     "extra": {
+      "asset-installer-paths": {
+            "bower-asset-library": "contao/assets/"
+        },
         "contao": {
             "sources": {
                 "contao": "system/modules/fullcalendar"

@@ -1,7 +1,0 @@
-{
-  "name": "contao-fullcalendar",
-  "dependencies": {
-    "fullcalendar": "~2.4",
-    "qtip2": "~2.2"
-  }
-}
