@@ -17,9 +17,8 @@
 
 namespace ContaoFullcalendar;
 
-use Contao\Controller;
-use Contao\DC_Table;
 use Contao\CalendarEventsModel;
+use Contao\StringUtil;
 use Contao\File;
 
 use Sabre\VObject\Component\VCalendar;
@@ -41,7 +40,16 @@ class EventMapper
         $arrCSS[]            = 'jsonEvent';
         $newEvent            = new \stdClass();
         $newEvent->id        = $event['id'];
-        $newEvent->title     = \String::decodeEntities($event['title']);
+        $newEvent->pid       = $event['pid'];
+        $newEvent->alias     = $event['alias'];
+
+        $newEvent->title     = StringUtil::decodeEntities($event['title']);
+        $newEvent->details   = strip_tags($event['details']);
+
+        $newEvent->author    = $event['author'];
+        $newEvent->teaser    = $event['teaser'];
+        $newEvent->location  = $event['location'];
+        $newEvent->href      = $event['href'];
 
         $dateBegin = \Date::parse('Y-m-d', $event['begin']);
         $dateEnd   = \Date::parse('Y-m-d', $event['end']);
@@ -109,9 +117,9 @@ class EventMapper
         {
             $tmpl->$k = $v;
         }
+
         $newEvent->description = $tmpl->parse();
         $newEvent->className   = implode(' ', $arrCSS);
-        $newEvent->details     = strip_tags($event['details']);
 
         return $newEvent;
     }
