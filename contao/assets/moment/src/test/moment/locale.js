@@ -135,7 +135,7 @@ test('library localeData', function (assert) {
 
     assert.equal(moment.localeData().months(jan), 'January', 'no arguments returns global');
     assert.equal(moment.localeData('zh-cn').months(jan), '一月', 'a string returns the locale based on key');
-    assert.equal(moment.localeData(moment().locale('es')).months(jan), 'Enero', 'if you pass in a moment it uses the moment\'s locale');
+    assert.equal(moment.localeData(moment().locale('es')).months(jan), 'enero', 'if you pass in a moment it uses the moment\'s locale');
 });
 
 test('library deprecations', function (assert) {
@@ -169,7 +169,7 @@ test('instance locale method', function (assert) {
     moment.locale('en');
 
     assert.equal(moment([2012, 5, 6]).format('MMMM'), 'June', 'Normally default to global');
-    assert.equal(moment([2012, 5, 6]).locale('es').format('MMMM'), 'Junio', 'Use the instance specific locale');
+    assert.equal(moment([2012, 5, 6]).locale('es').format('MMMM'), 'junio', 'Use the instance specific locale');
     assert.equal(moment([2012, 5, 6]).format('MMMM'), 'June', 'Using an instance specific locale does not affect other moments');
 });
 
@@ -193,9 +193,9 @@ test('instance getter locale substrings', function (assert) {
 test('instance locale persists with manipulation', function (assert) {
     moment.locale('en');
 
-    assert.equal(moment([2012, 5, 6]).locale('es').add({days: 1}).format('MMMM'), 'Junio', 'With addition');
-    assert.equal(moment([2012, 5, 6]).locale('es').day(0).format('MMMM'), 'Junio', 'With day getter');
-    assert.equal(moment([2012, 5, 6]).locale('es').endOf('day').format('MMMM'), 'Junio', 'With endOf');
+    assert.equal(moment([2012, 5, 6]).locale('es').add({days: 1}).format('MMMM'), 'junio', 'With addition');
+    assert.equal(moment([2012, 5, 6]).locale('es').day(0).format('MMMM'), 'junio', 'With day getter');
+    assert.equal(moment([2012, 5, 6]).locale('es').endOf('day').format('MMMM'), 'junio', 'With endOf');
 });
 
 test('instance locale persists with cloning', function (assert) {
@@ -205,8 +205,8 @@ test('instance locale persists with cloning', function (assert) {
         b = a.clone(),
         c = moment(a);
 
-    assert.equal(b.format('MMMM'), 'Junio', 'using moment.fn.clone()');
-    assert.equal(b.format('MMMM'), 'Junio', 'using moment()');
+    assert.equal(b.format('MMMM'), 'junio', 'using moment.fn.clone()');
+    assert.equal(b.format('MMMM'), 'junio', 'using moment()');
 });
 
 test('duration locale method', function (assert) {
@@ -445,3 +445,35 @@ test('moment().lang with missing key doesn\'t change locale', function (assert) 
             'preserve global locale in case of bad locale id');
 });
 
+
+// TODO: Enable this after fixing pl months parse hack hack
+// test('monthsParseExact', function (assert) {
+//     var locale = 'test-months-parse-exact';
+
+//     moment.defineLocale(locale, {
+//         monthsParseExact: true,
+//         months: 'A_AA_AAA_B_B B_BB  B_C_C-C_C,C2C_D_D+D_D`D*D'.split('_'),
+//         monthsShort: 'E_EE_EEE_F_FF_FFF_G_GG_GGG_H_HH_HHH'.split('_')
+//     });
+
+//     assert.equal(moment('A', 'MMMM', true).month(), 0, 'parse long month 0 with MMMM');
+//     assert.equal(moment('AA', 'MMMM', true).month(), 1, 'parse long month 1 with MMMM');
+//     assert.equal(moment('AAA', 'MMMM', true).month(), 2, 'parse long month 2 with MMMM');
+//     assert.equal(moment('B B', 'MMMM', true).month(), 4, 'parse long month 4 with MMMM');
+//     assert.equal(moment('BB  B', 'MMMM', true).month(), 5, 'parse long month 5 with MMMM');
+//     assert.equal(moment('C-C', 'MMMM', true).month(), 7, 'parse long month 7 with MMMM');
+//     assert.equal(moment('C,C2C', 'MMMM', true).month(), 8, 'parse long month 8 with MMMM');
+//     assert.equal(moment('D+D', 'MMMM', true).month(), 10, 'parse long month 10 with MMMM');
+//     assert.equal(moment('D`D*D', 'MMMM', true).month(), 11, 'parse long month 11 with MMMM');
+
+//     assert.equal(moment('E', 'MMM', true).month(), 0, 'parse long month 0 with MMM');
+//     assert.equal(moment('EE', 'MMM', true).month(), 1, 'parse long month 1 with MMM');
+//     assert.equal(moment('EEE', 'MMM', true).month(), 2, 'parse long month 2 with MMM');
+
+//     assert.equal(moment('A', 'MMM').month(), 0, 'non-strict parse long month 0 with MMM');
+//     assert.equal(moment('AA', 'MMM').month(), 1, 'non-strict parse long month 1 with MMM');
+//     assert.equal(moment('AAA', 'MMM').month(), 2, 'non-strict parse long month 2 with MMM');
+//     assert.equal(moment('E', 'MMMM').month(), 0, 'non-strict parse short month 0 with MMMM');
+//     assert.equal(moment('EE', 'MMMM').month(), 1, 'non-strict parse short month 1 with MMMM');
+//     assert.equal(moment('EEE', 'MMMM').month(), 2, 'non-strict parse short month 2 with MMMM');
+// });

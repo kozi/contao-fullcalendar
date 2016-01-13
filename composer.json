@@ -32,13 +32,12 @@
     "require": {
         "contao-community-alliance/composer-plugin": "~2",
         "contao/core": ">=3.5",
-        "php": ">=5.5",
-        "sabre/vobject" : "~3.4",
+        "php": ">=5.5",        
         "sabre/dav": "~3"
     },
     "require-dev": {
         "fxp/composer-asset-plugin": "~1",
-        "bower-asset/fullcalendar": "2.5.x"
+        "bower-asset/fullcalendar": "2.6.x"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,

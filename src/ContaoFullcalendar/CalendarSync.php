@@ -99,10 +99,7 @@ class CalendarSync extends \Backend
         $file->write($vcalContent);
         $file->close();
 
-
-
-        $vcalendar->expand($dateTimeStart, $dateTimeEnd);
-
+        $vcalendar   = $vcalendar->expand($dateTimeStart, $dateTimeEnd);
         $objTimezone = new \DateTimeZone($GLOBALS['TL_CONFIG']['timeZone']);
 
         if($vcalendar->VEVENT)
