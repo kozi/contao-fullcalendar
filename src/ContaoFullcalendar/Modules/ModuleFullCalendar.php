@@ -1,5 +1,7 @@
 <?php
 
+namespace ContaoFullcalendar\Modules;
+
 /**
  * Contao Open Source CMS
  * Copyright (C) 2005-2016 Leo Feyer
@@ -12,7 +14,7 @@
  * @filesource
  */
 
-namespace ContaoFullcalendar;
+use ContaoFullcalendar\EventMapper;
 
 /**
  * Class ModuleFullCalendar

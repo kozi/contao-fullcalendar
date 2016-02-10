@@ -13,15 +13,16 @@
  * @filesource
  */
 
-$GLOBALS['TL_CRON']['hourly'][]                         = ['ContaoFullcalendar\CalendarSync', 'syncCal'];
-$GLOBALS['TL_CRON']['weekly'][]                         = ['ContaoFullcalendar\CalendarSync', 'clearIcsFolder'];
+$GLOBALS['TL_CRON']['hourly'][]                         = ['\ContaoFullcalendar\CalendarSync', 'syncCal'];
+$GLOBALS['TL_CRON']['weekly'][]                         = ['\ContaoFullcalendar\CalendarSync', 'clearIcsFolder'];
 
-$GLOBALS['TL_HOOKS']['replaceInsertTags'][]             = ['ContaoFullcalendar\FullCalTags', 'replaceTags'];
+$GLOBALS['TL_HOOKS']['replaceInsertTags'][]             = ['\ContaoFullcalendar\FullCalTags', 'replaceTags'];
 
 $GLOBALS['BE_MOD']['content']['calendar']['stylesheet'] = 'system/modules/fullcalendar/assets/be-style.css';
 $GLOBALS['BE_MOD']['content']['calendar']['javascript'] = 'system/modules/fullcalendar/assets/be-style.js';
 
-$GLOBALS['BE_MOD']['content']['calendar']['fullcal']    = ['ContaoFullcalendar\CalendarSync', 'syncOneCal'];
-$GLOBALS['FE_MOD']['events']['fullcalendar']            = 'ContaoFullcalendar\ModuleFullCalendar';
-$GLOBALS['BE_FFL']['fullcalView']                       = 'ContaoFullcalendar\FullcalViewWidget';
+$GLOBALS['BE_MOD']['content']['calendar']['fullcal']    = ['\ContaoFullcalendar\CalendarSync', 'syncOneCal'];
+
+$GLOBALS['FE_MOD']['events']['fullcalendar']            = '\ContaoFullcalendar\Modules\ModuleFullCalendar';
+$GLOBALS['BE_FFL']['fullcalView']                       = '\ContaoFullcalendar\Widgets\FullcalViewWidget';
 

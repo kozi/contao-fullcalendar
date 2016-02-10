@@ -1,5 +1,7 @@
 <?php
 
+namespace ContaoFullcalendar;
+
 /**
  * Contao Open Source CMS
  * Copyright (C) 2005-2016 Leo Feyer
@@ -11,8 +13,6 @@
  * @license    LGPL
  * @filesource
  */
-
-namespace ContaoFullcalendar;
 
 use Contao\CalendarModel;
 

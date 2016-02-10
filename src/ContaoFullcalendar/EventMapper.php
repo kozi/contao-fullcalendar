@@ -1,5 +1,7 @@
 <?php
 
+namespace ContaoFullcalendar;
+
 /**
  * class EventMapper
  *
@@ -14,8 +16,6 @@
  * @license    LGPL
  * @filesource
  */
-
-namespace ContaoFullcalendar;
 
 use Contao\CalendarEventsModel;
 use Contao\StringUtil;
