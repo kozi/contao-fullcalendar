@@ -198,9 +198,9 @@ class EventMapper
             {
                 // Bei mehrtägigen Terminen ohne Zeitangabe muss
                 // der letzte Tag subtrahiert werden.
-                $objEndDate->sub($objIntervalOneDay);
-                $eventObject->endDate = $objEndDate->getTimestamp();
-                $eventObject->endTime = $objEndDate->getTimestamp();
+                $objEndDateSubbed     = $objEndDate->sub($objIntervalOneDay);
+                $eventObject->endDate = $objEndDateSubbed->getTimestamp();
+                $eventObject->endTime = $objEndDateSubbed->getTimestamp();
             }
         }
 
