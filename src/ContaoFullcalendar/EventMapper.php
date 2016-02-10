@@ -4,11 +4,11 @@
  * class EventMapper
  *
  * Contao Open Source CMS
- * Copyright (C) 2005-2015 Leo Feyer
+ * Copyright (C) 2005-2016 Leo Feyer
  *
  *
  * PHP version 5
- * @copyright Martin Kozianka 2014-2015 <http://kozianka.de/>
+ * @copyright Martin Kozianka 2014-2016 <http://kozianka.de/>
  * @author    Martin Kozianka <http://kozianka.de/>
  * @package    contao-fullcalendar
  * @license    LGPL
@@ -265,7 +265,7 @@ class EventMapper
      */
     private static function generateAlias(CalendarEventsModel $eventObj)
     {
-        $strAlias = standardize(\String::restoreBasicEntities($eventObj->title));
+        $strAlias = standardize(StringUtil::restoreBasicEntities($eventObj->title));
 
         $objAlias = \Database::getInstance()->prepare("SELECT id FROM tl_calendar_events WHERE alias=?")
             ->execute($strAlias);

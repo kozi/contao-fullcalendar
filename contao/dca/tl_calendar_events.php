@@ -1,5 +1,17 @@
 <?php
 
+/**
+ * Contao Open Source CMS
+ * Copyright (C) 2005-2016 Leo Feyer
+ *
+ * PHP version 5
+ * @copyright  Martin Kozianka 2014-2016 <http://kozianka.de/>
+ * @author     Martin Kozianka <http://kozianka.de/>
+ * @package    contao-fullcalendar
+ * @license    LGPL
+ * @filesource
+ */
+
 $GLOBALS['TL_DCA']['tl_calendar_events']['list']['sorting']['child_record_callback'] = ['tl_calendar_events_fullcal', 'listEvents'];
 $GLOBALS['TL_DCA']['tl_calendar_events']['config']['onload_callback'][]              = ['tl_calendar_events_fullcal', 'adjustDca'];
 
