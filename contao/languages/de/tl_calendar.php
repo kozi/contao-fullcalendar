@@ -10,3 +10,7 @@ $GLOBALS['TL_LANG']['tl_calendar']['fullcal_username']   = ['Benutzername', 'Web
 $GLOBALS['TL_LANG']['tl_calendar']['fullcal_password']   = ['Passwort', 'WebDAV Passwort'];
 $GLOBALS['TL_LANG']['tl_calendar']['fullcal_ics']        = ['ICS-URL', 'Link zu der ics-Datei'];
 $GLOBALS['TL_LANG']['tl_calendar']['fullcal_alias']      = ['Kalenderalias', 'Der Kalenderalias wird für den Dateinamen der abonnierbaren ICS-Datei verwentet.'];
+
+$GLOBALS['TL_LANG']['tl_calendar']['fullcal_type']['no_sync']    = 'Keine Synchronisation';
+$GLOBALS['TL_LANG']['tl_calendar']['fullcal_type']['webdav']     = 'WebDAV-Synchronisation';
+$GLOBALS['TL_LANG']['tl_calendar']['fullcal_type']['public_ics'] = 'Link zu einer ICS-Datei (URL)';

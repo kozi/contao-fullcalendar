@@ -12,9 +12,9 @@ $GLOBALS['TL_LANG']['tl_module']['fullcal_header_left']    = ['Header (left)', $
 $GLOBALS['TL_LANG']['tl_module']['fullcal_header_center']  = ['Header (center)', $fullcalendarDesc];
 $GLOBALS['TL_LANG']['tl_module']['fullcal_header_right']   = ['Header (right)', $fullcalendarDesc];
 
-$GLOBALS['TL_LANG']['tl_module']['3 months'] = '-3 months bis +3 months';
-$GLOBALS['TL_LANG']['tl_module']['6 months'] = '-6 months bis +6 months';
-$GLOBALS['TL_LANG']['tl_module']['1 year']   = '-1 year bis +1 year';
-$GLOBALS['TL_LANG']['tl_module']['2 years']  = '-2 years bis +2 years';
+$GLOBALS['TL_LANG']['tl_module']['fullcal_range']['3_months'] = '-3 months bis +3 months';
+$GLOBALS['TL_LANG']['tl_module']['fullcal_range']['6_months'] = '-6 months bis +6 months';
+$GLOBALS['TL_LANG']['tl_module']['fullcal_range']['1_year']   = '-1 year bis +1 year';
+$GLOBALS['TL_LANG']['tl_module']['fullcal_range']['2_years']  = '-2 years bis +2 years';
 
 

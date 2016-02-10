@@ -35,8 +35,8 @@ $GLOBALS['TL_DCA']['tl_calendar']['fields']['fullcal_range'] = [
     'label'                   => &$GLOBALS['TL_LANG']['tl_calendar']['fullcal_range'],
     'exclude'                 => true,
     'inputType'               => 'select',
-    'options'                 => ['3 months','6 months','1 year','2 years'],
-    'reference'               => &$GLOBALS['TL_LANG']['tl_module'],
+    'options'                 => ['3_months','6_months','1_year','2_years'],
+    'reference'               => &$GLOBALS['TL_LANG']['tl_module']['fullcal_range'],
     'eval'                    => ['tl_class' => 'w50', 'mandatory' => true],
     'sql'                     => "varchar(255) NOT NULL default 'next_365'",
 ];
@@ -62,9 +62,15 @@ $GLOBALS['TL_DCA']['tl_calendar']['fields']['fullcal_type'] = [
     'label'                   => &$GLOBALS['TL_LANG']['tl_calendar']['fullcal_type'],
     'exclude'                 => true,
     'inputType'               => 'select',
-    'options'                 => ['' => 'No Sync', 'webdav' => 'webdav', 'public_ics' => 'public_ics'],
+    'options'                 => ['webdav', 'public_ics'],
+    'reference'               => &$GLOBALS['TL_LANG']['tl_calendar']['fullcal_type'],
     'sql'                     => "varchar(16) NOT NULL default ''",
-    'eval'                    => ['submitOnChange'=>true, 'tl_class' => 'long'],
+    'eval'                    => [
+        'submitOnChange'     => true,
+        'tl_class'           => 'long',
+        'includeBlankOption' => true,
+        'blankOptionLabel'   => $GLOBALS['TL_LANG']['tl_calendar']['fullcal_type']['no_sync']
+    ],
 ];
 
 $GLOBALS['TL_DCA']['tl_calendar']['fields']['fullcal_baseUri'] = [
