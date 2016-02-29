@@ -88,8 +88,10 @@ class CalendarSync extends \Backend
 
         // Time range
         $arrEventIds   = [];
-        $dateTimeStart = new \DateTime('-'.$objCalendar->fullcal_range);
-        $dateTimeEnd   = new \DateTime('+'.$objCalendar->fullcal_range);
+
+        $range         = str_replace('_',' ', $objCalendar->fullcal_range);
+        $dateTimeStart = new \DateTime('-'.$range);
+        $dateTimeEnd   = new \DateTime('+'.$range);
 
         $vcalendar     = Reader::read($vcalContent);
 
