@@ -59,7 +59,7 @@ class ModuleFullCalendar extends \Events
         $fullcalOptions->weekNumbers  = $this->fullcal_weekNumbers;
         $fullcalOptions->weekMode     = $this->fullcal_weekMode;
         $fullcalOptions->aspectRatio  = $this->fullcal_aspectRatio;
-        $fullcalOptions->isRTL        = $this->fullcal_isRTL;
+        $fullcalOptions->isRTL        = ("1" === $this->fullcal_isRTL);
 
         $fullcalOptions->header         = new \stdClass();
         $fullcalOptions->header->left   = $this->fullcal_header_left;
@@ -81,10 +81,6 @@ class ModuleFullCalendar extends \Events
 
         }
 
-        $this->Template->jsonArrayEvents = json_encode($this->getEventsAsPlainArray($arrCalendarIds), JSON_NUMERIC_CHECK);
-        $this->Template->fullcalOptions  = json_encode($fullcalOptions, JSON_NUMERIC_CHECK);
-        $this->Template->arrCalendar     = $arrCalendar;
-
         if ($objPage->hasJQuery !== '1')
         {
             $GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/fullcalendar/assets/jquery/dist/jquery.min.js|static';
@@ -98,11 +94,17 @@ class ModuleFullCalendar extends \Events
         $GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/fullcalendar/assets/fullcal-eventManager.js|static';
 		
 		$pathLang = 'system/modules/fullcalendar/assets/fullcalendar/dist/locale/'.$objPage->language.'.js';
-		
         if (file_exists(TL_ROOT.'/'.$pathLang))
         {
+            // Include file with translations
             $GLOBALS['TL_JAVASCRIPT'][] = $pathLang.'|static';
+            // Set correct locale in fullcalendar configuration
+            $fullcalOptions->locale = $objPage->language;
         }
+		
+        $this->Template->jsonArrayEvents = json_encode($this->getEventsAsPlainArray($arrCalendarIds), JSON_NUMERIC_CHECK);
+        $this->Template->fullcalOptions  = json_encode($fullcalOptions, JSON_NUMERIC_CHECK);
+        $this->Template->arrCalendar     = $arrCalendar;
     }
 
     private function getEventsAsPlainArray(array $arrCalendarIds)
