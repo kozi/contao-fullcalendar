@@ -96,9 +96,9 @@ class ModuleFullCalendar extends \Events
         $GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/fullcalendar/assets/fullcalendar/dist/fullcalendar.js|static';
 
         $GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/fullcalendar/assets/fullcal-eventManager.js|static';
-
-        $pathLang = 'system/modules/fullcalendar/assets/fullcalendar/dist/lang/'.$objPage->language.'.js';
-
+		
+		$pathLang = 'system/modules/fullcalendar/assets/fullcalendar/dist/locale/'.$objPage->language.'.js';
+		
         if (file_exists(TL_ROOT.'/'.$pathLang))
         {
             $GLOBALS['TL_JAVASCRIPT'][] = $pathLang.'|static';
