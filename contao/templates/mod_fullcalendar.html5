@@ -6,18 +6,15 @@
 
 <div id="calendar"></div>
 <script>
-var fullCalEventManager;
+var fullCalEventManager_<?=$this-id?>;
 
 $(document).ready(function() {
-
-    fullCalEventManager = new EventManager('#calendar', <?=$this->jsonArrayEvents?>);
-
     // page is now ready, initialize the calendar...
+    fullCalEventManager_<?=$this-id?> = new EventManager('#calendar', <?=$this->jsonArrayEvents?>);
     $('#calendar').fullCalendar(
         // Remove last } to extend the json object
         <?=substr_replace($this->fullcalOptions, '', strrpos($this->fullcalOptions, '}'))?>,
-        contentHeight: 'auto',
-        events: fullCalEventManager.getCurrentEvents()
+        events: fullCalEventManager_<?=$this-id?>.getCurrentEvents()
     });
 });
 </script>
@@ -26,7 +23,7 @@ $(document).ready(function() {
     <ul>
     <?php foreach($this->arrCalendar as $cal) : ?>
         <li id="calAlias_<?=$cal->alias?>" class="calendar active" style="background-color:#<?=$cal->color[0]?>">
-            <i onclick="fullCalEventManager.update(this)" class="icon-check"></i>
+            <i onclick="fullCalEventManager_<?=$this-id?>.update(this)" class="icon-check"></i>
             <?=$cal->title?>, <a onclick="return false" href="{{fullcal_url::<?=$cal->alias?>}}">{{fullcal_url::<?=$cal->alias?>}}</a>
 
         </li>
