@@ -18,6 +18,7 @@ $(document).ready(function() {
     });
 });
 </script>
+<?php if($this->appendStyle):><style><?=$this->appendStyle?></style><?php endif; ?>
 
 <div class="fullcal_menu">
     <ul>

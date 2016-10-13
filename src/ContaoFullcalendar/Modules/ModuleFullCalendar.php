@@ -60,7 +60,7 @@ class ModuleFullCalendar extends \Events
         if ($this->fullcal_contentHeight != "") {
             $fullcalOptions->contentHeight = $this->fullcal_contentHeight;
         }
-        
+
         $fullcalOptions->aspectRatio    = $this->fullcal_aspectRatio;
         $fullcalOptions->fixedWeekCount = ("1" === $this->fullcal_fixedWeekCount);
         $fullcalOptions->isRTL          = ("1" === $this->fullcal_isRTL);
@@ -108,7 +108,11 @@ class ModuleFullCalendar extends \Events
             // Set correct locale in fullcalendar configuration
             $fullcalOptions->locale = $objPage->language;
         }
-		
+
+        if ($this->fullcal_wrapTitleMonth === "1") {
+            $this->Template->appendStyle = ".fc-month-view .fc-content .fc-title{ white-space: normal }";
+        }
+
         $this->Template->jsonArrayEvents = json_encode($this->getEventsAsPlainArray($arrCalendarIds), JSON_NUMERIC_CHECK);
         $this->Template->fullcalOptions  = json_encode($fullcalOptions, JSON_NUMERIC_CHECK);
         $this->Template->arrCalendar     = $arrCalendar;
@@ -130,8 +134,8 @@ class ModuleFullCalendar extends \Events
 
         // Time range
         $jsonEvents = [];
-        $tsStart    = strtotime('-'.$this->fullcal_range, time());
-        $tsEnd      = strtotime('+'.$this->fullcal_range, time());
+        $tsStart    = strtotime('-'.str_replace("_", " ", $this->fullcal_range), time());
+        $tsEnd      = strtotime('+'.str_replace("_", " ", $this->fullcal_range), time());
         $events     = $this->getAllEvents($arrCalendarIds, $tsStart, $tsEnd);
         ksort($events);
 
