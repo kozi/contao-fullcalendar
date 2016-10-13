@@ -12,7 +12,7 @@
  * @filesource
  */
 
-$fullcalPalette = '{fullcal_legend},cal_calendar,fullcal_range,cal_startDay,fullcal_fixedWeekCount,fullcal_weekNumbers;
+$fullcalPalette = '{fullcal_legend},cal_calendar,fullcal_range,cal_startDay,fullcal_weekNumbers,fullcal_fixedWeekCount;
 fullcal_contentHeight,fullcal_aspectRatio,fullcal_wrapTitleMonth,fullcal_isRTL;
 fullcal_header_left,fullcal_header_center,fullcal_header_right;';
 
