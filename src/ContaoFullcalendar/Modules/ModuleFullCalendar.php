@@ -54,12 +54,19 @@ class ModuleFullCalendar extends \Events
 
         $this->fullcal_viewButtons    = ['month', 'agendaWeek', 'agendaDay'];
 
-        $fullcalOptions               = new \stdClass();
-        $fullcalOptions->firstDay     = $this->cal_startDay;
-        $fullcalOptions->weekNumbers  = $this->fullcal_weekNumbers;
-        $fullcalOptions->weekMode     = $this->fullcal_weekMode;
-        $fullcalOptions->aspectRatio  = $this->fullcal_aspectRatio;
-        $fullcalOptions->isRTL        = ("1" === $this->fullcal_isRTL);
+        $fullcalOptions                 = new \stdClass();
+        $fullcalOptions->firstDay       = $this->cal_startDay;
+
+        if ($this->fullcal_contentHeight != "") {
+            $fullcalOptions->contentHeight = $this->fullcal_contentHeight;
+        }
+        
+        $fullcalOptions->aspectRatio    = $this->fullcal_aspectRatio;
+        $fullcalOptions->fixedWeekCount = ("1" === $this->fullcal_fixedWeekCount);
+        $fullcalOptions->isRTL          = ("1" === $this->fullcal_isRTL);
+
+        $fullcalOptions->weekNumbers           = ($this->fullcal_weekNumbers !== "none");        
+        $fullcalOptions->weekNumbersWithinDays = ($this->fullcal_weekNumbers === "within");
 
         $fullcalOptions->header         = new \stdClass();
         $fullcalOptions->header->left   = $this->fullcal_header_left;

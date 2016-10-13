@@ -12,8 +12,8 @@
  * @filesource
  */
 
-$fullcalPalette = '{fullcal_legend},cal_calendar,fullcal_range,cal_startDay,
-fullcal_weekMode,fullcal_aspectRatio,fullcal_contentHeight,fullcal_weekNumbers,fullcal_wrapTitleMonth,fullcal_isRTL;
+$fullcalPalette = '{fullcal_legend},cal_calendar,fullcal_range,cal_startDay,fullcal_fixedWeekCount,fullcal_weekNumbers;
+fullcal_contentHeight,fullcal_aspectRatio,fullcal_wrapTitleMonth,fullcal_isRTL;
 fullcal_header_left,fullcal_header_center,fullcal_header_right;';
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['fullcalendar']      = str_replace('{include_legend},form;', $fullcalPalette, $GLOBALS['TL_DCA']['tl_module']['palettes']['form']);
@@ -23,10 +23,10 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['fullcal_range'] = [
     'label'                   => &$GLOBALS['TL_LANG']['tl_module']['fullcal_range'],
     'exclude'                 => true,
     'inputType'               => 'select',
-    'options'                 => array('3 months','6 months','1 year','2 years'),
-    'reference'               => &$GLOBALS['TL_LANG']['tl_module'],
+    'options'                 => array('3_months','6_months','1_year','2_years'),
+    'reference'               => &$GLOBALS['TL_LANG']['tl_module']['fullcal_range'],
     'eval'                    => ['tl_class' => 'w50'],
-    'sql'                     => "varchar(255) NOT NULL default 'next_365'",
+    'sql'                     => "varchar(255) NOT NULL default '1_year'",
 ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['fullcal_weekNumbers'] = [
@@ -34,18 +34,17 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['fullcal_weekNumbers'] = [
     'exclude'                 => true,
     'inputType'               => 'select',
     'options'                 => array('none','column','within'),
-    'reference'               => &$GLOBALS['TL_LANG']['tl_module'],
+    'reference'               => &$GLOBALS['TL_LANG']['tl_module']['fullcal_weekNumbers'],
     'eval'                    => ['tl_class' => 'w50'],
-    'sql'                     => "varchar(255) NOT NULL default 'next_365'",
+    'sql'                     => "varchar(255) NOT NULL default 'none'",
 ];
 
-$GLOBALS['TL_DCA']['tl_module']['fields']['fullcal_weekMode'] = [
-    'label'                   => &$GLOBALS['TL_LANG']['tl_module']['fullcal_weekMode'],
+$GLOBALS['TL_DCA']['tl_module']['fields']['fullcal_fixedWeekCount'] = [
+    'label'                   => &$GLOBALS['TL_LANG']['tl_module']['fullcal_fixedWeekCount'],
     'exclude'                 => true,
-    'inputType'               => 'select',
-    'options'                 => ['fixed', 'liquid', 'variable'],
+    'inputType'               => 'checkbox',
     'eval'                    => ['tl_class' => 'w50'],
-    'sql'                     => "varchar(255) NOT NULL default 'fixed'",    
+    'sql'                     => "char(1) NOT NULL default ''",    
 ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['fullcal_contentHeight'] = [
