@@ -209,7 +209,7 @@ class EventMapper
         // After first save() because the id is necessary for alias generation
         static::generateAlias($eventObject);
 
-        // Das einzelne Event als ics Datei speichern
+        // Save the single event as ics files
         static::saveEventAsIcs($eventObject, $vevent);
 
         $eventObject->fullcal_flagNew = $isNew;
@@ -239,23 +239,25 @@ class EventMapper
     }
 
     /**
-     * Get CalendarEventsModel from VEvent
+     * Save one event in an ics file 
      * @param CalendarEventsModel $eventObject
      * @param \Sabre\VObject\Node $vevent
-     * @internal param $ \CalendarEventsModel
-     * @internal param $ \Sabre\VObject\Component\VEvent
      */
     private static function saveEventAsIcs(CalendarEventsModel $eventObject, Node $vevent)
     {
+        // Generate a unique filename
         $strFile = CalendarSync::$icsFolder.$eventObject->alias.'.ics';
 
+        // Create a calendar & add the event 
         $cal = new VCalendar();
         $cal->add($vevent);
 
+        // Save this calendar as an ics file 
         $file = new File($strFile);
         $file->write($cal->serialize());
         $file->close();
 
+        // Save the reference to the ics file in the event 
         $eventObject->fullcal_ics = $strFile;
         $eventObject->save();
     }
