@@ -90,10 +90,10 @@ class ModuleFullCalendar extends \Events
 
         if ($objPage->hasJQuery !== '1')
         {
-            $GLOBALS['TL_JAVASCRIPT'][] = 'components/jquery/jquery.min.js|static';
+            $GLOBALS['TL_JAVASCRIPT'][] = 'assets/jquery/jquery.min.js|static';
         }
         
-        $GLOBALS['TL_JAVASCRIPT'][] = 'components/moment/min/moment.min.js|static';
+        $GLOBALS['TL_JAVASCRIPT'][] = 'assets/moment/min/moment.min.js|static';
         $GLOBALS['TL_CSS'][]        = 'vendor/fullcalendar/fullcalendar/dist/fullcalendar.css||static';
         $GLOBALS['TL_JAVASCRIPT'][] = 'vendor/fullcalendar/fullcalendar/dist/fullcalendar.js|static';
 
