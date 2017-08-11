@@ -90,20 +90,20 @@ class ModuleFullCalendar extends \Events
 
         if ($objPage->hasJQuery !== '1')
         {
-            $GLOBALS['TL_JAVASCRIPT'][] = 'assets/jquery/jquery.min.js|static';
+            $GLOBALS['TL_JAVASCRIPT'][] = 'assets/jquery/jquery.min.js';
         }
         
-        $GLOBALS['TL_JAVASCRIPT'][] = 'assets/moment/min/moment.min.js|static';
-        $GLOBALS['TL_CSS'][]        = 'vendor/fullcalendar/fullcalendar/dist/fullcalendar.css||static';
-        $GLOBALS['TL_JAVASCRIPT'][] = 'vendor/fullcalendar/fullcalendar/dist/fullcalendar.js|static';
+        $GLOBALS['TL_JAVASCRIPT'][] = 'assets/moment/min/moment.min.js';
+        $GLOBALS['TL_CSS'][]        = 'vendor/fullcalendar/fullcalendar/dist/fullcalendar.css';
+        $GLOBALS['TL_JAVASCRIPT'][] = 'vendor/fullcalendar/fullcalendar/dist/fullcalendar.js';
 
-        $GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/fullcalendar/assets/fullcal-eventManager.js|static';
+        $GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/fullcalendar/assets/fullcal-eventManager.js';
 		
         $pathLang = 'vendor/fullcalendar/fullcalendar/dist/locale/'.$objPage->language.'.js';
         if (file_exists(TL_ROOT.'/'.$pathLang))
         {
             // Include file with translations
-            $GLOBALS['TL_JAVASCRIPT'][] = $pathLang.'|static';
+            $GLOBALS['TL_JAVASCRIPT'][] = $pathLang;
             // Set correct locale in fullcalendar configuration
             $fullcalOptions->locale = $objPage->language;
         }
