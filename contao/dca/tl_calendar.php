@@ -141,7 +141,7 @@ class tl_calendar_fullcal extends Backend
         if ($varValue == '')
         {
             $autoAlias = true;
-            $varValue = standardize(String::restoreBasicEntities($dc->activeRecord->title));
+            $varValue = standardize(StringUtil::restoreBasicEntities($dc->activeRecord->title));
         }
 
         $objAlias = $this->Database->prepare("SELECT id FROM tl_calendar WHERE fullcal_alias=?")
