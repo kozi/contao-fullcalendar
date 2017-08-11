@@ -32,7 +32,7 @@
     "require": {
         "contao-community-alliance/composer-plugin": "~2.4 || ~3.0",
         "contao/core-bundle": "~3.5 || ~4.4",
-        "fullcalendar/fullcalendar": "~3.4",
+        "fullcalendar/fullcalendar": "dev-master",
         "sabre/dav": "~3.2"
     },
     "minimum-stability": "dev",
