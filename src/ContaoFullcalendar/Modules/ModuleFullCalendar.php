@@ -90,17 +90,16 @@ class ModuleFullCalendar extends \Events
 
         if ($objPage->hasJQuery !== '1')
         {
-            $GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/fullcalendar/assets/jquery/dist/jquery.min.js|static';
+            $GLOBALS['TL_JAVASCRIPT'][] = 'components/jquery/jquery.min.js|static';
         }
-
-        $GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/fullcalendar/assets/moment/min/moment.min.js|static';
-
-        $GLOBALS['TL_CSS'][]        = 'system/modules/fullcalendar/assets/fullcalendar/dist/fullcalendar.css||static';
-        $GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/fullcalendar/assets/fullcalendar/dist/fullcalendar.js|static';
+        
+        $GLOBALS['TL_JAVASCRIPT'][] = 'components/moment/min/moment.min.js|static';
+        $GLOBALS['TL_CSS'][]        = 'vendor/fullcalendar/fullcalendar/dist/fullcalendar.css||static';
+        $GLOBALS['TL_JAVASCRIPT'][] = 'vendor/fullcalendar/fullcalendar/dist/fullcalendar.js|static';
 
         $GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/fullcalendar/assets/fullcal-eventManager.js|static';
 		
-		$pathLang = 'system/modules/fullcalendar/assets/fullcalendar/dist/locale/'.$objPage->language.'.js';
+        $pathLang = 'vendor/fullcalendar/fullcalendar/dist/locale/'.$objPage->language.'.js';
         if (file_exists(TL_ROOT.'/'.$pathLang))
         {
             // Include file with translations
