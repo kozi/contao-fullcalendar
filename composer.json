@@ -31,7 +31,7 @@
     },
     "require": {
         "contao-community-alliance/composer-plugin": "~2.4 || ~3.0",
-        "contao/core": "~3.5 || ~4.4",
+        "contao/core-bundle": "~3.5 || ~4.4",
         "fullcalendar/fullcalendar": "~3.4",
         "sabre/dav": "~3.2"
     },
