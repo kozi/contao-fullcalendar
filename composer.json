@@ -30,11 +30,14 @@
         }
     },
     "require": {
-        "contao-community-alliance/composer-plugin": "~2.4 || ~3.0",
         "contao/core-bundle": "~3.5 || ~4.4",
-        "fullcalendar/fullcalendar": "dev-master",
+        "contao-community-alliance/composer-plugin": "~2.4 || ~3.0",        
+        "fullcalendar/fullcalendar": "~3.4",
         "sabre/dav": "~3.2"
     },
+    "config": {
+        "component-dir": "assets"
+    },    
     "minimum-stability": "dev",
     "prefer-stable": true,
     "extra": {

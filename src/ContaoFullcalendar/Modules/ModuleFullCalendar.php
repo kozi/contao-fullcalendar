@@ -14,8 +14,8 @@ namespace ContaoFullcalendar\Modules;
  * @filesource
  */
 
-use ContaoFullcalendar\EventMapper;
-
+ use ContaoFullcalendar\EventMapper;
+ 
 /**
  * Class ModuleFullCalendar
  *
@@ -92,18 +92,29 @@ class ModuleFullCalendar extends \Events
         {
             $GLOBALS['TL_JAVASCRIPT'][] = 'assets/jquery/jquery.min.js|static';
         }
-        
-        $GLOBALS['TL_JAVASCRIPT'][] = 'assets/moment/min/moment.min.js|static';
-        $GLOBALS['TL_CSS'][]        = 'vendor/fullcalendar/fullcalendar/dist/fullcalendar.css|static';
-        $GLOBALS['TL_JAVASCRIPT'][] = 'vendor/fullcalendar/fullcalendar/dist/fullcalendar.js|static';
 
-        $GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/fullcalendar/assets/fullcal-eventManager.js|static';
-		
-        $pathLang = 'vendor/fullcalendar/fullcalendar/dist/locale/'.$objPage->language.'.js|static';
-        if (file_exists(TL_ROOT.'/'.$pathLang))
+
+        $assetsPath = "system/modules/fullcalendar/assets";
+        $distPath   = $assetsPath."/dist";
+        $langPath   = $distPath.'/locale/'.$objPage->language.'.js';
+
+        // Copy fullcalendar dist to public assets folder
+        if (!is_dir(TL_ROOT.'/'.$distPath))
+        {
+            $objFolder = new \Folder("vendor/fullcalendar/fullcalendar/dist");
+            $objFolder->copyTo($distPath);
+        }
+
+        $GLOBALS['TL_CSS'][]        = $distPath.'/fullcalendar.css|static';
+
+        $GLOBALS['TL_JAVASCRIPT'][] = 'assets/moment/min/moment.min.js|static';
+        $GLOBALS['TL_JAVASCRIPT'][] = $distPath.'/fullcalendar.js|static';
+        $GLOBALS['TL_JAVASCRIPT'][] = $assetsPath.'/fullcal-eventManager.js|static';
+
+        if (file_exists(TL_ROOT.'/'.$langPath))
         {
             // Include file with translations
-            $GLOBALS['TL_JAVASCRIPT'][] = $pathLang.'|static';
+            $GLOBALS['TL_JAVASCRIPT'][] = $langPath.'|static';
             // Set correct locale in fullcalendar configuration
             $fullcalOptions->locale = $objPage->language;
         }
