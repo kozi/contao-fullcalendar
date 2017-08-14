@@ -100,9 +100,6 @@ class ModuleFullCalendar extends \Events
         }
         $GLOBALS['TL_JAVASCRIPT'][] = ($isV4) ? "assets/moment/min/moment.min.js|static" : "assets/components/moment/min/moment.min.js|static";
 
-        $assetsPath = "system/modules/fullcalendar/assets";
-        $langPath   = self::$distPath.'/locale/'.$objPage->language.'.js';
-
         // Copy fullcalendar dist to public assets folder
         if (!is_dir(TL_ROOT.'/'.self::$distPath))
         {
@@ -111,11 +108,12 @@ class ModuleFullCalendar extends \Events
             $objFolder->copyTo(self::$distPath);
         }
 
-        $GLOBALS['TL_CSS'][]        = self::$distPath."/fullcalendar.css|static";
+        $GLOBALS['TL_CSS'][]        = self::$distPath."/fullcalendar.min.css|static";
+        $GLOBALS['TL_JAVASCRIPT'][] = self::$distPath."/fullcalendar.min.js|static";        
         
-        $GLOBALS['TL_JAVASCRIPT'][] = self::$distPath."/fullcalendar.js|static";        
-        $GLOBALS['TL_JAVASCRIPT'][] = $assetsPath."/fullcal-eventManager.js|static";
+        $GLOBALS['TL_JAVASCRIPT'][] = "system/modules/fullcalendar/assets/fullcal-eventManager.js|static";
 
+        $langPath   = self::$distPath.'/locale/'.$objPage->language.'.js';
         if (file_exists(TL_ROOT.'/'.$langPath))
         {
             // Include file with translations
@@ -125,7 +123,7 @@ class ModuleFullCalendar extends \Events
         }
 
         if ($this->fullcal_wrapTitleMonth === "1") {
-            $this->Template->appendStyle = ".fc-month-view .fc-content .fc-title{ white-space: normal }";
+            $this->Template->appendStyle = ".fc-month-view .fc-content .fc-title { white-space: normal }";
         }
 
         $this->Template->jsonArrayEvents = json_encode($this->getEventsAsPlainArray($arrCalendarIds), JSON_NUMERIC_CHECK);
