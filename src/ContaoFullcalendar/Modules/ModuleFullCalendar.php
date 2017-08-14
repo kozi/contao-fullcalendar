@@ -14,7 +14,7 @@ namespace ContaoFullcalendar\Modules;
  * @filesource
  */
 
- use ContaoFullcalendar\EventMapper;
+use ContaoFullcalendar\EventMapper;
  
 /**
  * Class ModuleFullCalendar
@@ -26,6 +26,7 @@ namespace ContaoFullcalendar\Modules;
  */
 class ModuleFullCalendar extends \Events
 {
+    public static $distPath = "assets/jquery-fullcalendar";
 
     /**
      * Template
@@ -94,19 +95,16 @@ class ModuleFullCalendar extends \Events
         }
 
 
+        $isV4       = version_compare(VERSION, '4', '>=');
         $assetsPath = "system/modules/fullcalendar/assets";
-        $distPath   = $assetsPath."/dist";
         $langPath   = $distPath.'/locale/'.$objPage->language.'.js';
 
-
-        $isV4 = version_compare(VERSION, '4', '>=');
-
         // Copy fullcalendar dist to public assets folder
-        if (!is_dir(TL_ROOT.'/'.$distPath))
+        if (!is_dir(TL_ROOT.'/'.self::$distPath))
         {
             $sourcePath =  ($isV4 ? "" : "composer/"). "vendor/fullcalendar/fullcalendar/dist";
             $objFolder = new \Folder($sourcePath);
-            $objFolder->copyTo($distPath);
+            $objFolder->copyTo(self::$distPath);
         }
 
         $GLOBALS['TL_CSS'][]        = $distPath."/fullcalendar.css|static";

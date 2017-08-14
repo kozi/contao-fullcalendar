@@ -13,14 +13,15 @@
  * @filesource
  */
 
+use ContaoFullcalendar\Modules\ModuleFullCalendar;
+
 class FullcalendarRunonceJob extends \Controller
 {
 	public function run()
     {
-        $distPath = "system/modules/fullcalendar/assets/dist";
-        if (is_dir(TL_ROOT."/".$distPath))
+        if (is_dir(TL_ROOT."/".ModuleFullCalendar::$distPath))
         {
-            $objFolder = new \Folder($distPath);
+            $objFolder = new \Folder(ModuleFullCalendar::$distPath);
             $objFolder->delete();
         }		
     }
