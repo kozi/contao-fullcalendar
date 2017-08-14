@@ -89,15 +89,19 @@ class ModuleFullCalendar extends \Events
 
         }
 
+
+        
+        $isV4 = version_compare(VERSION, '4', '>=');
+        
+        // Add fullcalendar dependencies
         if ($objPage->hasJQuery !== '1')
         {
             $GLOBALS['TL_JAVASCRIPT'][] = 'assets/jquery/jquery.min.js|static';
         }
+        $GLOBALS['TL_JAVASCRIPT'][] = ($isV4) ? "assets/moment/min/moment.min.js|static" : "assets/components/moment/min/moment.min.js|static";
 
-
-        $isV4       = version_compare(VERSION, '4', '>=');
         $assetsPath = "system/modules/fullcalendar/assets";
-        $langPath   = $distPath.'/locale/'.$objPage->language.'.js';
+        $langPath   = self::$distPath.'/locale/'.$objPage->language.'.js';
 
         // Copy fullcalendar dist to public assets folder
         if (!is_dir(TL_ROOT.'/'.self::$distPath))
@@ -107,9 +111,9 @@ class ModuleFullCalendar extends \Events
             $objFolder->copyTo(self::$distPath);
         }
 
-        $GLOBALS['TL_CSS'][]        = $distPath."/fullcalendar.css|static";
-        $GLOBALS['TL_JAVASCRIPT'][] = ($isV4) ? "assets/moment/min/moment.min.js|static" : "assets/components/moment/min/moment.min.js|static";
-        $GLOBALS['TL_JAVASCRIPT'][] = $distPath."/fullcalendar.js|static";
+        $GLOBALS['TL_CSS'][]        = self::$distPath."/fullcalendar.css|static";
+        
+        $GLOBALS['TL_JAVASCRIPT'][] = self::$distPath."/fullcalendar.js|static";        
         $GLOBALS['TL_JAVASCRIPT'][] = $assetsPath."/fullcal-eventManager.js|static";
 
         if (file_exists(TL_ROOT.'/'.$langPath))
