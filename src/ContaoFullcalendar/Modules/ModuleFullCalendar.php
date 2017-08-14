@@ -98,19 +98,21 @@ class ModuleFullCalendar extends \Events
         $distPath   = $assetsPath."/dist";
         $langPath   = $distPath.'/locale/'.$objPage->language.'.js';
 
+
+        $isV4 = version_compare(VERSION, '4', '>=');
+
         // Copy fullcalendar dist to public assets folder
         if (!is_dir(TL_ROOT.'/'.$distPath))
         {
-            $sourcePath = ((version_compare(VERSION, '4', '<')) ? "composer/" : ""). "vendor/fullcalendar/fullcalendar/dist";
+            $sourcePath =  ($isV4 ? "" : "composer/"). "vendor/fullcalendar/fullcalendar/dist";
             $objFolder = new \Folder($sourcePath);
             $objFolder->copyTo($distPath);
         }
 
-        $GLOBALS['TL_CSS'][]        = $distPath.'/fullcalendar.css|static';
-
-        $GLOBALS['TL_JAVASCRIPT'][] = 'assets/moment/min/moment.min.js|static';
-        $GLOBALS['TL_JAVASCRIPT'][] = $distPath.'/fullcalendar.js|static';
-        $GLOBALS['TL_JAVASCRIPT'][] = $assetsPath.'/fullcal-eventManager.js|static';
+        $GLOBALS['TL_CSS'][]        = $distPath."/fullcalendar.css|static";
+        $GLOBALS['TL_JAVASCRIPT'][] = ($isV4) ? "assets/moment/min/moment.min.js|static" : "assets/components/moment/min/moment.min.js|static";
+        $GLOBALS['TL_JAVASCRIPT'][] = $distPath."/fullcalendar.js|static";
+        $GLOBALS['TL_JAVASCRIPT'][] = $assetsPath."/fullcal-eventManager.js|static";
 
         if (file_exists(TL_ROOT.'/'.$langPath))
         {
