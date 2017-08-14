@@ -35,9 +35,6 @@
         "fullcalendar/fullcalendar": "~3.4",
         "sabre/dav": "~3.2"
     },
-    "config": {
-        "component-dir": "assets"
-    },    
     "minimum-stability": "dev",
     "prefer-stable": true,
     "extra": {
