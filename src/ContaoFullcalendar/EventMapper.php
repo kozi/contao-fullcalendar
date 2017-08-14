@@ -44,7 +44,7 @@ class EventMapper
         $newEvent->alias     = $event['alias'];
 
         $newEvent->title     = StringUtil::decodeEntities($event['title']);
-        $newEvent->details   = strip_tags($event['details']);
+        $newEvent->details   = (array_key_exists("details", $event) && is_string($event['details'])) ? strip_tags($event['details']) : null;
 
         $newEvent->author    = $event['author'];
         $newEvent->teaser    = $event['teaser'];
