@@ -101,7 +101,8 @@ class ModuleFullCalendar extends \Events
         // Copy fullcalendar dist to public assets folder
         if (!is_dir(TL_ROOT.'/'.$distPath))
         {
-            $objFolder = new \Folder("vendor/fullcalendar/fullcalendar/dist");
+            $sourcePath = ((version_compare(VERSION, '4', '<')) ? "composer/" : ""). "vendor/fullcalendar/fullcalendar/dist";
+            $objFolder = new \Folder($sourcePath);
             $objFolder->copyTo($distPath);
         }
 
