@@ -26,8 +26,6 @@ use ContaoFullcalendar\EventMapper;
  */
 class ModuleFullCalendar extends \Events
 {
-    public static $distPath = "assets/jquery-fullcalendar";
-
     /**
      * Template
      * @var string
@@ -89,31 +87,21 @@ class ModuleFullCalendar extends \Events
 
         }
 
+        $isV4 = version_compare(VERSION, "4", ">=");
+        $pathPrefix = ($isV4) ?  "assets/" : "assets/components/";
+        $arrayJavascriptFiles = [];
 
+        // Add jQuery if not already included
+        ($objPage->hasJQuery !== "1") && ($GLOBALS["TL_JAVASCRIPT"][] = $pathPrefix."jquery/jquery.min.js|static");
         
-        $isV4 = version_compare(VERSION, '4', '>=');
-        
-        // Add fullcalendar dependencies
-        if ($objPage->hasJQuery !== '1')
-        {
-            $GLOBALS['TL_JAVASCRIPT'][] = 'assets/jquery/jquery.min.js|static';
-        }
-        $GLOBALS['TL_JAVASCRIPT'][] = ($isV4) ? "assets/moment/min/moment.min.js|static" : "assets/components/moment/min/moment.min.js|static";
+        $GLOBALS["TL_JAVASCRIPT"][] = $pathPrefix."moment/min/moment.min.js|static";
 
-        // Copy fullcalendar dist to public assets folder
-        if (!is_dir(TL_ROOT.'/'.self::$distPath))
-        {
-            $sourcePath =  ($isV4 ? "" : "composer/"). "vendor/fullcalendar/fullcalendar/dist";
-            $objFolder = new \Folder($sourcePath);
-            $objFolder->copyTo(self::$distPath);
-        }
+        $GLOBALS['TL_CSS'][]        = $pathPrefix."fullcalendar/dist/fullcalendar.min.css|static";
+        $GLOBALS["TL_JAVASCRIPT"][] = $pathPrefix."fullcalendar/dist/fullcalendar.min.js|static";        
 
-        $GLOBALS['TL_CSS'][]        = self::$distPath."/fullcalendar.min.css|static";
-        $GLOBALS['TL_JAVASCRIPT'][] = self::$distPath."/fullcalendar.min.js|static";        
-        
         $GLOBALS['TL_JAVASCRIPT'][] = "system/modules/fullcalendar/assets/fullcal-eventManager.js|static";
 
-        $langPath   = self::$distPath.'/locale/'.$objPage->language.'.js';
+        $langPath   = $pathPrefix."fullcalendar/dist/locale/".$objPage->language.'.js';
         if (file_exists(TL_ROOT.'/'.$langPath))
         {
             // Include file with translations
