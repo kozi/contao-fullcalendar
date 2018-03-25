@@ -13,5 +13,4 @@ nbproject/
 # dependencies
 build
 vendor
-/assets
 composer.lock
