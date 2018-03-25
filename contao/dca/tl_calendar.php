@@ -2,10 +2,10 @@
 
 /**
  * Contao Open Source CMS
- * Copyright (C) 2005-2017 Leo Feyer
+ * Copyright (C) 2005-2018 Leo Feyer
  *
  * PHP version 5
- * @copyright  Martin Kozianka 2014-2017 <http://kozianka.de/>
+ * @copyright  Martin Kozianka 2014-2018 <http://kozianka.de/>
  * @author     Martin Kozianka <http://kozianka.de/>
  * @package    contao-fullcalendar
  * @license    LGPL
@@ -109,8 +109,8 @@ $GLOBALS['TL_DCA']['tl_calendar']['fields']['fullcal_password'] = [
     'label'                   => &$GLOBALS['TL_LANG']['tl_calendar']['fullcal_password'],
     'exclude'                 => true,
     'inputType'               => 'text',
-    'sql'                     => "blob NULL",
-    'eval'                    => ['mandatory' => true, 'tl_class' => 'w50', 'encrypt' => true],
+    'sql'                     => "varchar(255) NOT NULL default ''",
+    'eval'                    => ['mandatory' => true, 'tl_class' => 'w50'],
 ];
 
 $GLOBALS['TL_DCA']['tl_calendar']['fields']['fullcal_lastchanged'] = [
