@@ -4,10 +4,10 @@ namespace ContaoFullcalendar\Modules;
 
 /**
  * Contao Open Source CMS
- * Copyright (C) 2005-2017 Leo Feyer
+ * Copyright (C) 2005-2018 Leo Feyer
  *
  * PHP version 5
- * @copyright Martin Kozianka 2014-2017 <http://kozianka.de/>
+ * @copyright Martin Kozianka 2014-2018 <http://kozianka.de/>
  * @author    Martin Kozianka <http://kozianka.de/>
  * @package    contao-fullcalendar
  * @license    LGPL
@@ -20,7 +20,7 @@ use ContaoFullcalendar\EventMapper;
  * Class ModuleFullCalendar
  *
  * Front end module "fullcalendar".
- * @copyright Martin Kozianka 2014-2017 <http://kozianka.de/>
+ * @copyright Martin Kozianka 2014-2018 <http://kozianka.de/>
  * @author    Martin Kozianka <http://kozianka.de/>
  * @package    contao-fullcalendar
  */
@@ -86,22 +86,21 @@ class ModuleFullCalendar extends \Events
             ];
 
         }
-
-        $isV4 = version_compare(VERSION, "4", ">=");
-        $pathPrefix = ($isV4) ?  "assets/" : "assets/components/";
-        $arrayJavascriptFiles = [];
-
-        // Add jQuery if not already included
-        ($objPage->hasJQuery !== "1") && ($GLOBALS["TL_JAVASCRIPT"][] = $pathPrefix."jquery/jquery.min.js|static");
         
+        // Add error message is jQuery is not included
+        if ($objPage->hasJQuery !== "1") {
+            $this->Template->errorMessage = "jQuery is not activated for this page!";
+        }
+
+        $pathPrefix = "system/modules/fullcalendar/assets/";
         $GLOBALS["TL_JAVASCRIPT"][] = $pathPrefix."moment/min/moment.min.js|static";
 
-        $GLOBALS['TL_CSS'][]        = $pathPrefix."fullcalendar/dist/fullcalendar.min.css|static";
-        $GLOBALS["TL_JAVASCRIPT"][] = $pathPrefix."fullcalendar/dist/fullcalendar.min.js|static";        
+        $GLOBALS['TL_CSS'][]        = $pathPrefix."fullcalendar/fullcalendar.min.css|static";
+        $GLOBALS["TL_JAVASCRIPT"][] = $pathPrefix."fullcalendar/fullcalendar.min.js|static";        
 
-        $GLOBALS['TL_JAVASCRIPT'][] = "system/modules/fullcalendar/assets/fullcal-eventManager.js|static";
+        $GLOBALS['TL_JAVASCRIPT'][] = $pathPrefix."fullcal-eventManager.js|static";
 
-        $langPath   = $pathPrefix."fullcalendar/dist/locale/".$objPage->language.'.js';
+        $langPath   = $pathPrefix."fullcalendar/locale/".$objPage->language.'.js';
         if (file_exists(TL_ROOT.'/'.$langPath))
         {
             // Include file with translations
@@ -113,7 +112,7 @@ class ModuleFullCalendar extends \Events
         if ($this->fullcal_wrapTitleMonth === "1") {
             $this->Template->appendStyle = ".fc-month-view .fc-content .fc-title { white-space: normal }";
         }
-
+        
         $this->Template->jsonArrayEvents = json_encode($this->getEventsAsPlainArray($arrCalendarIds), JSON_NUMERIC_CHECK);
         $this->Template->fullcalOptions  = json_encode($fullcalOptions, JSON_NUMERIC_CHECK);
         $this->Template->arrCalendar     = $arrCalendar;

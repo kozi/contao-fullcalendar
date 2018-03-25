@@ -21,7 +21,6 @@
     "support": {
         "email": "martin@kozianka.de",
         "issues": "https://github.com/kozi/contao-fullcalendar/issues",
-        "irc": "irc://irc.freenode.org/contao.dev",
         "source": "https://github.com/kozi/contao-fullcalendar"
     },
     "autoload": {
@@ -32,11 +31,7 @@
     "require": {
         "contao/core-bundle": "~3.5 || ~4.4",
         "contao-community-alliance/composer-plugin": "~2.4 || ~3.0",        
-        "fullcalendar/fullcalendar": "~3.5",
         "sabre/dav": "~3.2"
-    },
-    "config": {
-        "component-dir": "assets"
     },    
     "minimum-stability": "dev",
     "prefer-stable": true,
