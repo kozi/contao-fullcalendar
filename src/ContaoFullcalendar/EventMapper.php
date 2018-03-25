@@ -166,6 +166,7 @@ class EventMapper
         $eventObject->title        = $eData['summary'];
         $eventObject->location     = $eData['location'];
         $eventObject->pid          = $calObj->id;
+        $eventObject->source       = 'default';       
         $eventObject->published    = '1';
         $eventObject->addTime      = $addTime ? '1' : '';
         $eventObject->tstamp       = $objTimestamp->getTimestamp();
