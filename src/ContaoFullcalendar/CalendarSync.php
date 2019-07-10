@@ -33,18 +33,8 @@ class CalendarSync extends \Backend
             $infoObj = $this->updateCalendar($calObj);
             \Message::add($infoObj->getMessage(), $infoObj->getType());
         }
-
-        if (\Input::get('id') && \Input::get('table') === 'tl_calendar_events')
-        {
-            
-            /*$this->redirect(
-                \Environment::get('script')
-                .'?do=calendar&table=tl_calendar_events&id='.\Input::get('id')
-            );*/
-            $this->redirect($this->getReferer());
-        }
         
-        // $this->redirect(\Environment::get('script').'?do=calendar');
+        // Redirect to previous page
         $this->redirect($this->getReferer());
     }
 
