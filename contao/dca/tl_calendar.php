@@ -67,7 +67,7 @@ $GLOBALS['TL_DCA']['tl_calendar']['fields']['fullcal_type'] = [
     'sql'                     => "varchar(16) NOT NULL default ''",
     'eval'                    => [
         'submitOnChange'     => true,
-        'tl_class'           => 'long',
+        'tl_class'           => 'clr',
         'includeBlankOption' => true,
         'blankOptionLabel'   => $GLOBALS['TL_LANG']['tl_calendar']['fullcal_type']['no_sync']
     ],
