@@ -36,12 +36,16 @@ class CalendarSync extends \Backend
 
         if (\Input::get('id') && \Input::get('table') === 'tl_calendar_events')
         {
-            $this->redirect(
+            
+            /*$this->redirect(
                 \Environment::get('script')
                 .'?do=calendar&table=tl_calendar_events&id='.\Input::get('id')
-            );
+            );*/
+            $this->redirect($this->getReferer());
         }
-        $this->redirect(\Environment::get('script').'?do=calendar');
+        
+        // $this->redirect(\Environment::get('script').'?do=calendar');
+        $this->redirect($this->getReferer());
     }
 
     public function syncCal()
