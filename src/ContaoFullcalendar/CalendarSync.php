@@ -14,11 +14,10 @@ namespace ContaoFullcalendar;
  * @filesource
  */
 
-use \Sabre\VObject\Reader;
-use \Sabre\DAV\Client;
-
-use \Contao\Folder;
 use \Contao\File;
+use \Contao\Folder;
+use \Sabre\DAV\Client;
+use \Sabre\VObject\Reader;
 
 class CalendarSync extends \Backend
 {
@@ -28,12 +27,11 @@ class CalendarSync extends \Backend
     public function syncOneCal()
     {
         $calObj = \CalendarModel::findByPk(\Input::get('id'));
-        if ($calObj)
-        {
+        if ($calObj) {
             $infoObj = $this->updateCalendar($calObj);
             \Message::add($infoObj->getMessage(), $infoObj->getType());
         }
-        
+
         // Redirect to previous page
         $this->redirect($this->getReferer());
     }
@@ -44,8 +42,7 @@ class CalendarSync extends \Backend
             'column' => ["fullcal_type != ''"],
         ]);
 
-        foreach($objCalendarCollection as $objCalendar)
-        {
+        foreach ($objCalendarCollection as $objCalendar) {
             $infoObj = self::updateCalendar($objCalendar);
             $this->log(strip_tags($infoObj->getMessage()), __METHOD__, TL_CRON);
         }
@@ -55,11 +52,11 @@ class CalendarSync extends \Backend
     {
         $folder = new Folder(static::$calFolder);
         $folder->purge();
-        $this->log('Purge folder '.static::$calFolder, __METHOD__, TL_CRON);
+        $this->log('Purge folder ' . static::$calFolder, __METHOD__, TL_CRON);
 
         $folder = new Folder(static::$icsFolder);
         $folder->purge();
-        $this->log('Purge folder '.static::$icsFolder, __METHOD__, TL_CRON);
+        $this->log('Purge folder ' . static::$icsFolder, __METHOD__, TL_CRON);
 
         $this->syncCal();
     }
@@ -67,53 +64,47 @@ class CalendarSync extends \Backend
     private function updateCalendar(\Model $objCalendar)
     {
         $vcalContent = null;
-        $infoObj     = new InfoObject($objCalendar);
+        $infoObj = new InfoObject($objCalendar);
 
         try
         {
             $vcalContent = self::getVCalendarContent($objCalendar);
-        }
-        catch(\Exception $e)
-        {
+        } catch (\Exception $e) {
             $infoObj->setException($e);
             return $infoObj;
         }
 
-
         // Time range
-        $arrEventIds   = [];
+        $arrEventIds = [];
 
-        $range         = str_replace('_',' ', $objCalendar->fullcal_range);
-        $dateTimeStart = new \DateTime('-'.$range);
-        $dateTimeEnd   = new \DateTime('+'.$range);
+        $range = str_replace('_', ' ', $objCalendar->fullcal_range);
+        $dateTimeStart = new \DateTime('-' . $range);
+        $dateTimeEnd = new \DateTime('+' . $range);
 
-        $vcalendar     = Reader::read($vcalContent);
+        $vcalendar = Reader::read($vcalContent);
 
         // Lokale Version des Kalenders speichern
-        $strFilename = static::$calFolder.$objCalendar->fullcal_alias.'.ics';
-        $file        = new File($strFilename);
+        $strFilename = static::$calFolder . $objCalendar->fullcal_alias . '.ics';
+        $file = new File($strFilename);
         $file->write($vcalContent);
         $file->close();
 
-        $vcalendar   = $vcalendar->expand($dateTimeStart, $dateTimeEnd);
+        $vcalendar = $vcalendar->expand($dateTimeStart, $dateTimeEnd);
         $objTimezone = new \DateTimeZone($GLOBALS['TL_CONFIG']['timeZone']);
 
-        if($vcalendar->VEVENT)
-        {
-            foreach($vcalendar->VEVENT as $vevent)
-            {
-                $evObj         = EventMapper::getCalendarEventsModel($vevent, $objCalendar, $objTimezone);
+        if ($vcalendar->VEVENT) {
+            foreach ($vcalendar->VEVENT as $vevent) {
+                $evObj = EventMapper::getCalendarEventsModel($vevent, $objCalendar, $objTimezone);
                 $arrEventIds[] = intval($evObj->id);
                 $infoObj->add($evObj);
             }
         }
 
         // Events löschen die nicht gefunden wurden
-        if (count($arrEventIds) > 0)
-        {
+        if (count($arrEventIds) > 0) {
             $stmt = \Database::getInstance()->prepare(
                 "DELETE FROM tl_calendar_events WHERE pid = ? AND fullcal_id != ''"
-                .(empty($arrEventIds) ? "" : " AND id not in(".implode(',', $arrEventIds).")")
+                . (empty($arrEventIds) ? "" : " AND id not in(" . implode(',', $arrEventIds) . ")")
             );
             $stmt->execute($objCalendar->id);
             $infoObj->setDeleted($stmt->affectedRows);
@@ -136,14 +127,12 @@ class CalendarSync extends \Backend
     {
         $content = self::getFileContent($calObj);
 
-        if (!is_string($content) || strlen($content) === 0)
-        {
+        if (!is_string($content) || strlen($content) === 0) {
             throw new \Exception('Could not get content.');
         }
 
         return $content;
     }
-
 
     /**
      * Get remote file content
@@ -154,53 +143,39 @@ class CalendarSync extends \Backend
      */
     private static function getFileContent($calObj)
     {
-        if ('public_ics' === $calObj->fullcal_type)
-        {
+        if ('public_ics' === $calObj->fullcal_type) {
             // fullcal_lastchanged
             $content = file_get_contents($calObj->fullcal_ics);
-            if ($content !== false)
-            {
+            if ($content !== false) {
                 return $content;
+            } else {
+                throw new \Exception('Error getting content from ' . $calObj->fullcal_ics);
             }
-            else
-            {
-                throw new \Exception('Error getting content from '.$calObj->fullcal_ics);
-            }
-        }
-        elseif ('webdav' === $calObj->fullcal_type)
-        {
-            $settings  = [
-                'baseUri'  => $calObj->fullcal_baseUri,
+        } elseif ('webdav' === $calObj->fullcal_type) {
+            $settings = [
+                'baseUri' => $calObj->fullcal_baseUri,
                 'userName' => $calObj->fullcal_username,
-                'password' => \Encryption::decrypt($calObj->fullcal_password)
+                'password' => \Encryption::decrypt($calObj->fullcal_password),
             ];
 
-            $client    = new Client($settings);
+            $client = new Client($settings);
 
             // Hack!
             $client->addCurlSetting(CURLOPT_SSL_VERIFYPEER, 0);
             $client->addCurlSetting(CURLOPT_SSL_VERIFYHOST, 0);
 
-            $response  = $client->request('GET', $calObj->fullcal_path);
-            if ($response['statusCode'] === 200)
-            {
+            $response = $client->request('GET', $calObj->fullcal_path);
+            if ($response['statusCode'] === 200) {
                 return $response['body'];
-            }
-            elseif ($response['statusCode'] === 404)
-            {
-                throw new \Exception($settings['baseUri'].' not found. [404]');
-            }
-            elseif ($response['statusCode'] === 401)
-            {
-                $body = str_replace(['<p>', '</p>'],['<br>','<br>'], $response['body']);
+            } elseif ($response['statusCode'] === 404) {
+                throw new \Exception($settings['baseUri'] . ' not found. [404]');
+            } elseif ($response['statusCode'] === 401) {
+                $body = str_replace(['<p>', '</p>'], ['<br>', '<br>'], $response['body']);
                 throw new \Exception(strip_tags($body, '<br>'));
-            }
-            else
-            {
+            } else {
                 throw new \Exception($response['statusCode']);
             }
         }
-        throw new \Exception('Unknown sync type '.$calObj->fullcal_type);
+        throw new \Exception('Unknown sync type ' . $calObj->fullcal_type);
     }
 }
-

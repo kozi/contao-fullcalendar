@@ -18,16 +18,16 @@ class FullcalViewWidget extends \Widget
 {
     protected $strTemplate = 'be_widget';
     private $strReturn = '';
-    private $tmplRow   = '<tr class="%s"><td class="key">%s</td><td class="value">%s</td></tr>';
-    private $lang      = null;
-    private $event     = null;
+    private $tmplRow = '<tr class="%s"><td class="key">%s</td><td class="value">%s</td></tr>';
+    private $lang = null;
+    private $event = null;
 
     public function generate()
     {
-        $this->lang  = &$GLOBALS['TL_LANG']['tl_calendar_events'];
+        $this->lang = &$GLOBALS['TL_LANG']['tl_calendar_events'];
         $this->event = &$this->activeRecord;
 
-        $this->strReturn  = '<table class="fullcalView"><tbody>';
+        $this->strReturn = '<table class="fullcalView"><tbody>';
 
         $this->getTblRow('title', null, 'h');
 
@@ -46,7 +46,7 @@ class FullcalViewWidget extends \Widget
 
     private function fullcal_time()
     {
-        $tle       = new \tl_calendar_events();
+        $tle = new \tl_calendar_events();
         $strReturn = $tle->listEvents($this->event->row());
         $strReturn = preg_replace('/.*?\[(.*?)\].*/i', "$1", $strReturn);
         return $strReturn;
@@ -56,6 +56,6 @@ class FullcalViewWidget extends \Widget
     {
         $value = ($value === null) ? $this->event->$key : $value;
         $this->strReturn .= sprintf($this->tmplRow, $key, $this->lang[$key][0], $value);
-        return ;
+        return;
     }
 }

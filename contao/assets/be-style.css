@@ -1,40 +1,39 @@
 .fullcal_sync .tl_content_left {
-    background:url('icons/arrow-circle-double-12x12-sw.png') no-repeat 0 center;
-    padding-left:16px;
-    color:#9F9F9F;
+    background: url('icons/arrow-circle-double-12x12-sw.png') no-repeat 0 center;
+    padding-left: 16px;
+    color: #9F9F9F;
 }
+
 .fullcal_sync .tl_content_left span {
-    color:#b3b3b3;
+    color: #b3b3b3;
 }
 
 .fullcal_sync .tl_content_right a.copy,
 .fullcal_sync .tl_content_right a.cut,
 .fullcal_sync .tl_content_right a.toggle,
 .fullcal_sync .tl_content_right a.delete {
-    display:none;
+    display: none;
 }
 
 table.fullcalView {
     border-collapse: separate;
-    border-spacing:1px;
-    margin:5px 0;
+    border-spacing: 1px;
+    margin: 5px 0;
 }
 
 table.fullcalView td {
-    background-color:#efefef;
-    margin:1px;
-    padding:5px 10px;
+    background-color: #efefef;
+    margin: 1px;
+    padding: 5px 10px;
 }
 
 table.fullcalView .title td,
 table.fullcalView .fullcal_time td {
-    background-color:#ededed;
-    font-size:130%;
+    background-color: #ededed;
+    font-size: 130%;
 }
 
 table.fullcalView td.key {
 
     font-weight: bold;
 }
-
-

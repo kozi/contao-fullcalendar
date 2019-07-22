@@ -15,7 +15,7 @@ namespace ContaoFullcalendar\Modules;
  */
 
 use ContaoFullcalendar\EventMapper;
- 
+
 /**
  * Class ModuleFullCalendar
  *
@@ -34,14 +34,13 @@ class ModuleFullCalendar extends \Events
 
     public function generate()
     {
-        if (TL_MODE === 'BE')
-        {
-            $objTemplate           = new \BackendTemplate('be_wildcard');
+        if (TL_MODE === 'BE') {
+            $objTemplate = new \BackendTemplate('be_wildcard');
             $objTemplate->wildcard = '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['FMD']['fullcalendar'][0]) . ' ###';
-            $objTemplate->title    = $this->headline;
-            $objTemplate->id       = $this->id;
-            $objTemplate->link     = $this->name;
-            $objTemplate->href     = 'contao/main.php?do=themes&amp;table=tl_module&amp;act=edit&amp;id=' . $this->id;
+            $objTemplate->title = $this->headline;
+            $objTemplate->id = $this->id;
+            $objTemplate->link = $this->name;
+            $objTemplate->href = 'contao/main.php?do=themes&amp;table=tl_module&amp;act=edit&amp;id=' . $this->id;
             return $objTemplate->parse();
         }
         return parent::generate();
@@ -51,60 +50,58 @@ class ModuleFullCalendar extends \Events
     {
         global $objPage;
 
-        $this->fullcal_viewButtons    = ['month', 'agendaWeek', 'agendaDay'];
+        $this->fullcal_viewButtons = ['month', 'agendaWeek', 'agendaDay'];
 
-        $fullcalOptions                 = new \stdClass();
-        $fullcalOptions->firstDay       = $this->cal_startDay;
+        $fullcalOptions = new \stdClass();
+        $fullcalOptions->firstDay = $this->cal_startDay;
 
         if ($this->fullcal_contentHeight != "") {
             $fullcalOptions->contentHeight = $this->fullcal_contentHeight;
         }
 
-        $fullcalOptions->aspectRatio    = $this->fullcal_aspectRatio;
+        $fullcalOptions->aspectRatio = $this->fullcal_aspectRatio;
         $fullcalOptions->fixedWeekCount = ("1" === $this->fullcal_fixedWeekCount);
-        $fullcalOptions->isRTL          = ("1" === $this->fullcal_isRTL);
+        $fullcalOptions->isRTL = ("1" === $this->fullcal_isRTL);
 
-        $fullcalOptions->weekNumbers           = ($this->fullcal_weekNumbers !== "none");        
+        $fullcalOptions->weekNumbers = ($this->fullcal_weekNumbers !== "none");
         $fullcalOptions->weekNumbersWithinDays = ($this->fullcal_weekNumbers === "within");
 
-        $fullcalOptions->header         = new \stdClass();
-        $fullcalOptions->header->left   = $this->fullcal_header_left;
+        $fullcalOptions->header = new \stdClass();
+        $fullcalOptions->header->left = $this->fullcal_header_left;
         $fullcalOptions->header->center = $this->fullcal_header_center;
-        $fullcalOptions->header->right  = $this->fullcal_header_right;
+        $fullcalOptions->header->right = $this->fullcal_header_right;
 
         $arrCalendarIds = array_map('intval', deserialize($this->cal_calendar));
-        $arrCalendar    = [];
-        $collectionCal  = \CalendarModel::findMultipleByIds($arrCalendarIds);
+        $arrCalendar = [];
+        $collectionCal = \CalendarModel::findMultipleByIds($arrCalendarIds);
 
-        foreach($collectionCal as $objCal)
-        {
+        foreach ($collectionCal as $objCal) {
             $arrCalendar[$objCal->fullcal_alias] = (object) [
-                'id'     => $objCal->id,
-                'title'  => $objCal->title,
-                'alias'  => $objCal->fullcal_alias,
-                'color'  => deserialize($objCal->fullcal_color),
+                'id' => $objCal->id,
+                'title' => $objCal->title,
+                'alias' => $objCal->fullcal_alias,
+                'color' => deserialize($objCal->fullcal_color),
             ];
 
         }
-        
+
         // Add error message is jQuery is not included
         if ($objPage->hasJQuery !== "1") {
             $this->Template->errorMessage = "jQuery is not activated for this page!";
         }
 
         $pathPrefix = "system/modules/fullcalendar/assets/";
-        $GLOBALS["TL_JAVASCRIPT"][] = $pathPrefix."moment/min/moment.min.js|static";
+        $GLOBALS["TL_JAVASCRIPT"][] = $pathPrefix . "moment/min/moment.min.js|static";
 
-        $GLOBALS['TL_CSS'][]        = $pathPrefix."fullcalendar/fullcalendar.min.css|static";
-        $GLOBALS["TL_JAVASCRIPT"][] = $pathPrefix."fullcalendar/fullcalendar.min.js|static";        
+        $GLOBALS['TL_CSS'][] = $pathPrefix . "fullcalendar/fullcalendar.min.css|static";
+        $GLOBALS["TL_JAVASCRIPT"][] = $pathPrefix . "fullcalendar/fullcalendar.min.js|static";
 
-        $GLOBALS['TL_JAVASCRIPT'][] = $pathPrefix."fullcal-eventManager.js|static";
+        $GLOBALS['TL_JAVASCRIPT'][] = $pathPrefix . "fullcal-eventManager.js|static";
 
-        $langPath   = $pathPrefix."fullcalendar/locale/".$objPage->language.'.js';
-        if (file_exists(TL_ROOT.'/'.$langPath))
-        {
+        $langPath = $pathPrefix . "fullcalendar/locale/" . $objPage->language . '.js';
+        if (file_exists(TL_ROOT . '/' . $langPath)) {
             // Include file with translations
-            $GLOBALS['TL_JAVASCRIPT'][] = $langPath.'|static';
+            $GLOBALS['TL_JAVASCRIPT'][] = $langPath . '|static';
             // Set correct locale in fullcalendar configuration
             $fullcalOptions->locale = $objPage->language;
         }
@@ -112,40 +109,35 @@ class ModuleFullCalendar extends \Events
         if ($this->fullcal_wrapTitleMonth === "1") {
             $this->Template->appendStyle = ".fc-month-view .fc-content .fc-title { white-space: normal }";
         }
-        
+
         $this->Template->jsonArrayEvents = json_encode($this->getEventsAsPlainArray($arrCalendarIds), JSON_NUMERIC_CHECK);
-        $this->Template->fullcalOptions  = json_encode($fullcalOptions, JSON_NUMERIC_CHECK);
-        $this->Template->arrCalendar     = $arrCalendar;
+        $this->Template->fullcalOptions = json_encode($fullcalOptions, JSON_NUMERIC_CHECK);
+        $this->Template->arrCalendar = $arrCalendar;
     }
 
     private function getEventsAsPlainArray(array $arrCalendarIds)
     {
-        $arrCalendar   = [];
+        $arrCalendar = [];
         $collectionCal = \CalendarModel::findMultipleByIds($arrCalendarIds);
-        foreach($collectionCal as $calModel)
-        {
+        foreach ($collectionCal as $calModel) {
             $arrColor = deserialize($calModel->fullcal_color);
-            if (is_array($arrColor) && strlen($arrColor[0]) > 0)
-            {
-                $calModel->fullcal_hexColor = '#'.$arrColor[0];
+            if (is_array($arrColor) && strlen($arrColor[0]) > 0) {
+                $calModel->fullcal_hexColor = '#' . $arrColor[0];
             }
             $arrCalendar[$calModel->id] = $calModel;
         }
 
         // Time range
         $jsonEvents = [];
-        $tsStart    = strtotime('-'.str_replace("_", " ", $this->fullcal_range), time());
-        $tsEnd      = strtotime('+'.str_replace("_", " ", $this->fullcal_range), time());
-        $events     = $this->getAllEvents($arrCalendarIds, $tsStart, $tsEnd);
+        $tsStart = strtotime('-' . str_replace("_", " ", $this->fullcal_range), time());
+        $tsEnd = strtotime('+' . str_replace("_", " ", $this->fullcal_range), time());
+        $events = $this->getAllEvents($arrCalendarIds, $tsStart, $tsEnd);
         ksort($events);
 
-        foreach($events as $days)
-        {
-            foreach($days as $keyDay => $day)
-            {
+        foreach ($events as $days) {
+            foreach ($days as $keyDay => $day) {
                 // $keyDay Ein Tag mit eventuell mehreren Events
-                foreach($day as $event)
-                {
+                foreach ($day as $event) {
                     $jsonEvents[] = EventMapper::convert($event, $arrCalendar[$event['pid']]);
                 }
             }
@@ -154,4 +146,3 @@ class ModuleFullCalendar extends \Events
     }
 
 }
-

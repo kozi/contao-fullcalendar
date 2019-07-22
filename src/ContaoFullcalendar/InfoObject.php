@@ -21,7 +21,7 @@ class InfoObject
      * @var \Exception
      */
     private $objException = null;
-    private $strType      = 'TL_INFO';
+    private $strType = 'TL_INFO';
     private $strTitle;
     private $intNew;
     private $intUpdated;
@@ -29,20 +29,17 @@ class InfoObject
 
     public function __construct($objCal)
     {
-        $this->strTitle   = $objCal->title;
-        $this->intNew     = 0;
+        $this->strTitle = $objCal->title;
+        $this->intNew = 0;
         $this->intUpdated = 0;
         $this->intDeleted = 0;
     }
 
     public function add($objEvent)
     {
-        if($objEvent->fullcal_flagNew)
-        {
+        if ($objEvent->fullcal_flagNew) {
             $this->intNew++;
-        }
-        else
-        {
+        } else {
             $this->intUpdated++;
         }
     }
@@ -54,8 +51,7 @@ class InfoObject
 
     public function getMessage()
     {
-        if ($this->objException !== null)
-        {
+        if ($this->objException !== null) {
             return $this->objException->getMessage();
         }
 
@@ -67,7 +63,7 @@ class InfoObject
 
     public function setException(\Exception $e)
     {
-        $this->strType      = 'TL_ERROR';
+        $this->strType = 'TL_ERROR';
         $this->objException = $e;
     }
 

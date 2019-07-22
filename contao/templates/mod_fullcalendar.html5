@@ -1,12 +1,12 @@
-<?php $GLOBALS['TL_CSS'][] = 'system/modules/fullcalendar/assets/fullcalendar.css||static'; ?>
+<?php $GLOBALS['TL_CSS'][] = 'system/modules/fullcalendar/assets/fullcalendar.css||static';?>
 
-<?php $this->extend('block_searchable'); ?>
+<?php $this->extend('block_searchable');?>
 
-<?php $this->block('content'); ?>
+<?php $this->block('content');?>
 
-<?php if($this->errorMessage): ?>
+<?php if ($this->errorMessage): ?>
     <pre style="color:red;"><?=$this->errorMessage?></pre>
-<?php endif; ?>
+<?php endif;?>
 
 <div id="calendar"></div>
 <script>
@@ -22,19 +22,19 @@ $(document).ready(function() {
     });
 });
 </script>
-<?php if($this->appendStyle): ?><style><?=$this->appendStyle?></style><?php endif; ?>
+<?php if ($this->appendStyle): ?><style><?=$this->appendStyle?></style><?php endif;?>
 
 <div class="fullcal_menu">
     <ul>
-    <?php foreach($this->arrCalendar as $cal) : ?>
+    <?php foreach ($this->arrCalendar as $cal): ?>
         <li id="calAlias_<?=$cal->alias?>" class="calendar active" style="background-color:#<?=$cal->color[0]?>">
             <i onclick="fullCalEventManager_<?=$this->id?>.update(this)" class="icon-check"></i>
             <?=$cal->title?>, <a onclick="return false" href="{{fullcal_url::<?=$cal->alias?>}}">{{fullcal_url::<?=$cal->alias?>}}</a>
 
         </li>
-    <?php endforeach; ?>
+    <?php endforeach;?>
     </ul>
 </div>
 
-<?php $this->endblock(); ?>
+<?php $this->endblock();?>
 
