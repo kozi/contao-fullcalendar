@@ -155,7 +155,7 @@ class CalendarSync extends \Backend
             $settings = [
                 'baseUri' => $calObj->fullcal_baseUri,
                 'userName' => $calObj->fullcal_username,
-                'password' => \Encryption::decrypt($calObj->fullcal_password),
+                'password' => $calObj->fullcal_password,
             ];
 
             $client = new Client($settings);
