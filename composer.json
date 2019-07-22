@@ -29,10 +29,10 @@
         }
     },
     "require": {
-        "contao/core-bundle": "~3.5 || ~4.4",
-        "contao-community-alliance/composer-plugin": "~2.4 || ~3.0",        
-        "sabre/dav": "~3.2"
-    },    
+        "contao/core-bundle": "~4.7",
+        "contao-community-alliance/composer-plugin": "~3.0",
+        "sabre/dav": "~4.0"
+    },
     "minimum-stability": "dev",
     "prefer-stable": true,
     "extra": {
