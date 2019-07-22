@@ -4,10 +4,10 @@ namespace ContaoFullcalendar\Modules;
 
 /**
  * Contao Open Source CMS
- * Copyright (C) 2005-2018 Leo Feyer
+ * Copyright (C) 2005-2019 Leo Feyer
  *
  * PHP version 5
- * @copyright Martin Kozianka 2014-2018 <http://kozianka.de/>
+ * @copyright Martin Kozianka 2014-2019 <http://kozianka.de/>
  * @author    Martin Kozianka <http://kozianka.de/>
  * @package    contao-fullcalendar
  * @license    LGPL
@@ -20,7 +20,7 @@ use ContaoFullcalendar\EventMapper;
  * Class ModuleFullCalendar
  *
  * Front end module "fullcalendar".
- * @copyright Martin Kozianka 2014-2018 <http://kozianka.de/>
+ * @copyright Martin Kozianka 2014-2019 <http://kozianka.de/>
  * @author    Martin Kozianka <http://kozianka.de/>
  * @package    contao-fullcalendar
  */
