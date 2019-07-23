@@ -24,9 +24,9 @@ $GLOBALS['TL_DCA']['tl_calendar']['subpalettes']['fullcal_type_public_ics'] = 'f
 
 array_insert($GLOBALS['TL_DCA']['tl_calendar']['list']['operations'], 0, [
     'fullcal' => [
-        'label' => &$GLOBALS['TL_LANG']['tl_calendar']['fullcal'],
+        'label' => &$GLOBALS['TL_LANG']['tl_calendar']['fullcal_sync'],
         'href' => 'key=fullcal',
-        'icon' => 'reload.gif',
+        'icon' => 'sync.svg',
         'button_callback' => ['tl_calendar_fullcal', 'btnCallback'],
     ],
 ]);

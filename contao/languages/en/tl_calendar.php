@@ -1,5 +1,6 @@
 <?php
 
+$GLOBALS['TL_LANG']['tl_calendar']['fullcal_sync'] = 'Synchronize calendar';
 $GLOBALS['TL_LANG']['tl_calendar']['fullcal_legend'] = 'FullCalendar';
 $GLOBALS['TL_LANG']['tl_calendar']['fullcal_color'] = ['Color', 'Color for events'];
 $GLOBALS['TL_LANG']['tl_calendar']['fullcal_type'] = ['Type of synchronization', 'Type of synchronization'];
