@@ -16,7 +16,7 @@ Diese Funktion wurde mit **sabre/dav** von  der fruux GmbH realisiert.
 ## sabre/dav
 
 * [http://sabre.io/](http://sabre.io/)
-* [https://github.com/fruux/sabre-dav](https://github.com/fruux/sabre-dav)
+* [https://github.com/sabre-io/dav](https://github.com/sabre-io/dav)
 
 ## Beispiel
 
