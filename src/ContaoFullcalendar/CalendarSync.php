@@ -33,7 +33,7 @@ class CalendarSync extends \Backend
             \Message::add($infoObj->getMessage(), $infoObj->getType());
         }
         System::setCookie('BE_PAGE_OFFSET', 0, 0);
-        $this->redirect(str_replace('&key=fullcal', '', Environment::get('request')));
+        $this->redirect(str_replace('&key=fullcal', '', \Environment::get('request')));
     }
 
     public function syncCal()
