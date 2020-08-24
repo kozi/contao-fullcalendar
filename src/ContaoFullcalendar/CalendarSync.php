@@ -16,6 +16,7 @@ namespace ContaoFullcalendar;
 
 use \Contao\File;
 use \Contao\Folder;
+use \Contao\System;
 use \Sabre\DAV\Client;
 use \Sabre\VObject\Reader;
 
@@ -31,9 +32,8 @@ class CalendarSync extends \Backend
             $infoObj = $this->updateCalendar($calObj);
             \Message::add($infoObj->getMessage(), $infoObj->getType());
         }
-
-        // Redirect to previous page
-        $this->redirect($this->getReferer());
+        System::setCookie('BE_PAGE_OFFSET', 0, 0);
+        $this->redirect(str_replace('&key=fullcal', '', Environment::get('request')));
     }
 
     public function syncCal()

@@ -91,7 +91,7 @@ class ModuleFullCalendar extends \Events
         }
 
         $pathPrefix = "system/modules/fullcalendar/assets/";
-        $GLOBALS["TL_JAVASCRIPT"][] = $pathPrefix . "moment/min/moment.min.js|static";
+        $GLOBALS["TL_JAVASCRIPT"][] = $pathPrefix . "moment.min.js|static";
 
         $GLOBALS['TL_CSS'][] = $pathPrefix . "fullcalendar/fullcalendar.min.css|static";
         $GLOBALS["TL_JAVASCRIPT"][] = $pathPrefix . "fullcalendar/fullcalendar.min.js|static";
