@@ -1,36 +1,25 @@
-/* .fullcal_menu ul {
-    list-style: none;
+.fullcal_menu_list {
+    margin: 1rem 0;
     padding: 0;
-    margin: 2em 0;
+    list-style: none;
 }
 
-.fullcal_menu li {
+.fullcal_menu_entry {
+    margin: 1rem 0;
+    display: flex;
+    list-style: none;
+    align-items: center;
+}
+
+.fullcal_menu_dot {
     display: block;
-    padding: 0.3em 0.3em 0.2em 0.3em;
-    margin: 0.2em 0;
-    color: #fff;
-}
-
-.fullcal_menu li.inactive {
-    background-color: #959FA9 !important;
-}
-
-.fullcal_menu li i:hover {
+    border-radius: 50%;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin: 0 .5rem .1rem 0;
     cursor: pointer;
 }
 
-.fullcal_menu li a {
-    color: #fff;
+.fullcal_menu_entry.deactivated .fullcal_menu_dot {
+    background-color: #ddd !important;
 }
-
-.fc-event {
-    border: 2px solid rgba(0, 0, 0, 0.1) !important;
-    padding: 2px;
-    font-size: 72%;
-    cursor: pointer;
-}
-
-.fc-header .fc-state-active,
-.fc-header .ui-state-active {
-    z-index: auto;
-}*/

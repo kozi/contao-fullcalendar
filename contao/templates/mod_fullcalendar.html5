@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if(fcMenuElement) {
         console.log("fcMenuElement", fcMenuElement);
-        var dots = fcMenuElement.getElementsByClassName("fullcal_dot");
+        var dots = fcMenuElement.getElementsByClassName("fullcal_menu_dot");
         dots && Array.prototype.forEach.call(dots, function(dot) {
             console.log("dot", dot);
         });
@@ -34,12 +34,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <?php if ($this->showMenu): ?>
 <div id="fullcal_menu_<?=$this->id?>" class="fullcal_menu">
-    <ul>
+    <ul class="fullcal_menu_list">
     <?php foreach ($this->arrCalendar as $cal): ?>
-        <li id="calAlias_<?=$cal->alias?>" class="calendar active">
-            <span class="fullcal_dot" style="background-color:#<?=$cal->color[0]?>"></span>
-            <span class="fullcal_label">
-                <?=$cal->title?>, <a onclick="return false" href="{{fullcal_url::<?=$cal->alias?>}}">{{fullcal_url::<?=$cal->alias?>}}</a>
+        <li id="calAlias_<?=$cal->alias?>" class="fullcal_menu_entry">
+            <span class="fullcal_menu_dot" style="background-color:#<?=$cal->color[0]?>"></span>
+            <span class="fullcal_menu_label">
+                <a class="fullcal_menu_title"><?=$cal->title?></span>, <a class="fullcal_menu_ics" onclick="return false" href="{{fullcal_url::<?=$cal->alias?>}}">{{fullcal_url::<?=$cal->alias?>}}</a>
             </span>
         </li>
     <?php endforeach;?>
