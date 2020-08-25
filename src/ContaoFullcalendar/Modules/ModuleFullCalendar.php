@@ -96,6 +96,11 @@ class ModuleFullCalendar extends \Events
                 ".fc-daygrid-event > div { display:inline-block; }",
             ]);
         }
+
+        if (!ctype_space($this->fullcal_options_additional)) {
+            $this->Template->fullcalOptionsAdditional = trim($this->fullcal_options_additional);
+        }
+
         $this->Template->showMenu = true;
         $this->Template->jsonArrayEvents = json_encode($this->getEventsAsPlainArray($arrCalendarIds), JSON_NUMERIC_CHECK);
         $this->Template->fullcalOptions = json_encode($fullcalOptions, JSON_NUMERIC_CHECK);

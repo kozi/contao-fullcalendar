@@ -14,7 +14,7 @@
 
 $fullcalPalette = '{fullcal_legend},cal_calendar,fullcal_range,cal_startDay,fullcal_weekNumbers,fullcal_fixedWeekCount;
 fullcal_contentHeight,fullcal_aspectRatio,fullcal_wrapTitleMonth,fullcal_isRTL;
-fullcal_headerToolbar_start,fullcal_headerToolbar_center,fullcal_headerToolbar_end;';
+fullcal_headerToolbar_start,fullcal_headerToolbar_center,fullcal_headerToolbar_end;fullcal_options_additional;';
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['fullcalendar'] = str_replace('{include_legend},form;', $fullcalPalette, $GLOBALS['TL_DCA']['tl_module']['palettes']['form']);
 $GLOBALS['TL_DCA']['tl_module']['config']['onsubmit_callback'][] = ['tl_module_fullcal', 'checkCalNoSpan'];
@@ -104,6 +104,14 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['fullcal_headerToolbar_end'] = [
     'inputType' => 'text',
     'sql' => "varchar(255) NOT NULL default ''",
     'eval' => ['tl_class' => 'w50'],
+];
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['fullcal_options_additional'] = [
+    'label' => &$GLOBALS['TL_LANG']['tl_module']['fullcal_options_additional'],
+    'exclude' => true,
+    'inputType' => 'textarea',
+    'sql' => "varchar(255) NOT NULL default ''",
+    'eval' => ['tl_class' => 'long'],
 ];
 
 class tl_module_fullcal extends Backend

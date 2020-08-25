@@ -17,6 +17,8 @@ $GLOBALS['TL_LANG']['tl_module']['fullcal_headerToolbar_start'] = ['Kopfzeile (S
 $GLOBALS['TL_LANG']['tl_module']['fullcal_headerToolbar_center'] = ['Kopfzeile (Mitte)', $fullcalendarDesc];
 $GLOBALS['TL_LANG']['tl_module']['fullcal_headerToolbar_end'] = ['Kopfzeile (Ende)', $fullcalendarDesc];
 
+$GLOBALS['TL_LANG']['tl_module']['fullcal_options_additional'] = ['Zusätzliche FullCalendar Einstellungen', 'Muss als JSON-String angegeben werden.'];
+
 $GLOBALS['TL_LANG']['tl_module']['fullcal_range']['3_months'] = '-3 Monate bis +3 Monate';
 $GLOBALS['TL_LANG']['tl_module']['fullcal_range']['6_months'] = '-6 Monate bis +6 Monate';
 $GLOBALS['TL_LANG']['tl_module']['fullcal_range']['1_year'] = '-1 Jahr bis +1 Jahr';

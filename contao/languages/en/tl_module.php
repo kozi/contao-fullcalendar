@@ -17,6 +17,8 @@ $GLOBALS['TL_LANG']['tl_module']['fullcal_headerToolbar_start'] = ['Header (star
 $GLOBALS['TL_LANG']['tl_module']['fullcal_headerToolbar_center'] = ['Header (center)', $fullcalendarDesc];
 $GLOBALS['TL_LANG']['tl_module']['fullcal_headerToolbar_end'] = ['Header (end)', $fullcalendarDesc];
 
+$GLOBALS['TL_LANG']['tl_module']['fullcal_options_additional'] = ['Additional FullCalendar options', 'Must be a valid JSON string'];
+
 $GLOBALS['TL_LANG']['tl_module']['fullcal_range']['3_months'] = '-3 months bis +3 months';
 $GLOBALS['TL_LANG']['tl_module']['fullcal_range']['6_months'] = '-6 months bis +6 months';
 $GLOBALS['TL_LANG']['tl_module']['fullcal_range']['1_year'] = '-1 year bis +1 year';

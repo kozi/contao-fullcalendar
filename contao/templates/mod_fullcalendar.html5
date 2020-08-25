@@ -18,7 +18,9 @@ document.addEventListener('DOMContentLoaded', function() {
         // Remove last } to extend the json object
         <?=substr_replace($this->fullcalOptions, '', strrpos($this->fullcalOptions, '}'))?>,
         events: events
-    });
+        <?=($this->fullcalOptionsAdditional ? "," . substr($str, 1) : "}")?>
+    );
+
     fc.render();
 
     if(fcMenuElement) {
