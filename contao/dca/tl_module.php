@@ -111,7 +111,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['fullcal_options_additional'] = [
     'exclude' => true,
     'inputType' => 'textarea',
     'sql' => "varchar(255) NOT NULL default ''",
-    'eval' => ['tl_class' => 'long'],
+    'eval' => ['tl_class' => 'long', 'useRawRequestData' => true],
 ];
 
 class tl_module_fullcal extends Backend
