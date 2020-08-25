@@ -110,7 +110,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['fullcal_options_additional'] = [
     'label' => &$GLOBALS['TL_LANG']['tl_module']['fullcal_options_additional'],
     'exclude' => true,
     'inputType' => 'textarea',
-    'sql' => "varchar(255) NOT NULL default ''",
+    'sql' => "text NULL",
     'eval' => ['tl_class' => 'long', 'useRawRequestData' => true],
 ];
 
