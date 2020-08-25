@@ -90,15 +90,13 @@ class ModuleFullCalendar extends \Events
         $GLOBALS["TL_JAVASCRIPT"][] = "system/modules/fullcalendar/assets/fullcalendar/locales-all.min.js|static";
         $GLOBALS['TL_CSS'][] = "system/modules/fullcalendar/assets/fullcalendar/main.min.css|static";
 
-        $GLOBALS['TL_JAVASCRIPT'][] = "system/modules/fullcalendar/assets/fullcal-eventManager.js|static";
-
         if ($this->fullcal_wrapTitleMonth === "1") {
             $this->Template->appendStyle = join("\n", [
                 ".fc-daygrid-event { display:block; white-space:normal; }",
                 ".fc-daygrid-event > div { display:inline-block; }",
             ]);
         }
-
+        $this->Template->showMenu = true;
         $this->Template->jsonArrayEvents = json_encode($this->getEventsAsPlainArray($arrCalendarIds), JSON_NUMERIC_CHECK);
         $this->Template->fullcalOptions = json_encode($fullcalOptions, JSON_NUMERIC_CHECK);
         $this->Template->arrCalendar = $arrCalendar;

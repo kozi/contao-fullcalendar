@@ -9,31 +9,47 @@
 <?php endif;?>
 
 <div id="calendar_<?=$this->id?>"></div>
+
 <script>
-var fullCalEventManager_<?=$this->id?>;
+var fullcalEventManager_<?=$this->id?>;
 
 document.addEventListener('DOMContentLoaded', function() {
-	var fullCalEventManager_<?=$this->id?> = new EventManager('#calendar_<?=$this->id?>', <?=$this->jsonArrayEvents?>),
+    var events = <?=$this->jsonArrayEvents?>,
+        fcMenuElement = document.getElementById("fullcal_menu_<?=$this->id?>"),
         fc = new FullCalendar.Calendar(document.getElementById('calendar_<?=$this->id?>'),
         // Remove last } to extend the json object
         <?=substr_replace($this->fullcalOptions, '', strrpos($this->fullcalOptions, '}'))?>,
-        events: fullCalEventManager_<?=$this->id?>.getCurrentEvents()
+        events: events
     });
+    fullcalEventManager_<?=$this->id?>.setFullcalendar(fc);
     fc.render();
+
+    if(ffcMenuElement) {
+        console.log("fcMenuElement", fcMenuElement);
+    }
+
 });
 </script>
-<?php if ($this->appendStyle): ?><style><?=$this->appendStyle?></style><?php endif;?>
 
-<div class="fullcal_menu">
+<?php if ($this->showMenu): ?>
+<div id="fullcal_menu_<?=$this->id?>" class="fullcal_menu">
     <ul>
     <?php foreach ($this->arrCalendar as $cal): ?>
-        <li id="calAlias_<?=$cal->alias?>" class="calendar active" style="background-color:#<?=$cal->color[0]?>">
-            <i onclick="fullCalEventManager_<?=$this->id?>.update(this)" class="icon-check"></i>
-            <?=$cal->title?>, <a onclick="return false" href="{{fullcal_url::<?=$cal->alias?>}}">{{fullcal_url::<?=$cal->alias?>}}</a>
-
+        <li id="calAlias_<?=$cal->alias?>" class="calendar active">
+            <span class="fullcal_dot" onclick="fullcalEventManager_<?=$this->id?>.update(this)" style="background-color:#<?=$cal->color[0]?>"></span>
+            <span class="fullcal_label">
+                <?=$cal->title?>, <a onclick="return false" href="{{fullcal_url::<?=$cal->alias?>}}">{{fullcal_url::<?=$cal->alias?>}}</a>
+            </span>
         </li>
     <?php endforeach;?>
     </ul>
 </div>
+<?php endif;?>
+
+<?php if ($this->appendStyle): ?>
+<style>
+<?=$this->appendStyle?>
+</style>
+<?php endif;?>
 
 <?php $this->endblock();?>
