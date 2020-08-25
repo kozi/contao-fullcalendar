@@ -93,6 +93,11 @@ class ModuleFullCalendar extends \Events
         $GLOBALS["TL_JAVASCRIPT"][] = "system/modules/fullcalendar/assets/popper/popper.min.js|static";
         $GLOBALS["TL_JAVASCRIPT"][] = "system/modules/fullcalendar/assets/tippy/tippy-bundle.umd.min.js|static";
 
+        $GLOBALS['TL_CSS'][] = "system/modules/fullcalendar/assets/tippy/themes/light-border.css|static";
+        $GLOBALS['TL_CSS'][] = "system/modules/fullcalendar/assets/tippy/themes/light.css|static";
+        $GLOBALS['TL_CSS'][] = "system/modules/fullcalendar/assets/tippy/themes/material.css|static";
+        $GLOBALS['TL_CSS'][] = "system/modules/fullcalendar/assets/tippy/themes/translucent.css|static";
+
         if ($this->fullcal_wrapTitleMonth === "1") {
             $this->Template->appendStyle = join("\n", [
                 ".fc-daygrid-event { display:block; white-space:normal; }",
