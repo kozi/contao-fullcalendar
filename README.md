@@ -5,8 +5,7 @@ in Contao einbinden kann.
 
 Außerdem bietet die Erweiterung die Möglichkeit automatisch Events aus
 [ICalendar](http://de.wikipedia.org/wiki/ICalendar)-Kalendern in Contao
-Kalender zu integrieren.  
-Diese Funktion wurde mit **sabre/dav** von  der fruux GmbH realisiert.
+Kalender zu integrieren. Diese Funktion wurde mit **sabre/dav** realisiert.
 
 ## FullCalendar
 
