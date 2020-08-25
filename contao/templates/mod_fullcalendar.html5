@@ -8,18 +8,18 @@
     <pre style="color:red;"><?=$this->errorMessage?></pre>
 <?php endif;?>
 
-<div id="calendar"></div>
+<div id="calendar_<?=$this->id?>"></div>
 <script>
 var fullCalEventManager_<?=$this->id?>;
 
-$(document).ready(function() {
-    // page is now ready, initialize the calendar...
-    fullCalEventManager_<?=$this->id?> = new EventManager('#calendar', <?=$this->jsonArrayEvents?>);
-    $('#calendar').fullCalendar(
+document.addEventListener('DOMContentLoaded', function() {
+	var fullCalEventManager_<?=$this->id?> = new EventManager('#calendar_<?=$this->id?>', <?=$this->jsonArrayEvents?>),
+        fc = new FullCalendar.Calendar(document.getElementById('calendar_<?=$this->id?>'),
         // Remove last } to extend the json object
         <?=substr_replace($this->fullcalOptions, '', strrpos($this->fullcalOptions, '}'))?>,
         events: fullCalEventManager_<?=$this->id?>.getCurrentEvents()
     });
+    fc.render();
 });
 </script>
 <?php if ($this->appendStyle): ?><style><?=$this->appendStyle?></style><?php endif;?>
@@ -37,4 +37,3 @@ $(document).ready(function() {
 </div>
 
 <?php $this->endblock();?>
-
