@@ -21,8 +21,12 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     fc.render();
 
-    if(ffcMenuElement) {
+    if(fcMenuElement) {
         console.log("fcMenuElement", fcMenuElement);
+        var dots = fcMenuElement.getElementsByClassName("fullcal_dot");
+        dots && Array.prototype.forEach.call(dots, function(dot) {
+            console.log("dot", dot);
+        });
     }
 
 });
