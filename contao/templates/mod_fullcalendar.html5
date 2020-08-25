@@ -11,8 +11,6 @@
 <div id="calendar_<?=$this->id?>"></div>
 
 <script>
-var fullcalEventManager_<?=$this->id?>;
-
 document.addEventListener('DOMContentLoaded', function() {
     var events = <?=$this->jsonArrayEvents?>,
         fcMenuElement = document.getElementById("fullcal_menu_<?=$this->id?>"),
@@ -21,7 +19,6 @@ document.addEventListener('DOMContentLoaded', function() {
         <?=substr_replace($this->fullcalOptions, '', strrpos($this->fullcalOptions, '}'))?>,
         events: events
     });
-    fullcalEventManager_<?=$this->id?>.setFullcalendar(fc);
     fc.render();
 
     if(ffcMenuElement) {
@@ -36,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
     <ul>
     <?php foreach ($this->arrCalendar as $cal): ?>
         <li id="calAlias_<?=$cal->alias?>" class="calendar active">
-            <span class="fullcal_dot" onclick="fullcalEventManager_<?=$this->id?>.update(this)" style="background-color:#<?=$cal->color[0]?>"></span>
+            <span class="fullcal_dot" style="background-color:#<?=$cal->color[0]?>"></span>
             <span class="fullcal_label">
                 <?=$cal->title?>, <a onclick="return false" href="{{fullcal_url::<?=$cal->alias?>}}">{{fullcal_url::<?=$cal->alias?>}}</a>
             </span>
