@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <li id="calAlias_<?=$cal->alias?>" class="fullcal_menu_entry">
             <span class="fullcal_menu_dot" style="background-color:#<?=$cal->color[0]?>"></span>
             <span class="fullcal_menu_label">
-                <a class="fullcal_menu_title"><?=$cal->title?></span>, <a class="fullcal_menu_ics" onclick="return false" href="{{fullcal_url::<?=$cal->alias?>}}">{{fullcal_url::<?=$cal->alias?>}}</a>
+                <span class="fullcal_menu_title"><?=$cal->title?></span>, <a class="fullcal_menu_ics" onclick="return false" href="{{fullcal_url::<?=$cal->alias?>}}">{{fullcal_url::<?=$cal->alias?>}}</a>
             </span>
         </li>
     <?php endforeach;?>
