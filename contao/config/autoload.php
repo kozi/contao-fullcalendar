@@ -15,5 +15,5 @@
 
 TemplateLoader::addFiles([
     'mod_fullcalendar' => 'system/modules/fullcalendar/templates',
-    'fullcalendar_tooltip' => 'system/modules/fullcalendar/templates',
+    'fullcal_description' => 'system/modules/fullcalendar/templates',
 ]);

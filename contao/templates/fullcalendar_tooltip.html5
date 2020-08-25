@@ -1,7 +1,0 @@
-<h5 class="date">
-    <?=(($this->day) ? $this->day . ', ' : '')?><?=$this->date . $this->time;?>
-</h5>
-<h4 class="title"><?=$this->title?></h4>
-<div class="teaser">
-    <?=$this->teaser?>
-</div>

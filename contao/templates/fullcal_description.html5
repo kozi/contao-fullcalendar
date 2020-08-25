@@ -1,0 +1,5 @@
+<div class="fullcal_description">
+  <h5 class="fullcal_description_date"><?=(($this->day) ? $this->day . ', ' : '')?><?=$this->date . $this->time;?></h5>
+  <h4 class="fullcal_description_title"><?=$this->title?></h4>
+  <div class="fullcal_description_teaser"><?=$this->teaser?></div>
+</div>

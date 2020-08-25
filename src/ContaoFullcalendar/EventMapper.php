@@ -96,7 +96,7 @@ class EventMapper
             $newEvent->calendarAlias = $calObj->fullcal_alias;
         }
 
-        $tmpl = new \FrontendTemplate("fullcalendar_tooltip");
+        $tmpl = new \FrontendTemplate("fullcal_description");
         foreach ($event as $k => $v) {
             $tmpl->$k = $v;
         }
