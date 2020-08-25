@@ -53,23 +53,24 @@ class ModuleFullCalendar extends \Events
         $this->fullcal_viewButtons = ['month', 'agendaWeek', 'agendaDay'];
 
         $fullcalOptions = new \stdClass();
+        $fullcalOptions->locale = $objPage->language;
         $fullcalOptions->firstDay = $this->cal_startDay;
+        $fullcalOptions->aspectRatio = $this->fullcal_aspectRatio;
+        $fullcalOptions->fixedWeekCount = ("1" === $this->fullcal_fixedWeekCount);
+        $fullcalOptions->weekNumbers = ("1" === $this->fullcal_weekNumbers);
 
         if ($this->fullcal_contentHeight != "") {
             $fullcalOptions->contentHeight = $this->fullcal_contentHeight;
         }
 
-        $fullcalOptions->aspectRatio = $this->fullcal_aspectRatio;
-        $fullcalOptions->fixedWeekCount = ("1" === $this->fullcal_fixedWeekCount);
-        $fullcalOptions->isRTL = ("1" === $this->fullcal_isRTL);
+        if ("1" === $this->fullcal_isRTL) {
+            $fullcalOptions->direction = "rtl";
+        }
 
-        $fullcalOptions->weekNumbers = ($this->fullcal_weekNumbers !== "none");
-        $fullcalOptions->weekNumbersWithinDays = ($this->fullcal_weekNumbers === "within");
-
-        $fullcalOptions->header = new \stdClass();
-        $fullcalOptions->header->left = $this->fullcal_header_left;
-        $fullcalOptions->header->center = $this->fullcal_header_center;
-        $fullcalOptions->header->right = $this->fullcal_header_right;
+        $fullcalOptions->headerToolbar = new \stdClass();
+        $fullcalOptions->headerToolbar->start = $this->fullcal_headerToolbar_start;
+        $fullcalOptions->headerToolbar->center = $this->fullcal_headerToolbar_center;
+        $fullcalOptions->headerToolbar->end = $this->fullcal_headerToolbar_end;
 
         $arrCalendarIds = array_map('intval', deserialize($this->cal_calendar));
         $arrCalendar = [];
@@ -91,11 +92,11 @@ class ModuleFullCalendar extends \Events
 
         $GLOBALS['TL_JAVASCRIPT'][] = "system/modules/fullcalendar/assets/fullcal-eventManager.js|static";
 
-        // Set correct locale in fullcalendar configuration
-        $fullcalOptions->locale = $objPage->language;
-
         if ($this->fullcal_wrapTitleMonth === "1") {
-            $this->Template->appendStyle = ".fc-month-view .fc-content .fc-title { white-space: normal }";
+            $this->Template->appendStyle = join("\n", [
+                ".fc-daygrid-event { display:block; white-space:normal; }",
+                ".fc-daygrid-event > div { display:inline-block; }",
+            ]);
         }
 
         $this->Template->jsonArrayEvents = json_encode($this->getEventsAsPlainArray($arrCalendarIds), JSON_NUMERIC_CHECK);

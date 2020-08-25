@@ -14,7 +14,7 @@
 
 $fullcalPalette = '{fullcal_legend},cal_calendar,fullcal_range,cal_startDay,fullcal_weekNumbers,fullcal_fixedWeekCount;
 fullcal_contentHeight,fullcal_aspectRatio,fullcal_wrapTitleMonth,fullcal_isRTL;
-fullcal_header_left,fullcal_header_center,fullcal_header_right;';
+fullcal_headerToolbar_start,fullcal_headerToolbar_center,fullcal_headerToolbar_end;';
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['fullcalendar'] = str_replace('{include_legend},form;', $fullcalPalette, $GLOBALS['TL_DCA']['tl_module']['palettes']['form']);
 $GLOBALS['TL_DCA']['tl_module']['config']['onsubmit_callback'][] = ['tl_module_fullcal', 'checkCalNoSpan'];
@@ -32,11 +32,9 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['fullcal_range'] = [
 $GLOBALS['TL_DCA']['tl_module']['fields']['fullcal_weekNumbers'] = [
     'label' => &$GLOBALS['TL_LANG']['tl_module']['fullcal_weekNumbers'],
     'exclude' => true,
-    'inputType' => 'select',
-    'options' => array('none', 'column', 'within'),
-    'reference' => &$GLOBALS['TL_LANG']['tl_module']['fullcal_weekNumbers'],
+    'inputType' => 'checkbox',
     'eval' => ['tl_class' => 'w50'],
-    'sql' => "varchar(255) NOT NULL default 'none'",
+    'sql' => "char(1) NOT NULL default ''",
 ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['fullcal_fixedWeekCount'] = [
@@ -81,8 +79,8 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['fullcal_wrapTitleMonth'] = [
     'sql' => "char(1) NOT NULL default '1'",
 ];
 
-$GLOBALS['TL_DCA']['tl_module']['fields']['fullcal_header_left'] = [
-    'label' => &$GLOBALS['TL_LANG']['tl_module']['fullcal_header_left'],
+$GLOBALS['TL_DCA']['tl_module']['fields']['fullcal_headerToolbar_start'] = [
+    'label' => &$GLOBALS['TL_LANG']['tl_module']['fullcal_headerToolbar_start'],
     'exclude' => true,
     'inputType' => 'text',
     'default' => 'prev,next today',
@@ -90,8 +88,8 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['fullcal_header_left'] = [
     'eval' => ['tl_class' => 'w50'],
 ];
 
-$GLOBALS['TL_DCA']['tl_module']['fields']['fullcal_header_center'] = [
-    'label' => &$GLOBALS['TL_LANG']['tl_module']['fullcal_header_center'],
+$GLOBALS['TL_DCA']['tl_module']['fields']['fullcal_headerToolbar_center'] = [
+    'label' => &$GLOBALS['TL_LANG']['tl_module']['fullcal_headerToolbar_center'],
     'exclude' => true,
     'default' => 'title',
     'inputType' => 'text',
@@ -99,8 +97,8 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['fullcal_header_center'] = [
     'eval' => ['tl_class' => 'w50'],
 ];
 
-$GLOBALS['TL_DCA']['tl_module']['fields']['fullcal_header_right'] = [
-    'label' => &$GLOBALS['TL_LANG']['tl_module']['fullcal_header_right'],
+$GLOBALS['TL_DCA']['tl_module']['fields']['fullcal_headerToolbar_end'] = [
+    'label' => &$GLOBALS['TL_LANG']['tl_module']['fullcal_headerToolbar_end'],
     'exclude' => true,
     'default' => 'month,agendaWeek,agendaDay',
     'inputType' => 'text',
