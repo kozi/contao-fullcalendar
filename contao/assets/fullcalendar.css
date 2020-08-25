@@ -5,7 +5,7 @@
 }
 
 .fullcal_menu_entry {
-    margin: 1rem 0;
+    margin: 1rem 0 0 0;
     display: flex;
     list-style: none;
     align-items: center;
