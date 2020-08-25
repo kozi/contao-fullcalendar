@@ -85,26 +85,14 @@ class ModuleFullCalendar extends \Events
 
         }
 
-        // Add error message is jQuery is not included
-        if ($objPage->hasJQuery !== "1") {
-            $this->Template->errorMessage = "jQuery is not activated for this page!";
-        }
+        $GLOBALS["TL_JAVASCRIPT"][] = "system/modules/fullcalendar/assets/fullcalendar/main.min.js|static";
+        $GLOBALS["TL_JAVASCRIPT"][] = "system/modules/fullcalendar/assets/fullcalendar/locales-all.min.js|static";
+        $GLOBALS['TL_CSS'][] = "system/modules/fullcalendar/assets/fullcalendar/main.min.css|static";
 
-        $pathPrefix = "system/modules/fullcalendar/assets/";
-        $GLOBALS["TL_JAVASCRIPT"][] = $pathPrefix . "moment.min.js|static";
+        $GLOBALS['TL_JAVASCRIPT'][] = "system/modules/fullcalendar/assets/fullcal-eventManager.js|static";
 
-        $GLOBALS['TL_CSS'][] = $pathPrefix . "fullcalendar/fullcalendar.min.css|static";
-        $GLOBALS["TL_JAVASCRIPT"][] = $pathPrefix . "fullcalendar/fullcalendar.min.js|static";
-
-        $GLOBALS['TL_JAVASCRIPT'][] = $pathPrefix . "fullcal-eventManager.js|static";
-
-        $langPath = $pathPrefix . "fullcalendar/locale/" . $objPage->language . '.js';
-        if (file_exists(TL_ROOT . '/' . $langPath)) {
-            // Include file with translations
-            $GLOBALS['TL_JAVASCRIPT'][] = $langPath . '|static';
-            // Set correct locale in fullcalendar configuration
-            $fullcalOptions->locale = $objPage->language;
-        }
+        // Set correct locale in fullcalendar configuration
+        $fullcalOptions->locale = $objPage->language;
 
         if ($this->fullcal_wrapTitleMonth === "1") {
             $this->Template->appendStyle = ".fc-month-view .fc-content .fc-title { white-space: normal }";
