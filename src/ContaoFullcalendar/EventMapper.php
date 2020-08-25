@@ -25,8 +25,6 @@ use Sabre\VObject\Node;
 
 class EventMapper
 {
-    const TMPL_DESCRIPTION = '<h3>%s</h3><p class="desc">%s</p>';
-
     /**
      * Convert "Contao-Event-Array" to json representation for fullcalendar
      * @param array
