@@ -128,7 +128,7 @@ class ModuleFullCalendar extends \Events
         }
 
         // Time range
-        $jsonEvents = [];
+        $jsonEventSources = new \stdClass();
         $tsStart = strtotime('-' . str_replace("_", " ", $this->fullcal_range), time());
         $tsEnd = strtotime('+' . str_replace("_", " ", $this->fullcal_range), time());
         $events = $this->getAllEvents($arrCalendarIds, $tsStart, $tsEnd);
@@ -138,11 +138,30 @@ class ModuleFullCalendar extends \Events
             foreach ($days as $keyDay => $day) {
                 // $keyDay Ein Tag mit eventuell mehreren Events
                 foreach ($day as $event) {
-                    $jsonEvents[] = EventMapper::convert($event, $arrCalendar[$event['pid']]);
+                    $calModel = $arrCalendar[$event['pid']];
+                    $calAlias = $calModel->fullcal_alias;
+
+                    if (!isset($jsonEventSources[$calAlias])) {
+                        $eventSource = new \stdClass();
+                        $eventSource->id = $calAlias;
+                        $eventSource->hexColor = isset($calModel->fullcal_hexColor) ? $calModel->fullcal_hexColor : null;
+                        $eventSource->events = [];
+                        $jsonEventSources[$calObj->fullcal_alias] = $eventSource;
+                    } else {
+                        $eventSource = $jsonEventSources[$calObj->fullcal_alias];
+                    }
+
+                    $newEvent = EventMapper::convert($event);
+
+                    $newEvent->calendarAlias = $calAlias;
+                    $newEvent->backgroundColor = isset($calModel->fullcal_hexColor) ? $calModel->fullcal_hexColor : null;
+                    $newEvent->className .= " " . $calAlias;
+
+                    $eventSource->events[] = $newEvent;
                 }
             }
         }
-        return $jsonEvents;
+        return $jsonEventSources;
     }
 
 }

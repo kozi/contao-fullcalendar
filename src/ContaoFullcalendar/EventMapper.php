@@ -31,7 +31,7 @@ class EventMapper
      * @param \CalendarModel
      * @return object
      */
-    public static function convert(array $event, $calObj)
+    public static function convert(array $event)
     {
         $arrCSS = array_map('trim', explode(' ', $event['class']));
         $arrCSS[] = 'jsonEvent';
@@ -83,17 +83,6 @@ class EventMapper
             $newEvent->start = \Date::parse('c', $event['begin']);
             $newEvent->end = \Date::parse('c', $event['end']);
             $arrCSS[] = 'daysTime';
-        }
-
-        if ($calObj !== null) {
-            // Add calendar alias as css class
-            $arrCSS[] = $calObj->fullcal_alias;
-            // Add color from calendar Object
-            if ($calObj->fullcal_hexColor) {
-                $newEvent->backgroundColor = $calObj->fullcal_hexColor;
-            }
-            // Add calendar alias as attribute
-            $newEvent->calendarAlias = $calObj->fullcal_alias;
         }
 
         $tmpl = new \FrontendTemplate("fullcal_description");
