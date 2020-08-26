@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <div id="fullcal_menu_<?=$this->id?>" class="fullcal_menu">
     <ul class="fullcal_menu_list">
     <?php foreach ($this->arrCalendar as $cal): ?>
-        <li id="calAlias_<?=$cal->alias?>" class="fullcal_menu_entry">
+        <li id="calAlias_<?=$cal->alias?>" class="fullcal_menu_entry fullcal_menu_active">
             <span class="fullcal_menu_dot" style="background-color:#<?=$cal->color[0]?>"></span>
             <span class="fullcal_menu_label">
                 <span class="fullcal_menu_title"><?=$cal->title?></span>, <a class="fullcal_menu_ics" onclick="return false" href="{{fullcal_url::<?=$cal->alias?>}}">{{fullcal_url::<?=$cal->alias?>}}</a>
