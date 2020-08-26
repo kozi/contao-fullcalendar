@@ -90,29 +90,30 @@ class ModuleFullCalendar extends \Events
         $GLOBALS["TL_JAVASCRIPT"][] = "system/modules/fullcalendar/assets/fullcalendar/locales-all.min.js|static";
         $GLOBALS['TL_CSS'][] = "system/modules/fullcalendar/assets/fullcalendar/main.min.css|static";
 
-        $GLOBALS["TL_JAVASCRIPT"][] = "system/modules/fullcalendar/assets/popper/popper.min.js|static";
-        $GLOBALS["TL_JAVASCRIPT"][] = "system/modules/fullcalendar/assets/tippy/tippy-bundle.umd.min.js|static";
-
         $GLOBALS["TL_JAVASCRIPT"][] = "system/modules/fullcalendar/assets/fullcal.js|static";
 
-        $GLOBALS['TL_CSS'][] = "system/modules/fullcalendar/assets/tippy/themes/light-border.css|static";
-        $GLOBALS['TL_CSS'][] = "system/modules/fullcalendar/assets/tippy/themes/light.css|static";
-        $GLOBALS['TL_CSS'][] = "system/modules/fullcalendar/assets/tippy/themes/material.css|static";
-        $GLOBALS['TL_CSS'][] = "system/modules/fullcalendar/assets/tippy/themes/translucent.css|static";
+        if (isset($this->fullcal_tooltip_options) && !ctype_space($this->fullcal_tooltip_options)) {
+            $this->Template->fullcalTooltipOptions = trim($this->fullcal_tooltip_options);
+
+            $GLOBALS["TL_JAVASCRIPT"][] = "system/modules/fullcalendar/assets/popper/popper.min.js|static";
+            $GLOBALS["TL_JAVASCRIPT"][] = "system/modules/fullcalendar/assets/tippy/tippy-bundle.umd.min.js|static";
+
+            $GLOBALS['TL_CSS'][] = "system/modules/fullcalendar/assets/tippy/themes/light-border.css|static";
+            $GLOBALS['TL_CSS'][] = "system/modules/fullcalendar/assets/tippy/themes/light.css|static";
+            $GLOBALS['TL_CSS'][] = "system/modules/fullcalendar/assets/tippy/themes/material.css|static";
+            $GLOBALS['TL_CSS'][] = "system/modules/fullcalendar/assets/tippy/themes/translucent.css|static";
+
+        }
+
+        if (isset($this->fullcal_options_additional) && !ctype_space($this->fullcal_options_additional)) {
+            $this->Template->fullcalOptionsAdditional = trim($this->fullcal_options_additional);
+        }
 
         if ($this->fullcal_wrapTitleMonth === "1") {
             $this->Template->appendStyle = join("\n", [
                 ".fc-daygrid-event { display:block; white-space:normal; }",
                 ".fc-daygrid-event > div { display:inline-block; }",
             ]);
-        }
-
-        if (isset($this->fullcal_tooltip_options) && !ctype_space($this->fullcal_tooltip_options)) {
-            $this->Template->fullcalTooltipOptions = trim($this->fullcal_tooltip_options);
-        }
-
-        if (isset($this->fullcal_options_additional) && !ctype_space($this->fullcal_options_additional)) {
-            $this->Template->fullcalOptionsAdditional = trim($this->fullcal_options_additional);
         }
 
         $this->Template->showMenu = true;
