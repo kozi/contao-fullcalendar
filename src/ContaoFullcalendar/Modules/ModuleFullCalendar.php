@@ -141,14 +141,14 @@ class ModuleFullCalendar extends \Events
                     $calModel = $arrCalendar[$event['pid']];
                     $calAlias = $calModel->fullcal_alias;
 
-                    if (!isset($jsonEventSources[$calAlias])) {
+                    if (!isset($jsonEventSources->$calAlias)) {
                         $eventSource = new \stdClass();
                         $eventSource->id = $calAlias;
                         $eventSource->hexColor = isset($calModel->fullcal_hexColor) ? $calModel->fullcal_hexColor : null;
                         $eventSource->events = [];
-                        $jsonEventSources[$calObj->fullcal_alias] = $eventSource;
+                        $jsonEventSources->$calAlias = $eventSource;
                     } else {
-                        $eventSource = $jsonEventSources[$calObj->fullcal_alias];
+                        $eventSource = $jsonEventSources->$calAlias;
                     }
 
                     $newEvent = EventMapper::convert($event);
