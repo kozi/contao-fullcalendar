@@ -16,17 +16,24 @@
 .fullcal_menu_dot {
     display: block;
     border-radius: 50%;
+    border: 2px solid rgba(0, 0, 0, .4);
     width: 1.5rem;
     height: 1.5rem;
     margin: 0 .5rem .1rem 0;
     cursor: pointer;
 }
 
-.fullcal_menu_entry.deactivated .fullcal_menu_dot {
-    background-color: #ddd !important;
+.fullcal_menu_entry.fullcal_menu_active .fullcal_menu_dot:hover {
+    opacity: .8;
 }
 
+.fullcal_menu_entry:not(.fullcal_menu_active) .fullcal_menu_dot {
+    opacity: .2;
+}
 
+.fullcal_menu_entry:not(.fullcal_menu_active) .fullcal_menu_dot:hover {
+    opacity: .3;
+}
 
 /* fullcal_description
 -----------------------------------------------------------------------------*/

@@ -11,26 +11,45 @@
 <div id="calendar_<?=$this->id?>"></div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    var events = <?=$this->jsonArrayEvents?>,
-        fcMenuElement = document.getElementById("fullcal_menu_<?=$this->id?>"),
-        fc = new FullCalendar.Calendar(document.getElementById('calendar_<?=$this->id?>'),
-        // Remove last } to extend the json object
-        <?=substr_replace($this->fullcalOptions, '', strrpos($this->fullcalOptions, '}'))?>,
-        events: events
-        <?=($this->fullcalOptionsAdditional ? "," . substr($this->fullcalOptionsAdditional, 1) : "}")?>
-    );
 
-    fc.render();
+function initializeFullcal(id, events, fcOptions, additionalOpts) {
+    var fc, fcContainer = document.getElementById("calendar_" + id),
+        fcMenuElement = document.getElementById("fullcal_menu_" + id),
+        dots = fcMenuElement && fcMenuElement.getElementsByClassName("fullcal_menu_dot"),
+        activeClass = "fullcal_menu_active";
 
-    if(fcMenuElement) {
-        console.log("fcMenuElement", fcMenuElement);
-        var dots = fcMenuElement.getElementsByClassName("fullcal_menu_dot");
-        dots && Array.prototype.forEach.call(dots, function(dot) {
-            console.log("dot", dot);
+    var updateEvents = function() {
+    	var activeEntries = fcMenuElement && fcMenuElement.getElementsByClassName("fullcal_menu_active"),
+            filteredEvents = [], activeIds = [];
+
+    	activeEntries && Array.prototype.forEach.call(activeEntries, function(entry) {
+            activeIds.push(entry.id.replace("calAlias_", ""));
+    	});
+        events.forEach(function(e) {
+            activeIds.indexOf(e.calendarAlias) !== -1 && filteredEvents.push(e);
         });
-    }
+        console.log("filteredEvents", filteredEvents);
+	};
 
+    dots && Array.prototype.forEach.call(dots, function(dot) {
+    	var cl = dot.parentElement.classList;
+    	dot.addEventListener("click", function(event) {
+    		cl.contains(activeClass) ? cl.remove(activeClass) : cl.add(activeClass);
+    		updateEvents();
+    	});
+    });
+
+    additionalOpts && Object.keys(additionalOpts).forEach(function(key) {
+        fcOptions[key] = additionalOpts[key];
+    });
+    fcOptions.events = events;
+
+    fc = new FullCalendar.Calendar(fcContainer, fcOptions);
+	fc.render();
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    initializeFullcal("<?=$this->id?>", <?=$this->jsonArrayEvents?>, <?=$this->fullcalOptions?>, <?=($this->fullcalOptionsAdditional ? $this->fullcalOptionsAdditional : "null")?>);
 });
 </script>
 
