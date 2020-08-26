@@ -107,11 +107,11 @@ class ModuleFullCalendar extends \Events
             ]);
         }
 
-        if (!ctype_space($this->fullcal_tooltip_options)) {
+        if (isset($this->fullcal_tooltip_options) && !ctype_space($this->fullcal_tooltip_options)) {
             $this->Template->fullcalTooltipOptions = trim($this->fullcal_tooltip_options);
         }
 
-        if (!ctype_space($this->fullcal_options_additional)) {
+        if (isset($this->fullcal_options_additional) && !ctype_space($this->fullcal_options_additional)) {
             $this->Template->fullcalOptionsAdditional = trim($this->fullcal_options_additional);
         }
 
