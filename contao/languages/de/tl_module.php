@@ -17,7 +17,7 @@ $GLOBALS['TL_LANG']['tl_module']['fullcal_headerToolbar_start'] = ['Kopfzeile (S
 $GLOBALS['TL_LANG']['tl_module']['fullcal_headerToolbar_center'] = ['Kopfzeile (Mitte)', $fullcalendarDesc];
 $GLOBALS['TL_LANG']['tl_module']['fullcal_headerToolbar_end'] = ['Kopfzeile (Ende)', $fullcalendarDesc];
 
-$GLOBALS['TL_LANG']['tl_module']['fullcal_tooltip_options'] = ['Tooltip-Konfiguration', 'Bsp: <pre>{theme: "light"}</pre> Die Eigenschaften content und allowHTML werden automatisch gesetzt. Fügen Sie eine Tooltip-Konfiguration hinzu (Einzelheiten siehe <a target="_blank" href="https://atomiks.github.io/tippyjs/">tippy.js Dokumentation</a>)'];
+$GLOBALS['TL_LANG']['tl_module']['fullcal_tooltip_options'] = ['Tooltip-Konfiguration', 'Bsp: <strong>{theme: "light"}</strong> Die Eigenschaften content und allowHTML werden automatisch gesetzt. Fügen Sie eine Tooltip-Konfiguration hinzu (Einzelheiten siehe <a target="_blank" href="https://atomiks.github.io/tippyjs/">tippy.js Dokumentation</a>)'];
 $GLOBALS['TL_LANG']['tl_module']['fullcal_options_additional'] = ['Zusätzliche FullCalendar Einstellungen', 'Muss ein valides Javascript Objekt sein.'];
 
 $GLOBALS['TL_LANG']['tl_module']['fullcal_range']['3_months'] = '-3 Monate bis +3 Monate';
