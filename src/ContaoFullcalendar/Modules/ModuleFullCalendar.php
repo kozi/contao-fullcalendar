@@ -93,6 +93,8 @@ class ModuleFullCalendar extends \Events
         $GLOBALS["TL_JAVASCRIPT"][] = "system/modules/fullcalendar/assets/popper/popper.min.js|static";
         $GLOBALS["TL_JAVASCRIPT"][] = "system/modules/fullcalendar/assets/tippy/tippy-bundle.umd.min.js|static";
 
+        $GLOBALS["TL_JAVASCRIPT"][] = "system/modules/fullcalendar/assets/fullcal.js|static";
+
         $GLOBALS['TL_CSS'][] = "system/modules/fullcalendar/assets/tippy/themes/light-border.css|static";
         $GLOBALS['TL_CSS'][] = "system/modules/fullcalendar/assets/tippy/themes/light.css|static";
         $GLOBALS['TL_CSS'][] = "system/modules/fullcalendar/assets/tippy/themes/material.css|static";
@@ -105,17 +107,21 @@ class ModuleFullCalendar extends \Events
             ]);
         }
 
+        if (!ctype_space($this->fullcal_tooltip_options)) {
+            $this->Template->fullcalTooltipOptions = trim($this->fullcal_tooltip_options);
+        }
+
         if (!ctype_space($this->fullcal_options_additional)) {
             $this->Template->fullcalOptionsAdditional = trim($this->fullcal_options_additional);
         }
 
         $this->Template->showMenu = true;
-        $this->Template->jsonArrayEvents = json_encode($this->getEventsAsPlainArray($arrCalendarIds), JSON_NUMERIC_CHECK);
+        $this->Template->jsonEventSources = json_encode($this->getEventSources($arrCalendarIds), JSON_NUMERIC_CHECK);
         $this->Template->fullcalOptions = json_encode($fullcalOptions, JSON_NUMERIC_CHECK);
         $this->Template->arrCalendar = $arrCalendar;
     }
 
-    private function getEventsAsPlainArray(array $arrCalendarIds)
+    private function getEventSources(array $arrCalendarIds)
     {
         $arrCalendar = [];
         $collectionCal = \CalendarModel::findMultipleByIds($arrCalendarIds);

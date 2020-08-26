@@ -10,49 +10,6 @@
 
 <div id="calendar_<?=$this->id?>"></div>
 
-<script>
-
-function initializeFullcal(id, events, fcOptions, additionalOpts) {
-    var fc, fcContainer = document.getElementById("calendar_" + id),
-        fcMenuElement = document.getElementById("fullcal_menu_" + id),
-        dots = fcMenuElement && fcMenuElement.getElementsByClassName("fullcal_menu_dot"),
-        activeClass = "fullcal_menu_active";
-
-    var updateEvents = function() {
-    	var activeEntries = fcMenuElement && fcMenuElement.getElementsByClassName("fullcal_menu_active"),
-            filteredEvents = [], activeIds = [];
-
-    	activeEntries && Array.prototype.forEach.call(activeEntries, function(entry) {
-            activeIds.push(entry.id.replace("calAlias_", ""));
-    	});
-        events.forEach(function(e) {
-            activeIds.indexOf(e.calendarAlias) !== -1 && filteredEvents.push(e);
-        });
-        console.log("filteredEvents", filteredEvents);
-	};
-
-    dots && Array.prototype.forEach.call(dots, function(dot) {
-    	var cl = dot.parentElement.classList;
-    	dot.addEventListener("click", function(event) {
-    		cl.contains(activeClass) ? cl.remove(activeClass) : cl.add(activeClass);
-    		updateEvents();
-    	});
-    });
-
-    additionalOpts && Object.keys(additionalOpts).forEach(function(key) {
-        fcOptions[key] = additionalOpts[key];
-    });
-    fcOptions.events = events;
-
-    fc = new FullCalendar.Calendar(fcContainer, fcOptions);
-	fc.render();
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-    initializeFullcal("<?=$this->id?>", <?=$this->jsonArrayEvents?>, <?=$this->fullcalOptions?>, <?=($this->fullcalOptionsAdditional ? $this->fullcalOptionsAdditional : "null")?>);
-});
-</script>
-
 <?php if ($this->showMenu): ?>
 <div id="fullcal_menu_<?=$this->id?>" class="fullcal_menu">
     <ul class="fullcal_menu_list">
@@ -73,5 +30,16 @@ document.addEventListener('DOMContentLoaded', function() {
 <?=$this->appendStyle?>
 </style>
 <?php endif;?>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    initializeFullcal(
+        "<?=$this->id?>",
+        <?=$this->jsonEventSources?>,
+        <?=$this->fullcalOptions?>,
+        <?=isset($this->fullcalTooltipOptions) ? $this->fullcalTooltipOptions : "null"?>,
+        <?=isset($this->fullcalOptionsAdditional) ? $this->fullcalOptionsAdditional : "null"?>);
+});
+</script>
 
 <?php $this->endblock();?>
