@@ -127,12 +127,12 @@ class EventMapper
         }
 
         $eventObject->fullcal_id = $eventId;
-        $eventObject->fullcal_uid = $eData['uid'];
-        $eventObject->fullcal_desc = $eData['description'];
-        $eventObject->fullcal_cat = $eData['categories'];
-        $eventObject->teaser = $eData['description'];
-        $eventObject->title = $eData['summary'];
-        $eventObject->location = $eData['location'];
+        $eventObject->fullcal_uid = isset($eData['uid']) ? $eData['uid'] : '';
+        $eventObject->fullcal_desc = isset($eData['description']) ? $eData['description'] : '';
+        $eventObject->fullcal_cat = isset($eData['categories']) ? $eData['categories'] : '';
+        $eventObject->teaser = isset($eData['description']) ? $eData['description'] : '';
+        $eventObject->title = isset($eData['summary']) ? $eData['summary'] : '';
+        $eventObject->location = isset($eData['location']) ? $eData['location'] : '';
         $eventObject->pid = $calObj->id;
         $eventObject->source = 'default';
         $eventObject->published = '1';
