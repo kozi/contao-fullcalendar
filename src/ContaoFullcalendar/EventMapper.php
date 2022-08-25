@@ -178,7 +178,6 @@ class EventMapper
 
         $eventObject->fullcal_flagNew = $isNew;
         return $eventObject;
-
     }
 
     /* Get a flat array with the event infos
@@ -219,7 +218,7 @@ class EventMapper
         $file->close();
 
         // Save the reference to the ics file in the event
-        $eventObject->fullcal_ics = $strFile;
+        $eventObject->fullcal_ics = str_replace("web/", "", $strFile);
         $eventObject->save();
     }
 
