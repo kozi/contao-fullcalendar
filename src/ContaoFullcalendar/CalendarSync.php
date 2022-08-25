@@ -22,7 +22,7 @@ use \Sabre\VObject\Reader;
 
 class CalendarSync extends \Backend
 {
-    public static $icsFolder = 'web/hare/ics-events/';
+    public static $icsFolder = 'web/share/ics-events/';
     public static $calFolder = 'web/share/ics-cal/';
 
     public function syncOneCal()
@@ -66,8 +66,7 @@ class CalendarSync extends \Backend
         $vcalContent = null;
         $infoObj = new InfoObject($objCalendar);
 
-        try
-        {
+        try {
             $vcalContent = self::getVCalendarContent($objCalendar);
         } catch (\Exception $e) {
             $infoObj->setException($e);
@@ -104,11 +103,10 @@ class CalendarSync extends \Backend
         if (count($arrEventIds) > 0) {
             $stmt = \Database::getInstance()->prepare(
                 "DELETE FROM tl_calendar_events WHERE pid = ? AND fullcal_id != ''"
-                . (empty($arrEventIds) ? "" : " AND id not in(" . implode(',', $arrEventIds) . ")")
+                    . (empty($arrEventIds) ? "" : " AND id not in(" . implode(',', $arrEventIds) . ")")
             );
             $stmt->execute($objCalendar->id);
             $infoObj->setDeleted($stmt->affectedRows);
-
         }
 
         // Add errors in infoObj;
