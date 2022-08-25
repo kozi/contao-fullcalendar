@@ -44,23 +44,22 @@ class FullCalTags extends \Frontend
                 return $calObj->fullcal_alias;
             }
 
-            $calUrl = \Environment::get('url') . '/' . CalendarSync::$calFolder . $calObj->fullcal_alias . '.ics';
+            $calUrl = \Environment::get('url') . '/' . str_replace("web/", "", CalendarSync::$calFolder) . $calObj->fullcal_alias . '.ics';
 
             if ($this->tagname === 'fullcal_url') {
                 return $calUrl;
             }
 
-            return sprintf('<a href="%s" title="%s [%s]">%s</a>',
+            return sprintf(
+                '<a href="%s" title="%s [%s]">%s</a>',
                 $calUrl,
                 $calObj->title,
                 $calUrl,
                 (($tagValues[1]) ? $tagValues[1] : $calObj->title)
             );
-
         }
 
         // Nicht unser tag
         return false;
     }
-
 }
