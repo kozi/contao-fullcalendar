@@ -22,8 +22,8 @@ use \Sabre\VObject\Reader;
 
 class CalendarSync extends \Backend
 {
-    public static $icsFolder = 'share/ics-events/';
-    public static $calFolder = 'share/ics-cal/';
+    public static $icsFolder = 'web/hare/ics-events/';
+    public static $calFolder = 'web/share/ics-cal/';
 
     public function syncOneCal()
     {
