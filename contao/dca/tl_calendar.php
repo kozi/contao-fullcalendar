@@ -47,7 +47,7 @@ $GLOBALS['TL_DCA']['tl_calendar']['fields']['fullcal_alias'] = [
     'inputType' => 'text',
     'eval' => ['rgxp' => 'alias', 'unique' => true, 'maxlength' => 128, 'tl_class' => 'w50'],
     'save_callback' => [['tl_calendar_fullcal', 'generateAlias']],
-    'sql' => "varchar(128) COLLATE utf8_bin NOT NULL default ''",
+    'sql' => "varchar(128) NOT NULL default ''",
 ];
 
 $GLOBALS['TL_DCA']['tl_calendar']['fields']['fullcal_color'] = [
